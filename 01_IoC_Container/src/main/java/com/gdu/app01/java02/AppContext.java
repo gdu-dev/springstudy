@@ -18,7 +18,7 @@ public class AppContext {
 		
 		// 0~100 난수 5개
 		List<Integer> scores = new ArrayList<Integer>();
-		for(int cnt = 0; cnt < 5; cnt++) {
+		for(int cnt = 0; cnt < 5; cnt++) {             // 5번 반복합니다.
 			scores.add( (int)(Math.random() * 101) );  // 0부터 101개의 난수가 발생된다.(0~100)
 		}
 		
