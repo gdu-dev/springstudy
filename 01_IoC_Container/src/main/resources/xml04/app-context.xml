@@ -9,6 +9,19 @@
 		<property name="user" value="GDJ61" />
 		<property name="password" value="1111" />
 	</bean>
+	
+	<!--
+		<bean> 태그의 scope 속성
+		
+		1. scope="singleton"
+			1) Spring Container에 bean을 하나만 만든다.
+			2) 디폴트 속성이다.
+		2. scope="prototype"
+			1) Spring Container에 bean을 여러 개 만든다.
+			2) getBean() 메소드로 bean을 요청할 때마다 새로운 bean을 계속 만든다. 
+	-->
+	
+	<bean id="dao" class="com.gdu.app01.xml04.MyDAO" scope="singleton" />
 
 
 </beans>
