@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="calc" class="com.gdu.app01.xml06.Calculator" />
+	
+	<bean id="bmiCalc" class="com.gdu.app01.xml06.BmiCalculator">
+		<constructor-arg value="1.85" />
+		<constructor-arg value="80.5" />
+		<constructor-arg ref="calc" />
+	</bean>
+
+	<bean id="member" class="com.gdu.app01.xml06.GymMember">
+		<constructor-arg value="김종국" />
+		<constructor-arg>
+			<list>
+				<value>헬스</value>
+				<value>수영</value>
+			</list>
+		</constructor-arg>
+		<constructor-arg ref="bmiCalc" />
+	</bean>
+
+</beans>

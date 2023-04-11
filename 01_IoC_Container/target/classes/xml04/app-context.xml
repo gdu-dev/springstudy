@@ -23,5 +23,4 @@
 	
 	<bean id="dao" class="com.gdu.app01.xml04.MyDAO" scope="singleton" />
 
-
 </beans>
