@@ -47,6 +47,20 @@
 	<div><a href="${contextPath}/detail.gdu?age=46">상세보기3</a></div>
 	<div><a href="${contextPath}/detail.gdu?name=민경태&age=46">상세보기4</a></div>
 	
+	<!-- ------------------------------------------------------------------ -->
+	
+	<!-- DiController에서 확인합시다. -->
+	<h1>Dependency Injection</h1>
+	<div><a href="${contextPath}/bbs/detail.do"></a></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </body>
 </html>
