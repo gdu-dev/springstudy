@@ -38,8 +38,21 @@ public class MyController {
 		                 // /WEB-INF/views/index.jsp
 	}
 	
-	
-	
-	
+	/*
+		@RequestMapping 작성 예시
+		@RequestMapping(value="/list.do", method=RequestMethod.GET)    정식 버전
+		@RequestMapping(value="list.do", method=RequestMethod.GET)     value는 슬래시(/)로 시작하지 않아도 된다.
+		@RequestMapping(value="/list.do")                              GET 방식의 method는 생략할 수 있다.
+		@RequestMapping("/list.do")                                    value 속성만 작성하는 경우네는 값만 작성할 수 있다.
+	*/
+	@RequestMapping("/list.do")
+	public String list() {
+		return "board/list";  // 실제 처리되는 경로 : /WEB-INF/views/board/list.jsp
+		/*
+			return "/board/list";  슬래시(/)로 시작한 Jsp 경로
+			실제 처리되는 경로 : /WEB-INF/views//board/list.jsp  (중간에 슬래시가 2개 포함된다.)
+			하지만, 실제로는 /WEB-INF/views/board/list.jsp 경로로 처리된다.
+		*/
+	}
 	
 }
