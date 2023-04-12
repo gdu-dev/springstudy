@@ -7,8 +7,8 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		
-		// AppContext.java에 정의된 Bean을 주세요!
-		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(AppContext.class);
+		// AppConfig.java에 정의된 Bean을 주세요!
+		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		
 		// 이름이 upload인 Bean을 주세요!
 		Upload upload = ctx.getBean("upload", Upload.class);

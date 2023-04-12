@@ -12,7 +12,7 @@
 	<context:annotation-config />
 	
 	<!-- AppContext에 정의된 bean을 만듭니다! -->
-	<bean class="com.gdu.app01.java_into_xml.AppContext" />
+	<bean class="com.gdu.app01.java_into_xml.AppConfig" />
 
 
 </beans>

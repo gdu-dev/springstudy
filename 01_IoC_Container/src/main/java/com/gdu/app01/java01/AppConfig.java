@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 	Spring Bean Configuration File하고 같은 일을 하지.
 */
 @Configuration
-public class AppContext {
+public class AppConfig {
 
 	// Bean을 만들고 싶으면 메소드를 만들면 됩니다. (Bean 하나 = 메소드 하나)
 	

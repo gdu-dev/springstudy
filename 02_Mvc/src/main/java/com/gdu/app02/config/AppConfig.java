@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.gdu.app02.domain.Bbs;
 
 @Configuration
-public class AppContext {
+public class AppConfig {
 
 	// 1번째 Bean은 root-context.xml에 있습니다.
 	

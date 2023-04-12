@@ -7,6 +7,6 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("xml_into_java/app-context.xml")
 
 @Configuration
-public class AppContext {
+public class AppConfig {
 
 }

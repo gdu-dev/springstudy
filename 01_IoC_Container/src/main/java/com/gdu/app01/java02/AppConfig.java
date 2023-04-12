@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppContext {
+public class AppConfig {
 
 	@Bean
 	public Student stu() {  // <bean id="stu" class="Student">

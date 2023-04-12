@@ -13,6 +13,6 @@
 		<property name="createdAt" value="2023-04-12" />
 	</bean>
 	
-	<!-- 2번째 Bean은 AppContext.java에 있습니다. -->
+	<!-- 2번째 Bean은 AppConfig.java에 있습니다. -->
 
 </beans>

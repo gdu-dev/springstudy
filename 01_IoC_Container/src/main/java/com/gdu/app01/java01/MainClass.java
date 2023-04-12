@@ -12,7 +12,7 @@ public class MainClass {
 			AnnotationConfigApplicationContext
 		*/
 		
-		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(AppContext.class);        // AppContext.java 파일에 있는 Bean을 주세요!
+		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);        // AppConfig.java 파일에 있는 Bean을 주세요!
 		// AbstractApplicationContext ctx = new AnnotationConfigApplicationContext("com.gdu.app01.java01");  com.gdu.app01.java01 패키지에 있는 모든 Bean을 주세요!
 
 		User user1 = ctx.getBean("user1", User.class);
