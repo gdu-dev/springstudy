@@ -1,5 +1,6 @@
 package com.gdu.app02.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,7 +84,7 @@ public class DiController {
 	 		@Autowired @Qualifier(value="bbs1") private Bbs apple;  // 강제로 Bean의 이름(id)이 bbs1인 Bean을 가져와서 apple에 전달한다.
 	 		@Autowired @Qualifier(value="bbs2") private Bbs mango;  // 강제로 Bean의 이름(id)이 bbs2인 Bean을 가져와서 mango에 전달한다.
 	 		**************************************
-	
+			@Autowired(
 	
 		2. 생성자 이용하기 (@Autowired 명시 없음)
 		
@@ -116,16 +117,16 @@ public class DiController {
 	
 	
 	// field
-	private Bbs bbs1;
-	private Bbs bbs2;
+	@Autowired(required=false)	private Bbs bbs1;
+	@Autowired private Bbs bbs2;
 
 	
 	// constructor
-	public DiController(Bbs bbs1, Bbs bbs2) {  // 이 곳의 매개변수로 Spring Container의 Bean이 자동으로 주입된다.
-		super();
-		this.bbs1 = bbs1;
-		this.bbs2 = bbs2;
-	}
+//	public DiController(Bbs bbs1, Bbs bbs2) {  // 이 곳의 매개변수로 Spring Container의 Bean이 자동으로 주입된다.
+//		super();
+//		this.bbs1 = bbs1;
+//		this.bbs2 = bbs2;
+//	}
 
 	// method
 	@GetMapping("/bbs/detail.do")
