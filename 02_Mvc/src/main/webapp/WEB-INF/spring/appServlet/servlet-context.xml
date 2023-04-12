@@ -13,16 +13,39 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!--
+		정적 자원(image, css, js 등)을 관리하는 디렉터리를 정합니다.
+		mapping="/resources/**"  :  주소에 "/resources"로 시작하는 경로가 나타나면
+		location="/resources/"   :  resources 디렉터리로 연결하세요!
+	-->
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!--
+		ViewResolver (뷰 해석기)
+		1. 컨트롤러에서 반환하는 뷰(Jsp)를 해석한다.
+		2. 예시
+			return "home";            컨트롤러가 반환한 값(응답할 Jsp 이름)
+			prefix="/WEB-INF/views/"  이 값은 컨트롤러가 반환한 값 앞에 붙인다.
+			suffix=".jsp"             이 값은 컨트롤러가 반환한 값 뒤에 붙인다.
+			뷰 리졸버가 해석한 최종 결과
+			/WEB-INF/views/home.jsp
+	-->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!--
+		1. component-scan에 등록된 패키지에 있는 component(@Component가 추가된 클래스)를 자동으로 Bean으로 등록한다.(Spring Container에 저장한다.)
+		2. @Component의 종류
+			@Component, @Controller, @Service, @Repository 등
+		3. 모든 구성 요소는 base-package 내부에 작성해야 한다.
+			com.gdu.app02.controller
+			com.gdu.app02.domain
+			com.gdu.app02.repository
+			com.gdu.app02.service
+	-->
 	<context:component-scan base-package="com.gdu.app02" />
-	
-	
 	
 </beans:beans>
