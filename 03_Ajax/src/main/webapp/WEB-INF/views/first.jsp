@@ -32,6 +32,28 @@
 		
 	}
 	
+	function fn2(){
+		
+		$('#result').empty();
+		
+		$.ajax({
+			// 요청
+			type: 'get',
+			url: '${contextPath}/first/ajax2',
+			data: $('#frm').serialize(),
+			// 응답
+			dataType: 'json',
+			success: function(resData){  // resData = {"name": "민경태", "age": 46}
+				let str = '<ul>';
+				str += '<li>' + resData.name + '</li>';
+				str += '<li>' + resData.age + '</li>';
+				str += '</ul>';
+				$('#result').append(str);
+			}
+		})
+		
+	}
+	
 </script>
 </head>
 <body>
