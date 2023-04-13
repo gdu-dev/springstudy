@@ -28,7 +28,7 @@ public class FirstServiceImpl implements IFirstService {
 		} catch(Exception e) {
 			
 			try {
-				response.setContentType("text/html; charset=UTF-8");
+				response.setContentType("text/plain; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println(e.getMessage());  // $.ajax의 error로 넘기는 예외 메시지
 				out.flush();
