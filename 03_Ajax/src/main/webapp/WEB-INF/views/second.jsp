@@ -11,7 +11,23 @@
 <script>
 
 	function fnBmi1(){
-		
+		$.ajax({
+			// 요청
+			type: 'get',
+			url: '${contextPath}/second/bmi1',
+			data: $('#frm').serialize(),
+			// 응답
+			dataType: 'json',
+			success: function(resData){                  // resData : {"bmi": 22, "obesity": "정상", "weight": 1, "height": 1}
+				$('#bmi').text(resData['bmi']);          // resData.bmi     == resData['bmi']
+				$('#obesity').text(resData['obesity']);  // resData.obesity == resData['obesity']
+			},
+			error: function(jqXHR){
+				$('#bmi').text('');
+				$('#obesity').text('');
+				alert(jqXHR.responseText);
+			}
+		})
 	}
 	
 	function fnBmi2(){

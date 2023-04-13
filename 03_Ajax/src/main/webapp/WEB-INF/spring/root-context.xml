@@ -5,7 +5,9 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- Spring Container에 등록된 Bean -->
 	<bean id="firstService" class="com.gdu.app03.service.FirstServiceImpl" />
+	<bean id="secondService" class="com.gdu.app03.service.SecondServiceImpl" />
 
 	
 </beans>
