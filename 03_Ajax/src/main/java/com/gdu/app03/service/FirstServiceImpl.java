@@ -22,6 +22,11 @@ public class FirstServiceImpl implements IFirstService {
 			String strAge = request.getParameter("age");
 			strAge = strAge.isEmpty() ? "0" : strAge;  // 사용자가 입력한 age가 없으면 빈 문자열이 전달된다.
 			int age = Integer.parseInt(strAge);
+
+			// 0~100 범위를 벗어난 경우 예외 발생시키기
+			if(age < 0 || age > 100) {
+				throw new RuntimeException(age + "살은 잘못된 나이입니다.");
+			}
 			
 			return new Person(name, age);    // $.ajax의 success로 넘기는 값
 			
@@ -52,4 +57,12 @@ public class FirstServiceImpl implements IFirstService {
 		
 	}
 
+	@Override
+	public Map<String, Object> execute3(Person person) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", person.getName());
+		map.put("age", person.getAge());
+		return map;
+	}
+	
 }

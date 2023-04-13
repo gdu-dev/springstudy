@@ -39,4 +39,11 @@ public class FirstController {
 	}
 	
 	
+	@ResponseBody
+	@GetMapping(value="/first/ajax3", produces="application/json")
+	public Map<String, Object> ajax3(Person person) {
+		return firstService.execute3(person);
+	}
+	
+	
 }
