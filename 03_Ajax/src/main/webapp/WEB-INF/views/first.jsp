@@ -27,6 +27,9 @@
 				str += '<li>' + resData.age + '</li>';
 				str += '</ul>';
 				$('#result').append(str);
+			},
+			error: function(jqXHR){
+				$('#result').text(jqXHR.responseText);
 			}
 		})
 		
