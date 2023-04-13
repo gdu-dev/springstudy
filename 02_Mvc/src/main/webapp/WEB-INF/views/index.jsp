@@ -58,6 +58,7 @@
 	<!-- PostController에서 확인합시다. -->
 	<h1>Redirect</h1>
 	<div><a href="${contextPath}/post/detail.do?name=민경태&age=46">상세보기</a></div>
+	<div><a href="${contextPath}/post/detail.me?name=민경태&age=46">상세보기</a></div>
 	
 	
 	
