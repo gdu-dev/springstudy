@@ -83,7 +83,7 @@ public class DiController {
 	 		@Autowired @Qualifier(value="bbs1") private Bbs apple;  // 강제로 Bean의 이름(id)이 bbs1인 Bean을 가져와서 apple에 전달한다.
 	 		@Autowired @Qualifier(value="bbs2") private Bbs mango;  // 강제로 Bean의 이름(id)이 bbs2인 Bean을 가져와서 mango에 전달한다.
 	 		**************************************
-			@Autowired(
+			
 	
 		2. 생성자 이용하기 (@Autowired 명시 없음)
 		

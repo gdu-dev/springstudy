@@ -7,7 +7,7 @@
 
 	<!-- Spring Container에 등록할 Bean을 만드는 파일(Spring Bean Configuration File) -->
 
-	<bean id="bbs" class="com.gdu.app02.domain.Bbs">
+	<bean id="bbs1" class="com.gdu.app02.domain.Bbs">
 		<property name="bbsNo" value="1" />
 		<property name="title" value="도와주세요" />
 		<property name="createdAt" value="2023-04-12" />
