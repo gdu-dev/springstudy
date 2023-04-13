@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<div><a href="${contextPath}/first.do">이동1</a></div>
+	
 </body>
 </html>

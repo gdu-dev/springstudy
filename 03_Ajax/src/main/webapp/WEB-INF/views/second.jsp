@@ -10,6 +10,14 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
+	function fnBmi1(){
+		
+	}
+	
+	function fnBmi2(){
+		
+	}
+
 </script>
 </head>
 <body>
@@ -17,23 +25,33 @@
 	<div>
 		<form id="frm">
 			<div>
-				<label for="name">이름</label>
-				<input id="name" name="name">
+				<label for="weight">몸무게</label>
+				<input id="weight" name="weight" placeholder="kg">
 			</div>
 			<div>
-				<label for="age">나이</label>
-				<input id="age" name="age">
+				<label for="height">키</label>
+				<input id="height" name="height" placeholder="cm">
 			</div>
 			<div>
-				<input type="button" value="전송1" onclick="fn1()">
-				<input type="button" value="전송2" onclick="fn2()">
+				<input type="button" value="BMI계산1" onclick="fnBmi1()">
+				<input type="button" value="BMI계산2" onclick="fnBmi2()">
 			</div>
 		</form>
 	</div>
 	
 	<hr>
 	
-	<div id="result"></div>
+	<div>
+		<h3>비만도</h3>
+		<ul>
+			<li>18.5미만 : 저체중</li>
+			<li>24.9미만 : 정상</li>
+			<li>29.9미만 : 과체중</li>
+			<li>30 초과  : 비만</li>
+		</ul>
+		<div>체질량지수(BMI) : <span id="bmi"></span></div>
+		<div>비만도 : <span id="obesity"></span></div>
+	</div>
 	
 </body>
 </html>
