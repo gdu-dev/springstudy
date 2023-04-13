@@ -49,12 +49,10 @@ public class FirstServiceImpl implements IFirstService {
 	
 	@Override
 	public Map<String, Object> execute2(String name, int age) {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
 		map.put("age", age);
 		return map;
-		
 	}
 
 	@Override

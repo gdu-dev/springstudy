@@ -1,5 +1,7 @@
 package com.gdu.app03.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +30,12 @@ public class SecondController {
 	@GetMapping(value="/second/bmi1", produces=MediaType.APPLICATION_JSON_VALUE)  // MediaType.APPLICATION_JSON_VALUE는 "application/json"이다.
 	public BmiVO bmi1(HttpServletRequest request, HttpServletResponse response) {
 		return secondService.execute1(request, response);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/second/bmi2", produces=MediaType.APPLICATION_JSON_VALUE)  // MediaType.APPLICATION_JSON_VALUE는 "application/json"이다.)
+	public Map<String, Object> bmi2(BmiVO bmiVO) {
+		return secondService.execute2(bmiVO);
 	}
 	
 }

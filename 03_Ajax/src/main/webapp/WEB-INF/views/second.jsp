@@ -31,7 +31,23 @@
 	}
 	
 	function fnBmi2(){
-		
+		$.ajax({
+			// 요청
+			type: 'get',
+			url: '${contextPath}/second/bmi2',
+			data: $('#frm').serialize(),
+			// 응답
+			dataType: 'json',
+			success: function(resData){                  // resData : {"bmi": 22, "obesity": "정상"}
+				$('#bmi').text(resData['bmi']);          // resData.bmi     == resData['bmi']
+				$('#obesity').text(resData['obesity']);  // resData.obesity == resData['obesity']
+			},
+			error: function(jqXHR){
+				$('#bmi').text('');
+				$('#obesity').text('');
+				alert(jqXHR.responseText);
+			}
+		})
 	}
 
 </script>
