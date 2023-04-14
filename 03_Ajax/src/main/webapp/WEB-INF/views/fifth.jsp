@@ -75,12 +75,19 @@
 				return;
 			}
 			$.ajax({
+				// 요청
 				type: 'get',
-				url: '/01_Servlet/PapagoServlet',
+				url: '${contextPath}/papago.do',
 				data: 'source=' + $('#source').val() + '&target=' + $('#target').val() + '&text=' + $('#text').val(),
+				// 응답
 				dataType: 'json',
-				success: (resData)=>{
+				success: function(resData){
 					$('#translatedText').text(resData.message.result.translatedText);
+				},
+				error: function(jqXHR){
+					if(jqXHR.status == 503){  // HttpStatus.SERVICE_UNAVAILABLE는 503이다.
+						alert('파파고 서비스 사용이 불가합니다. 입력 정보를 확인하세요.');
+					}
 				}
 			})
 		})
