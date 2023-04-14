@@ -26,4 +26,9 @@ public class MvcController {
 		return "third";
 	}
 	
+	@GetMapping("/fourth.do")
+	public String fourth() {
+		return "fourth";
+	}
+	
 }

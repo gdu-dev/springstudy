@@ -9,6 +9,7 @@
 	<bean id="firstService" class="com.gdu.app03.service.FirstServiceImpl" />
 	<bean id="secondService" class="com.gdu.app03.service.SecondServiceImpl" />
 	<bean id="thirdService" class="com.gdu.app03.service.ThirdServiceImpl" />
+	<bean id="fourthService" class="com.gdu.app03.service.FourthServiceImpl" />
 
 	
 </beans>
