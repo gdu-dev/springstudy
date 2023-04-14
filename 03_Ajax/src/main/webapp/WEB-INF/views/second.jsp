@@ -25,7 +25,10 @@
 			error: function(jqXHR){
 				$('#bmi').text('');
 				$('#obesity').text('');
-				alert(jqXHR.responseText);
+				// alert(jqXHR.responseText + '(' + jqXHR.status + ')');
+				if(jqXHR.status == 500){
+					alert('몸무게와 키 입력을 확인하세요.');
+				}
 			}
 		})
 	}

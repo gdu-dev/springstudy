@@ -1,16 +1,58 @@
 package com.gdu.app03.service;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.util.MultiValueMap;
 
 import com.gdu.app03.domain.BmiVO;
 
 public class SecondServiceImpl implements ISecondService {
 
+	/*
+		ResponseEntity<T> 클래스
+		1. Ajax 응답 데이터를 생성하는 클래스이다.
+		2. 생성자 중 하나의 사용법
+			public ResponseEntity(@Nullable T body, @Nullable MultiValueMap<String, String> headers, HttpStatus status)
+			1) @Nullable T body                      : 실제로 응답할 데이터
+			2) MultiValueMap<String, String> headers : 응답 헤더(대표적으로 Content-Type)
+			3) HttpStatus status                     : 응답 코드(200, 404, 500 등)
+	*/
+	
+	@Override
+	public ResponseEntity<BmiVO> execute1(HttpServletRequest request) {
+		
+		try {
+	
+			double weight = Double.parseDouble(request.getParameter("weight"));
+			double height = Double.parseDouble(request.getParameter("height")) / 100;
+			
+			double bmi = weight / (height * height);  // bmi = 몸무게(kg) / 키(m)*키(m)
+			String obesity = null;
+			if(bmi < 18.5) {
+				obesity = "저체중";
+			} else if(bmi < 24.9) {
+				obesity = "정상";
+			} else if(bmi < 29.9) {
+				obesity = "과체중";
+			} else {
+				obesity = "비만";
+			}
+			
+			return new ResponseEntity<BmiVO>(new BmiVO(weight, height, bmi, obesity), HttpStatus.OK);
+			
+		} catch(Exception e) {
+			
+			BmiVO bmiVO = null;
+			return new ResponseEntity<BmiVO>(bmiVO, HttpStatus.INTERNAL_SERVER_ERROR);  // HttpStatus가 500이므로 $.ajax의 error에서 처리된다.
+			
+		}
+		
+	}
+	
+	/*
 	@Override
 	public BmiVO execute1(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -74,5 +116,6 @@ public class SecondServiceImpl implements ISecondService {
 		return map;
 		
 	}
+	*/
 
 }
