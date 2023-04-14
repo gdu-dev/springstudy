@@ -34,6 +34,16 @@
 	}
 	
 	function fnBmi2(){
+		let weight = $('#weight').val();
+		if(weight == '' || Number(weight) < 0 || isNaN(weight)) {
+			alert('몸무게를 확인하세요.');
+			return;
+		}
+		let height = $('#height').val();
+		if(height == '' || Number(height) < 0 || isNaN(height)) {
+			alert('키를 확인하세요.');
+			return;
+		}
 		$.ajax({
 			// 요청
 			type: 'get',
@@ -48,7 +58,10 @@
 			error: function(jqXHR){
 				$('#bmi').text('');
 				$('#obesity').text('');
-				alert(jqXHR.responseText);
+				// alert(jqXHR.responseText);
+				if(jqXHR.status == 400) {  // 400은 BAD REQUEST를 의미한다.
+					alert('몸무게와 키는 0일 수 없습니다.');
+				}
 			}
 		})
 	}

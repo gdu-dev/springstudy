@@ -1,5 +1,7 @@
 package com.gdu.app03.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,11 @@ public class SecondController {
 		return secondService.execute1(request);
 	}
 	
-	
+	@ResponseBody
+	@GetMapping("/second/bmi2")  // produces가 없음에 주의합니다. (반환 객체 ResponseEntity에 Content-Type을 작성해서 보냅니다.)
+	public ResponseEntity<Map<String, Object>> bmi2(BmiVO bmiVO) {
+		return secondService.execute2(bmiVO);
+	}
 	
 	/*
 	@ResponseBody
