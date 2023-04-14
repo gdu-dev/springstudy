@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.app03.domain.BmiVO;
 import com.gdu.app03.service.ISecondService;
@@ -26,13 +25,11 @@ public class SecondController {
 		this.secondService = secondService;
 	}
 
-	@ResponseBody
 	@GetMapping(value="/second/bmi1", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BmiVO> bmi1(HttpServletRequest request) {
 		return secondService.execute1(request);
 	}
 	
-	@ResponseBody
 	@GetMapping("/second/bmi2")  // produces가 없음에 주의합니다. (반환 객체 ResponseEntity에 Content-Type을 작성해서 보냅니다.)
 	public ResponseEntity<Map<String, Object>> bmi2(BmiVO bmiVO) {
 		return secondService.execute2(bmiVO);

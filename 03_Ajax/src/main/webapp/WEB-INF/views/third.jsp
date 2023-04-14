@@ -38,7 +38,29 @@
 	}
 	
 	function fn2(){
-		
+		$.ajax({
+			// 요청
+			type: 'post',
+			url: '${contextPath}/third/ajax2',
+			data: JSON.stringify({
+				'name': $('#name').val(),
+				'tel': $('#tel').val()
+			}),
+			contentType: 'application/json', 
+			// 응답
+			dataType: 'json',
+			success: function(resData){
+				let str = '<ul>';
+				str += '<li>' + resData.name;
+				str += '<li>' + resData.tel;
+				$('#result').html(str);
+			},
+			error: function(jqXHR){
+				if(jqXHR.status == 400){
+					alert('이름과 전화번호 입력을 확인하세요.');
+				}
+			}
+		})
 	}
 
 </script>
@@ -68,9 +90,3 @@
 	
 </body>
 </html>
-
-
-
-
-
-

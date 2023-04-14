@@ -17,9 +17,11 @@ public class SecondServiceImpl implements ISecondService {
 
 	/*
 		ResponseEntity<T> 클래스
+		
 		1. Ajax 응답 데이터를 생성하는 클래스이다.
-		2. 생성자 중 하나의 사용법
-			public ResponseEntity(@Nullable T body, @Nullable MultiValueMap<String, String> headers, HttpStatus status)
+		2. @ResponseBody를 사용할 필요가 없다.
+		3. ResponseEntity 생성자 중 하나의 사용법
+			public ResponseEntity(@Nullable T body, @Nullable MultiValueMap<String, String> headers, HttpStatus status) { }
 			1) @Nullable T body                      : 실제로 응답할 데이터
 			2) MultiValueMap<String, String> headers : 응답 헤더(대표적으로 Content-Type)
 			3) HttpStatus status                     : 응답 코드(200, 404, 500 등)
