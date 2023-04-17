@@ -93,7 +93,12 @@ public class BoardDAO {
 		int result = 0;
 		try {
 			con = getConnection();
-			
+			sql = "INSERT INTO BOARD VALUES(BOARD_SEQ.NEXTVAL, ?, ?, ?, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, board.getTitle());
+			ps.setString(2, board.getContent());
+			ps.setString(3, board.getWriter());
+			result = ps.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -107,7 +112,12 @@ public class BoardDAO {
 		int result = 0;
 		try {
 			con = getConnection();
-			
+			sql = "UPDATE BOARD SET TITLE = ?, CONTENT = ?, MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') WHERE BOARD_NO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, board.getTitle());
+			ps.setString(2, board.getContent());
+			ps.setInt(3, board.getBoard_no());
+			result = ps.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -122,7 +132,10 @@ public class BoardDAO {
 		int result = 0;
 		try {
 			con = getConnection();
-			
+			sql = "DELETE FROM BOARD WHERE BOARD_NO = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, board_no);
+			result = ps.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
