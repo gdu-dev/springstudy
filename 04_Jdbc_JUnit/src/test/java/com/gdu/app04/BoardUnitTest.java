@@ -69,7 +69,7 @@ public class BoardUnitTest {
 	
 	@Test
 	public void a3수정테스트() {
-		BoardDTO board = new BoardDTO(1, "[수정]제목", "[수정]내용", null, null, "2023-04-17 15:40:00");
+		BoardDTO board = new BoardDTO(1, "[수정]제목", "[수정]내용", null, null, null);
 		assertEquals(1, boardDAO.updateBoard(board));  // boardDAO.updateBoard(board) 결과가 1이면 테스트 성공!
 	}
 	
