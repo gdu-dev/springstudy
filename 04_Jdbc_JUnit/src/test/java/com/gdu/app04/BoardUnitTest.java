@@ -9,6 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -52,6 +54,10 @@ public class BoardUnitTest {
 	private BoardDAO boardDAO;
 	
 	
+	// BoardUnitTest 클래스를 실행할 때 org.slf4j.Logger를 동작시킨다.
+	private static final Logger LOGGER = LoggerFactory.getLogger(BoardUnitTest.class);
+	
+	
 	// 테스트 메소드
 	@Test
 	public void a1삽입테스트() {
@@ -63,7 +69,8 @@ public class BoardUnitTest {
 	public void a2상세테스트() {
 		int board_no = 1;  // 조회할 게시글의 번호
 		BoardDTO board = boardDAO.selectBoardByNo(board_no);
-		System.out.println("a2 - " + board);  // LOG 기능으로 대체할 예정
+		// System.out.println("a2 - " + board);  // LOG 기능으로 대체할 예정
+		LOGGER.info(board.toString());  // LOG 기능으로 대체 완료
 		assertNotNull(board);  // board가 null이 아니면 테스트 성공!
 	}
 	
@@ -77,14 +84,16 @@ public class BoardUnitTest {
 	public void a4상세테스트() {
 		int board_no = 1;  // 조회할 게시글의 번호
 		BoardDTO board = boardDAO.selectBoardByNo(board_no);
-		System.out.println("a4 - " + board);  // LOG 기능으로 대체할 예정
+		// System.out.println("a4 - " + board);  // LOG 기능으로 대체할 예정
+		LOGGER.info(board.toString());  // LOG 기능으로 대체 완료
 		assertNotNull(board);  // board가 null이 아니면 테스트 성공!
 	}
 	
 	@Test
 	public void a5목록테스트() {
 		List<BoardDTO> list = boardDAO.selectBoardList();
-		System.out.println("a5 - " + list);  // LOG 기능으로 대체할 예정
+		// System.out.println("a5 - " + list);  // LOG 기능으로 대체할 예정
+		LOGGER.info(list.toString());  // LOG 기능으로 대체 완료
 		assertEquals(1, list.size());  // 목록 개수가 1개이면 테스트 성공!
 	}
 	
@@ -93,5 +102,5 @@ public class BoardUnitTest {
 		int board_no = 1;  // 삭제할 게시글 번호
 		assertEquals(1, boardDAO.deleteBoard(board_no));  // boardDAO.deleteBoard(board) 결과가 1이면 테스트 성공!
 	}
-		
+	
 }
