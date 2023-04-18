@@ -10,11 +10,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.springframework.stereotype.Repository;
-
 import com.gdu.app05.domain.BoardDTO;
 
-@Repository
+// @Repository 대신 AppConfig에 @Bean이 등록되어 있다.
 public class BoardDAO {
 
 	// dbcp 방식 (jdbc + DataSource)
