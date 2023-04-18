@@ -80,6 +80,7 @@
 				<textarea id="content" name="content">${b.content}</textarea>  <!-- summernote 편집기로 바뀌는 textarea -->
 			</div>
 			<div>
+				<input type="hidden" name="board_no" value="${b.board_no}">
 				<button>수정완료</button>
 				<input type="button" value="목록" onclick="fnList()">
 			</div>

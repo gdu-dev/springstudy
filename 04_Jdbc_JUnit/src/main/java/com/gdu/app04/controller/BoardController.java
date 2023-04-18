@@ -48,23 +48,10 @@ public class BoardController {
 		return "redirect:/board/list.do";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping("/modify.do")
+	public String modify(BoardDTO board) {
+		boardService.modifyBoard(board);
+		return "redirect:/board/detail.do?board_no=" + board.getBoard_no();
+	}
 	
 }
