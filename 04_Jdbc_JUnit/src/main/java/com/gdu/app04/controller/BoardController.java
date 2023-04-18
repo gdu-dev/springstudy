@@ -21,4 +21,16 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@GetMapping("/write.do")
+	public String write() {
+		return "board/write";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
