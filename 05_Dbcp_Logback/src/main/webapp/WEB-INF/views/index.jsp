@@ -17,7 +17,7 @@
 </head>
 <body>
 
-	<h1>Hello</h1>
+	<a href="${contextPath}/board/list.do">게시판</a>
 	
 </body>
 </html>

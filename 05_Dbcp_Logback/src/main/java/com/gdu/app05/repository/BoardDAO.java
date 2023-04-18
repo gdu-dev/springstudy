@@ -14,8 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gdu.app05.domain.BoardDTO;
 
-@Repository  // DAO가 사용하는 @Component
-             // Spring Container에 Bean이 등록될 때 Singleton으로 등록되기 때문에 별도의 Singleton Pattern 코드를 작성할 필요가 없다.
+@Repository
 public class BoardDAO {
 
 	// dbcp 방식 (jdbc + DataSource)
@@ -46,11 +45,6 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	// DAO 메소드 (BoardServiceImpl 클래스에서 사용하는 메소드)
-	// DAO 메소드명
-	// 방법1. BoardServiceImpl의 메소드와 이름을 맞춤
-	// 방법2. DB 친화적으로 새 이름을 부여 (이론상 권장)
 	
 	// 1. 목록
 	public List<BoardDTO> selectBoardList() {
