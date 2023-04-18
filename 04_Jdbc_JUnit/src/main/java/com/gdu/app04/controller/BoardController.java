@@ -42,7 +42,11 @@ public class BoardController {
 		return "board/detail";
 	}
 	
-	
+	@GetMapping("/remove.do")
+	public String remove(@RequestParam(value="board_no", required=false, defaultValue="0") int board_no) {
+		boardService.removeBoard(board_no);
+		return "redirect:/board/list.do";
+	}
 	
 	
 	

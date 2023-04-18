@@ -13,6 +13,16 @@
 <script src="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.js"></script>
 <script src="${contextPath}/resources/summernote-0.8.18-dist/lang/summernote-ko-KR.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.css">
+<script>
+	function fnRemove(){
+		if(confirm('삭제할까요?')){
+			location.href = '${contextPath}/board/remove.do?board_no=${b.board_no}';
+		}
+	}
+	function fnList(){
+		location.href = '${contextPath}/board/list.do';
+	}
+</script>
 </head>
 <body>
 
@@ -27,8 +37,8 @@
 	
 	<div>
 		<input type="button" value="편집" onclick="">
-		<input type="button" value="삭제" onclick="">
-		<input type="button" value="목록" onclick="">
+		<input type="button" value="삭제" onclick="fnRemove()">
+		<input type="button" value="목록" onclick="fnList()">
 	</div>
 	
 </body>
