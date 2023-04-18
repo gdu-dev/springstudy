@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<!-- Appenders : 로그를 출력하는 Appender를 모아 둔다. -->
+	<!-- Console 화면에 로그를 찍는 Appender -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%date{HH:mm:ss.SSS, Asia/Seoul} - %-5level - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- Application Loggers : com.gdu.app05 패키지는 debug 수준의 로그 레벨을 가진다. -->
+	<logger name="com.gdu.app05">
+		<level value="debug" />
+	</logger>
+	
+	<!-- 3rdparty Loggers : Spring Framework가 info 수준의 로그 레벨을 가진다. -->
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>
+	<logger name="org.springframework.beans">
+		<level value="info" />
+	</logger>
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+
+	<!-- Root Logger -->
+	<root>
+		<priority value="warn" />
+		<appender-ref ref="console" />
+	</root>
+	
+</configuration>
