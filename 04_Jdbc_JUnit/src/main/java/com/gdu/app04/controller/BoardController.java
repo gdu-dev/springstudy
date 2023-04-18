@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.app04.domain.BoardDTO;
 import com.gdu.app04.service.BoardService;
@@ -33,6 +34,27 @@ public class BoardController {
 		boardService.addBoard(board);      // addBoard() 메소드의 호출 결과인 int 값(0 또는 1)은 사용하지 않았다.
 		return "redirect:/board/list.do";  // 목록 보기로 redirect(redirect 경로는 항상 mapping으로 작성한다.)
 	}
+	
+	@GetMapping("/detail.do")
+	public String detail(@RequestParam(value="board_no", required=false, defaultValue="0") int board_no
+			           , Model model) {
+		model.addAttribute("b", boardService.getBoardByNo(board_no));
+		return "board/detail";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
