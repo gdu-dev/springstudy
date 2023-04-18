@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.gdu.app04.domain.BoardDTO;
 import com.gdu.app04.service.BoardService;
 
 @RequestMapping("/board")  // 모든 mapping에 /board가 prefix로 추가됩니다.
@@ -24,6 +26,12 @@ public class BoardController {
 	@GetMapping("/write.do")
 	public String write() {
 		return "board/write";
+	}
+	
+	@PostMapping("/add.do")
+	public String add(BoardDTO board) {
+		boardService.addBoard(board);      // addBoard() 메소드의 호출 결과인 int 값(0 또는 1)은 사용하지 않았다.
+		return "redirect:/board/list.do";  // 목록 보기로 redirect(redirect 경로는 항상 mapping으로 작성한다.)
 	}
 	
 	
