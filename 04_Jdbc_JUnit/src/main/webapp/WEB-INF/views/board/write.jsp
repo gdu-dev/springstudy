@@ -27,6 +27,8 @@
 			toolbar: [
 				['style', ['bold', 'italic', 'underline', 'clear']],
 				['font', ['strikethrough', 'superscript', 'subscript']],
+				['fontname', ['fontname']],
+				['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],
 				['table', ['table']],
 				['insert', ['link', 'picture', 'video']],
