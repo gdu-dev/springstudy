@@ -14,9 +14,27 @@
 <script src="${contextPath}/resources/summernote-0.8.18-dist/lang/summernote-ko-KR.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/resources/summernote-0.8.18-dist/summernote-lite.min.css">
 <script>
+
 	function fnList() {
 		location.href = '${contextPath}/board/list.do';
 	}
+	
+	$(function(){
+		$('#content').summernote({
+			width: 640,
+			height: 480,
+			lang: 'ko-KR',
+			toolbar: [
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['font', ['strikethrough', 'superscript', 'subscript']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['table', ['table']],
+				['insert', ['link', 'picture', 'video']],
+				['view', ['fullscreen', 'codeview', 'help']],
+			]
+		})
+	})
+	
 </script>
 </head>
 <body>
