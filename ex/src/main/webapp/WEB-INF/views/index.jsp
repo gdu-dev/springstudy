@@ -18,6 +18,7 @@
 	<!-- 1. <a> -->
 	<div>
 		<a href="${contextPath}/detail.do?boardNo=1&title=제목">보내기</a>
+		<a href="${contextPath}/detail.do">보내기(파라미터없음)</a>
 	</div>
 	
 	<!-- 2. <form> -->
@@ -26,6 +27,11 @@
 			<input type="hidden" name="boardNo" value="1">
 			<input type="hidden" name="title" value="제목">
 			<button>보내기</button>
+		</form>
+		<form method="post" action="${contextPath}/detail.do">
+			<input type="hidden" id="boardNo" value="1">
+			<input type="hidden" id="title" value="제목">
+			<button>보내기(파라미터없음)</button>
 		</form>
 	</div>
 	
