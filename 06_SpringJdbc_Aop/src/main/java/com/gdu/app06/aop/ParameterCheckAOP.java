@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
@@ -23,21 +23,21 @@ public class ParameterCheckAOP {
 	
 	
 	// 포인트컷(어떤 메소드에 어드바이스(AOP 동작)를 적용할 것인가?)
-	@Pointcut("execution(* com.gdu.app06.controller.*Controller.*ParamCheck(..))")
+	@Pointcut("execution(* com.gdu.app06.controller.*Controller.*ParamCheck(..))")  // 컨트롤러의 메소드 중 ParamCheck로 끝나는 메소드
 	public void setPointCut() {
 		// 이 메소드는 이름만 제공하는 역할(아무 이름이나 써도 되고, 본문도 필요가 없다.)
 	}
 	
 	
-	// 어드바이스(포인트컷에서 실제로 동작할 작업 : 파라미터들의 값을 LOGGER를 이용해서 콘솔로 확인)
-	
 	// 파라미터를 콘솔에 출력하기 위한 LOGGER
 	private static final Logger LOGGER = LoggerFactory.getLogger(ParameterCheckAOP.class);
 	
-	@Around("setPointCut()")
-	public Object paramLogging(ProceedingJoinPoint joinPoint) throws Throwable {
+	
+	// 어드바이스(포인트컷에서 실제로 동작할 작업 : 파라미터들의 값을 LOGGER를 이용해서 콘솔로 확인)
+	@After("setPointCut()")
+	public void paramLogging(JoinPoint joinPoint) throws Throwable {
 		
-		// 모든 파라미터가 저장된 HttpServletRequest 가져오기
+		// HttpServletRequest 가져오기(모든 파라미터는 HttpServletRequest에 저장되므로 HttpServletRequest request가 필요하다.)
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
 		
@@ -57,17 +57,8 @@ public class ParameterCheckAOP {
 		}
 		
 		// 어드바이스 실행
-		Object obj = null;
-		try {
-			obj = joinPoint.proceed();  // 실제 실행
-		} catch (Exception e) {
-			throw e;  // paramLogging() 메소드가 throws Throwable 처리하고 있다.
-		} finally {
-			// 여기서 콘솔에 String str을 로그로 남긴다.
-			// 치환 문자 : {}
-			LOGGER.debug("{} {} {}", request.getMethod(), request.getRequestURI(), str);
-		}
-		return obj;
+		// 치환 문자 : {}
+		LOGGER.debug("{} {} {}", request.getMethod(), request.getRequestURI(), str);
 		
 	}
 	
