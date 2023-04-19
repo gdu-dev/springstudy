@@ -50,6 +50,7 @@
 	<div>
 		<a href="${contextPath}/board/detail1.do?boardNo=10">상세요청1</a>
 		<a href="${contextPath}/board/detail2.do?boardNo=11">상세요청2</a>
+		<a href="${contextPath}/board/detail3.do?boardNo=12">상세요청3</a>
 		<a href="${contextPath}/board/list.do">목록요청</a>
 	</div>
 	

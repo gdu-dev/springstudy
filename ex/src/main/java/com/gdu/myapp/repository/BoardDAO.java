@@ -25,4 +25,16 @@ public class BoardDAO {
 		return new BoardDTO(boardNo, "스프링");
 	}
 	
+	public BoardDTO detail3(int boardNo) {
+		return new BoardDTO(boardNo, "이게뭐야");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

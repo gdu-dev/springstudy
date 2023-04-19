@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.gdu.myapp.domain.BoardDTO;
 import com.gdu.myapp.service.BoardService;
-import com.gdu.myapp.service.BoardServiceImpl;
 
 @Controller
 public class BoardController2 {
@@ -60,6 +59,13 @@ public class BoardController2 {
 		return "board/detail";
 	}
 	
+	@GetMapping("/board/detail3.do")
+	public String detail3(HttpServletRequest request, Model model) {
+		model.addAttribute("request", request);
+		boardService.detail3(model);
+		return "board/detail";
+	}
+	
 	@GetMapping("/board/list.do")
 	public String list(Model model) {
 		model.addAttribute("brdList", boardService.list());
@@ -67,17 +73,3 @@ public class BoardController2 {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
