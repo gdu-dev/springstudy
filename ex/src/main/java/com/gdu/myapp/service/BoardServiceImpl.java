@@ -1,6 +1,7 @@
 package com.gdu.myapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,8 +22,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<BoardDTO> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDAO.list();
 	}
 
 	@Override
@@ -32,8 +32,20 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardDTO detail2(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<String> opt = Optional.ofNullable(request.getParameter("boardNo"));
+		int boardNo = Integer.parseInt(opt.orElse("0"));
+		return boardDAO.detail2(boardNo);
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
