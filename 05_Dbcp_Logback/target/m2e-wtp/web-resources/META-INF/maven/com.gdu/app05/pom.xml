@@ -14,23 +14,11 @@
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-		<dependency>
-		    <groupId>ch.qos.logback</groupId>
-		    <artifactId>logback-classic</artifactId>
-		    <version>1.2.3</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.14.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
-		<dependency>
-		    <groupId>javax.annotation</groupId>
-		    <artifactId>javax.annotation-api</artifactId>
-		    <version>1.3.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
@@ -77,11 +65,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j-version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>1.2.3</version>
 		</dependency>
 		<!-- 불필요한 브릿지(Log4J와 SLF4J를 연결하는 브릿지) -->
 		<!--

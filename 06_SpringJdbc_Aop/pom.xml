@@ -3,23 +3,27 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gdu</groupId>
-	<artifactId>app05</artifactId>
-	<name>05_Dbcp_Logback</name>
+	<artifactId>app06</artifactId>
+	<name>06_SpringJdbc_Aop</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.3</org.springframework-version>
 		<org.aspectj-version>1.9.6</org.aspectj-version>
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
+
 	<dependencies>
+	
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.14.2</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
@@ -27,12 +31,20 @@
 		    <version>1.18.18</version>
 		    <scope>provided</scope>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
 		<dependency>
 		    <groupId>com.oracle.database.jdbc</groupId>
 		    <artifactId>ojdbc8</artifactId>
 		    <version>21.1.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -57,7 +69,14 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
-		</dependency>	
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>${org.aspectj-version}</version>
+		    <scope>runtime</scope>
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
@@ -71,42 +90,6 @@
 		    <artifactId>logback-classic</artifactId>
 		    <version>1.2.3</version>
 		</dependency>
-		<!-- 불필요한 브릿지(Log4J와 SLF4J를 연결하는 브릿지) -->
-		<!--
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		-->
-		<!-- Log4J : Logback으로 대체된 라이브러리 -->
-		<!--
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
-		</dependency>
-		-->
 
 		<!-- @Inject -->
 		<dependency>
