@@ -34,8 +34,8 @@ public class ParameterCheckAOP {
 	
 	
 	// 어드바이스(포인트컷에서 실제로 동작할 작업 : 파라미터들의 값을 LOGGER를 이용해서 콘솔로 확인)
-	@After("setPointCut()")
-	public void paramLogging(JoinPoint joinPoint) {
+	@After("setPointCut()")  // @After : 메소드 실행 후에 동작한다.
+	public void paramLogging(JoinPoint joinPoint) {  // 모든 JoinPoint(컨트롤러의 모든 메소드)를 받아온 다음 PointCut(ParamCheck로 끝나는 메소드)에 해당하는 메소드를 호출한 다음(@After)에 paramLogging() 메소드를 실행한다.  
 		
 		// HttpServletRequest 가져오기(모든 파라미터는 HttpServletRequest에 저장되므로 HttpServletRequest request가 필요하다.)
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -57,7 +57,7 @@ public class ParameterCheckAOP {
 		}
 		
 		// 어드바이스 실행
-		// 치환 문자 : {}
+		// 로그 치환 문자 : {}
 		LOGGER.debug("{} {} {}", request.getMethod(), request.getRequestURI(), str);
 		
 	}
