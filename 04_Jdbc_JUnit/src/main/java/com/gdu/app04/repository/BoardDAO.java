@@ -22,7 +22,7 @@ public class BoardDAO {
 	private String sql;
 	
 	// private 메소드 - 1 (BoardDAO 클래스 내부에서만 사용)
-	public Connection getConnection() {
+	private Connection getConnection() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");  // ojdbc8.jar 메모리 로드
 			return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "GDJ61", "1111");
