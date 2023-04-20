@@ -5,9 +5,6 @@
 
 <configuration>
 
-	<!-- db.properties 경로 설정하기 -->
-	<properties resource="mybatis/config/db.properties" />
-
 	<!-- settings -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
@@ -15,25 +12,7 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="Bbs" type="domain.BbsDTO" />
+		<typeAlias alias="Board" type="com.gdu.app07.domain.BoardDTO" />
 	</typeAliases>
-
-	<!-- 환경 설정 -->
-	<environments default="development">
-		<environment id="development">
-			<transactionManager type="JDBC"/>
-			<dataSource type="POOLED">
-				<property name="driver" value="${driver}" />
-				<property name="url" value="${url}" />
-				<property name="username" value="${username}" />
-				<property name="password" value="${password}" />
-			</dataSource>
-		</environment>
-	</environments>
-
-	<!-- mapper 경로 설정하기 -->
-	<mappers>
-		<mapper resource="mybatis/mapper/bbs.xml" />
-	</mappers>
 
 </configuration>
