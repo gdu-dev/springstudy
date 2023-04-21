@@ -71,15 +71,12 @@ public class BoardController {
 		return "redirect:/board/detail.do?boardNo=" + request.getParameter("boardNo");
 	}
 	
-	
-	
-	
+	// removeBoard() 서비스가 반환한 0 또는 1을 가지고 /board/list.do으로 이동(redirect)한다.
+	// removeBoard() 서비스가 반환한 0 또는 1은 /WEB-INF/views/board/list.jsp에서 확인한다.
+	@PostMapping("/remove.do")
+	public String remove(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("removeResult", boardService.removeBoard(request));
+		return "redirect:/board/list.do";
+	}
 	
 }
-
-
-
-
-
-
-
