@@ -48,6 +48,14 @@
 			]
 		})
 		$('#edit_screen').hide();  // 최초 편집화면은 숨김
+		let modifyResult = '${modifyResult}';
+		if(modifyResult != ''){
+			if(modifyResult == '1'){
+				alert('게시글이 수정되었습니다.');
+			} else {
+				alert('게시글이 수정이 실패했습니다.');
+			}
+		}
 	})
 </script>
 </head>

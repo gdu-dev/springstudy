@@ -22,7 +22,20 @@
 <script>
 	function fnDetail(n) {
 		location.href = '${contextPath}/board/detail.do?boardNo=' + n;
+		location.href = '/app07/board/detail.do?boardNo=' + n;
 	}
+	$(function(){
+		let addResult = '${addResult}';  // let addResult = '1';  삽입 성공
+		                                 // let addResult = '0';  삽입 실패
+		                                 // let addResult = '';   삽입과 상관 없음
+		if(addResult != '') {
+			if(addResult == '1'){
+				alert('게시글이 등록되었습니다.');
+			} else {
+				alert('게시글 등록이 실패했습니다.');
+			}
+		}
+	})
 </script>
 </head>
 <body>
