@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gdu.app07.service.BoardService;
+import com.gdu.app07.service.BoardServiceImpl;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
 	@Autowired
-	private BoardService boardService;
-
+	private BoardServiceImpl boardService;
+	
 	/*
 		데이터(속성) 저장 방법
 		1. forward  : Model에 attribute로 저장한다.
@@ -84,5 +84,5 @@ public class BoardController {
 	public void tx() {
 		boardService.testTx();
 	}
-	
+
 }

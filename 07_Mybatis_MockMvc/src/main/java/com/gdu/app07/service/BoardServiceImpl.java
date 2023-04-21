@@ -81,7 +81,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	// 트랜잭션 확인
-	@Transactional
+	@Transactional(readOnly=true)  // 성능 향상을 위해서 readOnly=true 추가
 	@Override
 	public void testTx() {
 		boardDAO.insertBoard(new BoardDTO(0, "타이틀", "콘텐트", "작성자", null, null));
