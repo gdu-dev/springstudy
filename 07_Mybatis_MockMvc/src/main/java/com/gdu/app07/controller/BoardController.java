@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gdu.app07.service.BoardServiceImpl;
+import com.gdu.app07.service.BoardService;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
 	@Autowired
-	private BoardServiceImpl boardService;
+	private BoardService boardService;
 
 	/*
 		데이터(속성) 저장 방법
@@ -34,7 +34,7 @@ public class BoardController {
 		mav.setViewName("board/list");
 		return mav;
 	}
-	 */
+	*/
 	
 	// getBoardList() 서비스가 반환한 List<BoardDTO>를 /WEB-INF/views/board/list.jsp로 전달한다.
 	@GetMapping("/list.do")
@@ -77,6 +77,12 @@ public class BoardController {
 	public String remove(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute("removeResult", boardService.removeBoard(request));
 		return "redirect:/board/list.do";
+	}
+	
+	// 트랜잭션 테스트
+	@GetMapping("/tx.do")
+	public void tx() {
+		boardService.testTx();
 	}
 	
 }
