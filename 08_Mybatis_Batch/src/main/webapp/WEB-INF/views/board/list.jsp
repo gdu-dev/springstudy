@@ -60,10 +60,15 @@
 	.screen_out {
 		display: none;
 	}
-	#lbl_chk_all, .lbl_chk_one {
+	#lbl_chk_all:hover {
 		cursor: pointer;
+		color: gray;
+	}
+	#lbl_chk_all:active {
+		color: silver;
 	}
 	.lbl_chk_one {
+		cursor: pointer;
 		padding-left: 20px;
 		background-image: url('../resources/images/check1.png');
 		background-size: 16px 16px;
