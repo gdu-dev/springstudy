@@ -43,15 +43,12 @@ public class BoardControllerTest {
 	// WebApplicationContext에 의해서 생성된다.
 	private MockMvc mockMvc;
 	
-	
 	// @WebApplication이 있어야 자동 주입(@Autowired)이 가능하다.
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	
-	
 	// LOGGER
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardControllerTest.class);
-	
 	
 	// @Before
 	// 1. 모든 @Test 수행 이전에 실행된다.
@@ -62,7 +59,6 @@ public class BoardControllerTest {
 				.webAppContextSetup(webApplicationContext)
 				.build();
 	}
-	
 	
 	@Test
 	public void a1삽입테스트() throws Exception {
