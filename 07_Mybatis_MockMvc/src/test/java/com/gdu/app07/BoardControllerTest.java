@@ -39,7 +39,6 @@ public class BoardControllerTest {
 		3. method + mapping을 이용해서 테스트를 진행한다.
 	*/
 	
-	
 	// Mock 테스트를 수행하는 객체
 	// WebApplicationContext에 의해서 생성된다.
 	private MockMvc mockMvc;
@@ -77,9 +76,47 @@ public class BoardControllerTest {
 							.toString());
 	}
 	
+	@Test
+	public void a2수정테스트() throws Exception {
+		LOGGER.debug(mockMvc.perform(MockMvcRequestBuilders
+				.post("/board/modify.do")               // @PostMapping("/board/modify.do")
+					.param("title", "테스트제목2")      // 파라미터
+					.param("content", "테스트내용2")    // 파라미터
+					.param("boardNo", "1"))             // 파라미터
+						.andReturn()                    // 수정결과
+						.getFlashMap()                  // FlashAttrubute에 저장된 결과 확인 
+							.toString());
+	}
 	
+	@Test
+	public void a3상세조회테스트() throws Exception {
+		LOGGER.debug(mockMvc.perform(MockMvcRequestBuilders
+				.get("/board/detail.do")      // @GetMapping("/board/detail.do")
+					.param("boardNo", "1"))   // 파라미터
+						.andReturn()          // 상세조회결과
+						.getModelAndView()    // Model에 저장된 조회 결과를 가져오기 위해서 ModelAndView를 먼저 가져옴
+						.getModelMap()        // ModelAndView에서 Model을 가져옴
+							.toString());
+	}
 	
+	@Test
+	public void a4목록테스트() throws Exception {
+		LOGGER.debug(mockMvc.perform(MockMvcRequestBuilders
+				.get("/board/list.do"))   // @GetMapping("/board/list.do")
+					.andReturn()          // 목록조회결과
+					.getModelAndView()    // Model에 저장된 조회 결과를 가져오기 위해서 ModelAndView를 먼저 가져옴
+					.getModelMap()        // ModelAndView에서 Model을 가져옴
+						.toString());
+	}
 	
-	
+	@Test
+	public void a5삭제테스트() throws Exception {
+		LOGGER.debug(mockMvc.perform(MockMvcRequestBuilders
+				.post("/board/remove.do")               // @PostMapping("/board/remove.do")
+					.param("boardNo", "1"))             // 파라미터
+						.andReturn()                    // 수정결과
+						.getFlashMap()                  // FlashAttrubute에 저장된 결과 확인 
+							.toString());
+	}
 	
 }
