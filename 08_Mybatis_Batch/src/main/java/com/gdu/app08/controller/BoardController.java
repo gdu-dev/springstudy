@@ -55,5 +55,11 @@ public class BoardController {
 	public void remove(HttpServletRequest request, HttpServletResponse response) {
 		boardService.removeBoard(request, response);
 	}
-
+	
+	// removeList() 서비스 내부에 location.href를 이용한 /board/list.do 이동이 있기 때문에 응답할 View를 반환하지 않는다.
+	@PostMapping("/removeList.do")
+	public void removeList(HttpServletRequest request, HttpServletResponse response) {
+		boardService.removeBoardList(request, response);
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.gdu.app08.service;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,6 +132,37 @@ public class BoardServiceImpl implements BoardService {
 				out.println("location.href='" + request.getContextPath() + "/board/list.do'");
 			} else {
 				out.println("alert('게시글이 삭제되지 않았습니다.')");
+				out.println("history.back()");
+			}
+			out.println("</script>");
+			out.flush();
+			out.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void removeBoardList(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 파라미터 boardNoList
+		String[] boarNoList = request.getParameterValues("boardNoList");
+		
+		int removeResult = boardMapper.deleteBoardList(Arrays.asList(boarNoList));  // Arrays.asList(boarNoList) : String[] boarNoList를 ArrayList로 바꾸는 코드
+		
+		try {
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>");
+			if(removeResult == boarNoList.length) {
+				out.println("alert('선택된 모든 게시글이 삭제되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "/board/list.do'");
+			} else {
+				out.println("alert('선택된 게시글이 삭제되지 않았습니다.')");
 				out.println("history.back()");
 			}
 			out.println("</script>");

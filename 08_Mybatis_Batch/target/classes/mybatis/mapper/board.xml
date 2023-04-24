@@ -39,4 +39,14 @@
 		 WHERE BOARD_NO = #{boardNo}
 	</delete>
 
+	<delete id="deleteBoardList" parameterType="List">
+		DELETE
+		  FROM BOARD
+		<where>
+			<foreach collection="list" item="boardNo" open="BOARD_NO IN(" separator="," close=")">
+				#{boardNo}
+			</foreach>
+		</where>
+	</delete>
+
 </mapper>
