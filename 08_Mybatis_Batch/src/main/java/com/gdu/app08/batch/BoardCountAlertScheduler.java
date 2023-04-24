@@ -32,7 +32,7 @@ import com.gdu.app08.service.BoardService;
 			(4) 매일 3시마다        : 0 0 0/3 * * ?
 			(5) 월요일 12시마다     : 0 0 12 ? * 1   또는 0 0 12 ? * MON
 			(6) 주말 12마다         : 0 0 12 ? * 6,7 또는 0 0 12 ? * SAT,SUN
-	4. 크론식 참고 사이트
+	4. 크론식 작성 사이트
 		http://www.cronmaker.com/
 */
 
