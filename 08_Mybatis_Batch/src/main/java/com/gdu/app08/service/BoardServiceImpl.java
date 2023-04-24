@@ -1,8 +1,10 @@
 package com.gdu.app08.service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,50 +35,112 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int addBoard(HttpServletRequest request) {
+	public void addBoard(HttpServletRequest request, HttpServletResponse response) {
+
+		// 파라미터 title, content, writer를 받아온다.
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String writer = request.getParameter("writer");
+		
+		// BoardDAO로 전달할 BoardDTO를 만든다.
+		BoardDTO board = new BoardDTO();
+		board.setTitle(title);
+		board.setContent(content);
+		board.setWriter(writer);
+		
+		int addResult = boardMapper.insertBoard(board);
+		
 		try {
-			// 파라미터 title, content, writer를 받아온다.
-			String title = request.getParameter("title");
-			String content = request.getParameter("content");
-			String writer = request.getParameter("writer");
-			// BoardDAO로 전달할 BoardDTO를 만든다.
-			BoardDTO board = new BoardDTO();
-			board.setTitle(title);
-			board.setContent(content);
-			board.setWriter(writer);
-			return boardMapper.insertBoard(board);
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>");
+			if(addResult == 1) {
+				out.println("alert('게시글이 등록되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "/board/list.do'");
+			} else {
+				out.println("alert('게시글이 등록되지 않았습니다.')");
+				out.println("history.back()");
+			}
+			out.println("</script>");
+			out.flush();
+			out.close();
+			
 		} catch (Exception e) {
-			return 0;
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
-	public int modifyBoard(HttpServletRequest request) {
+	public void modifyBoard(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 파라미터 title, content, boardNo를 받아온다.
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		
+		// BoardDAO로 전달할 BoardDTO를 만든다.
+		BoardDTO board = new BoardDTO();
+		board.setTitle(title);
+		board.setContent(content);
+		board.setBoardNo(boardNo);
+		
+		int modifyResult = boardMapper.updateBoard(board);
+		
 		try {
-			// 파라미터 title, content, boardNo를 받아온다.
-			String title = request.getParameter("title");
-			String content = request.getParameter("content");
-			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-			// BoardDAO로 전달할 BoardDTO를 만든다.
-			BoardDTO board = new BoardDTO();
-			board.setTitle(title);
-			board.setContent(content);
-			board.setBoardNo(boardNo);
-			return boardMapper.updateBoard(board);
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>");
+			if(modifyResult == 1) {
+				out.println("alert('게시글이 수정되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "/board/detail.do?boardNo=" + boardNo + "'");
+			} else {
+				out.println("alert('게시글이 수정되지 않았습니다.')");
+				out.println("history.back()");
+			}
+			out.println("</script>");
+			out.flush();
+			out.close();
+			
 		} catch (Exception e) {
-			return 0;
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
-	public int removeBoard(HttpServletRequest request) {
+	public void removeBoard(HttpServletRequest request, HttpServletResponse response) {
+
+		// 파라미터 boardNo를 받아온다.
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+
+		int removeResult = boardMapper.deleteBoard(boardNo);
+		
 		try {
-			// 파라미터 boardNo를 받아온다.
-			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-			return boardMapper.deleteBoard(boardNo);
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>");
+			if(removeResult == 1) {
+				out.println("alert('게시글이 삭제되었습니다.')");
+				out.println("location.href='" + request.getContextPath() + "/board/list.do'");
+			} else {
+				out.println("alert('게시글이 삭제되지 않았습니다.')");
+				out.println("history.back()");
+			}
+			out.println("</script>");
+			out.flush();
+			out.close();
+			
 		} catch (Exception e) {
-			return 0;
+			e.printStackTrace();
 		}
+		
 	}
 	
 }
