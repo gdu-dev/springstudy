@@ -29,14 +29,14 @@ import com.gdu.app08.service.BoardService;
 			(1) 매일 10초마다       : 0/10 * * * * ?
 			(2) 매일 1분마다        : 0 0/1 * * * ?
 			(3) 매일 20분, 50분마다 : 0 20,50 * * * ?
-			(4) 매일 3시마다        : 0 0 0/3 * * ?
+			(4) 매일 3시간마다      : 0 0 0/3 * * ?
 			(5) 월요일 12시마다     : 0 0 12 ? * 1   또는 0 0 12 ? * MON
 			(6) 주말 12마다         : 0 0 12 ? * 6,7 또는 0 0 12 ? * SAT,SUN
 	4. 크론식 작성 사이트
 		http://www.cronmaker.com/
 */
 
-public class BoardCountAlertScheduler {
+public class BoardCountScheduler {
 
 	@Autowired
 	private BoardService boardService;
