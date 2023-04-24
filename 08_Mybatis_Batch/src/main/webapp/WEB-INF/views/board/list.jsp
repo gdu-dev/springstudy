@@ -43,12 +43,12 @@
 	// 선택 항목 삭제
 	function fnRemoveList(){
 		$('#frm_remove_list').on('submit', function(event){
-			if(confirm('선택한 게시글을 모두 삭제할까요?') == false){
+			if($('.chk_one:checked').length == 0){
+				alert('선택된 게시글이 없습니다.');
 				event.preventDefault();
 				return;
 			}
-			if($('.chk_one:checked').length == 0){
-				alert('선택된 게시글이 없습니다.');
+			if(confirm('선택한 게시글을 모두 삭제할까요?') == false){
 				event.preventDefault();
 				return;
 			}
@@ -56,6 +56,14 @@
 	}
 	
 </script>
+<style>
+	.screen_out {
+		display: none;
+	}
+	#lbl_chk_all {
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 
@@ -73,7 +81,7 @@
 					<tr>
 						<td>
 							<label for="chk_all" id="lbl_chk_all">전체선택</label>
-							<input type="checkbox" id="chk_all">
+							<input type="checkbox" id="chk_all" class="screen_out">
 						</td>
 						<td>제목</td>
 						<td>작성자</td>
@@ -89,7 +97,9 @@
 					<c:if test="${not empty boardList}">					
 						<c:forEach items="${boardList}" var="b">
 							<tr>
-								<td><input type="checkbox" class="chk_one" name="boardNoList" value="${b.boardNo}"></td>
+								<td>
+									<input type="checkbox" class="chk_one" name="boardNoList" value="${b.boardNo}">
+								</td>
 								<td><a href="${contextPath}/board/detail.do?boardNo=${b.boardNo}">${b.title}</a></td>
 								<td>${b.writer}</td>
 								<td>${b.createdAt}</td>

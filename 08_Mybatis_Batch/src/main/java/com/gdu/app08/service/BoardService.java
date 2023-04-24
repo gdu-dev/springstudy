@@ -14,4 +14,5 @@ public interface BoardService {
 	public void modifyBoard(HttpServletRequest request, HttpServletResponse response);
 	public void removeBoard(HttpServletRequest request, HttpServletResponse response);
 	public void removeBoardList(HttpServletRequest request, HttpServletResponse response);
+	public void getBoardCount();
 }

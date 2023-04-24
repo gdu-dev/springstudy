@@ -48,5 +48,10 @@
 			</foreach>
 		</where>
 	</delete>
+	
+	<select id="selectBoardCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOARD
+	</select>
 
 </mapper>

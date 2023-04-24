@@ -1,6 +1,7 @@
 package com.gdu.app08.service;
 
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -173,6 +174,13 @@ public class BoardServiceImpl implements BoardService {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public void getBoardCount() {
+		int boardCount = boardMapper.selectBoardCount();
+		String msg = "[" + LocalDateTime.now().toString() + "] 게시글 갯수는 " + boardCount + "개입니다.";
+		System.out.println(msg);
 	}
 	
 }
