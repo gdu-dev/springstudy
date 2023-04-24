@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- namespace는 mybatis.mapper.board.xml 파일을 의미한다 -->
-<mapper namespace="mybatis.mapper.board">
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.app08.mapper.BoardMapper">
 
 	<select id="selectBoardList" resultType="Board">
 		SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT

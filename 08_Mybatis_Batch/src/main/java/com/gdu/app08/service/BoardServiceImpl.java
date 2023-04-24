@@ -8,17 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gdu.app08.domain.BoardDTO;
-import com.gdu.app08.repository.BoardDAO;
+import com.gdu.app08.mapper.BoardMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardMapper boardMapper;
 	
 	@Override
 	public List<BoardDTO> getBoardList() {
-		return boardDAO.selectBoardList();
+		return boardMapper.selectBoardList();
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class BoardServiceImpl implements BoardService {
 		if(strBoardNo != null && strBoardNo.isEmpty() == false) {
 			boardNo = Integer.parseInt(strBoardNo);
 		}
-		return boardDAO.selectBoardByNo(boardNo);
+		return boardMapper.selectBoardByNo(boardNo);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 			board.setTitle(title);
 			board.setContent(content);
 			board.setWriter(writer);
-			return boardDAO.insertBoard(board);
+			return boardMapper.insertBoard(board);
 		} catch (Exception e) {
 			return 0;
 		}
@@ -62,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
 			board.setTitle(title);
 			board.setContent(content);
 			board.setBoardNo(boardNo);
-			return boardDAO.updateBoard(board);
+			return boardMapper.updateBoard(board);
 		} catch (Exception e) {
 			return 0;
 		}
@@ -73,7 +73,7 @@ public class BoardServiceImpl implements BoardService {
 		try {
 			// 파라미터 boardNo를 받아온다.
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-			return boardDAO.deleteBoard(boardNo);
+			return boardMapper.deleteBoard(boardNo);
 		} catch (Exception e) {
 			return 0;
 		}
