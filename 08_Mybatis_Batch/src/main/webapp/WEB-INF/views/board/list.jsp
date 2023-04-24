@@ -33,7 +33,7 @@
 		let chkOne = $('.chk_one');  // 모든 개별선택
 		chkOne.on('click', function(){
 			let chkCnt = 0;
-			for(let i = 0; i < chkOne.length; i++) {
+			for(let i = 0; i < chkOne.length; i++){
 				chkCnt += $(chkOne[i]).prop('checked');
 			}
 			$('#chk_all').prop('checked', chkCnt == chkOne.length);
@@ -60,8 +60,18 @@
 	.screen_out {
 		display: none;
 	}
-	#lbl_chk_all {
+	#lbl_chk_all, .lbl_chk_one {
 		cursor: pointer;
+	}
+	.lbl_chk_one {
+		padding-left: 20px;
+		background-image: url('../resources/images/check1.png');
+		background-size: 16px 16px;
+		background-repeat: no-repeat;
+		background-position: 0 3px;
+	}
+	.chk_one:checked + label {
+		background-image: url('../resources/images/check2.png');
 	}
 </style>
 </head>
@@ -98,7 +108,8 @@
 						<c:forEach items="${boardList}" var="b">
 							<tr>
 								<td>
-									<input type="checkbox" class="chk_one" name="boardNoList" value="${b.boardNo}">
+									<input type="checkbox" id="chk_one${b.boardNo}" class="chk_one screen_out" name="boardNoList" value="${b.boardNo}">
+									<label for="chk_one${b.boardNo}" class="lbl_chk_one">${b.boardNo}</label>
 								</td>
 								<td><a href="${contextPath}/board/detail.do?boardNo=${b.boardNo}">${b.title}</a></td>
 								<td>${b.writer}</td>
