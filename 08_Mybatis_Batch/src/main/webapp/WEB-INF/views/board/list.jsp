@@ -20,29 +20,7 @@
 	}
 </style>
 <script>
-	function fnDetail(n) {
-		location.href = '${contextPath}/board/detail.do?boardNo=' + n;
-	}
-	$(function(){
-		let addResult = '${addResult}';  // let addResult = '1';  삽입 성공
-		                                 // let addResult = '0';  삽입 실패
-		                                 // let addResult = '';   삽입과 상관 없음
-		if(addResult != ''){
-			if(addResult == '1'){
-				alert('게시글이 등록되었습니다.');
-			} else {
-				alert('게시글 등록이 실패했습니다.');
-			}
-		}
-		let removeResult = '${removeResult}';
-		if(removeResult != ''){
-			if(removeResult == '1'){
-				alert('게시글이 삭제되었습니다.');
-			} else {
-				alert('게시글 삭제가 실패했습니다.');
-			}
-		}
-	})
+	
 </script>
 </head>
 <body>
@@ -52,31 +30,41 @@
 	</div>
 	
 	<div>
-		<table border="1">
-			<thead>
-				<tr>
-					<td>제목</td>
-					<td>작성자</td>
-					<td>작성일자</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:if test="${empty boardList}">
+		<form id="frm_remove_list" action="${contextPath}/board/removeList.do" method="post">
+			<div>
+				<button>선택삭제</button>
+			</div>
+			<table border="1">
+				<thead>
 					<tr>
-						<td colspan="3">첫 게시글의 주인공이 되어 보세요!</td>
+						<td>
+							<label for="chk_all" id="lbl_chk_all">전체선택</label>
+							<input type="checkbox" id="chk_all">
+						</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>작성일자</td>
 					</tr>
-				</c:if>
-				<c:if test="${not empty boardList}">					
-					<c:forEach items="${boardList}" var="b">
-						<tr onclick="fnDetail(${b.boardNo})">
-							<td>${b.title}</td>
-							<td>${b.writer}</td>
-							<td>${b.createdAt}</td>
+				</thead>
+				<tbody>
+					<c:if test="${empty boardList}">
+						<tr>
+							<td colspan="4">첫 게시글의 주인공이 되어 보세요!</td>
 						</tr>
-					</c:forEach>
-				</c:if>
-			</tbody>
-		</table>
+					</c:if>
+					<c:if test="${not empty boardList}">					
+						<c:forEach items="${boardList}" var="b">
+							<tr>
+								<td><input type="checkbox" name="boardNoList" value="${b.boardNo}"></td>
+								<td><a href="${contextPath}/board/detail.do?boardNo=${b.boardNo}">${b.title}</a></td>
+								<td>${b.writer}</td>
+								<td>${b.createdAt}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</tbody>
+			</table>
+		</form>
 	</div>
 	
 </body>

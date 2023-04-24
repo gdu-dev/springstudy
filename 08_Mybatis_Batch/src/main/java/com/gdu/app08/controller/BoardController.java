@@ -1,6 +1,7 @@
 package com.gdu.app08.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.app08.service.BoardService;
 
@@ -38,28 +38,22 @@ public class BoardController {
 		return "board/write";
 	}
 	
-	// addBoard() 서비스가 반환한 0 또는 1을 가지고 /board/list.do으로 이동(redirect)한다.
-	// addBoard() 서비스가 반환한 0 또는 1은 /WEB-INF/views/board/list.jsp에서 확인한다.
+	// addBoard() 서비스 내부에 location.href를 이용한 /board/list.do 이동이 있기 때문에 응답할 View를 반환하지 않는다.
 	@PostMapping("/add.do")
-	public String add(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("addResult", boardService.addBoard(request));
-		return "redirect:/board/list.do";
+	public void add(HttpServletRequest request, HttpServletResponse response) {
+		boardService.addBoard(request, response);
 	}
 	
-	// modifyBoard() 서비스가 반환한 0 또는 1을 가지고 /board/detail.do으로 이동(redirect)한다.
-	// modifyBoard() 서비스가 반환한 0 또는 1은 /WEB-INF/views/board/detail.jsp에서 확인한다.
+	// modifyBoard() 서비스 내부에 location.href를 이용한 /board/detail.do 이동이 있기 때문에 응답할 View를 반환하지 않는다.
 	@PostMapping("/modify.do")
-	public String modify(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("modifyResult", boardService.modifyBoard(request));
-		return "redirect:/board/detail.do?boardNo=" + request.getParameter("boardNo");
+	public void modify(HttpServletRequest request, HttpServletResponse response) {
+		boardService.modifyBoard(request, response);
 	}
 	
-	// removeBoard() 서비스가 반환한 0 또는 1을 가지고 /board/list.do으로 이동(redirect)한다.
-	// removeBoard() 서비스가 반환한 0 또는 1은 /WEB-INF/views/board/list.jsp에서 확인한다.
+	// removeBoard() 서비스 내부에 location.href를 이용한 /board/list.do 이동이 있기 때문에 응답할 View를 반환하지 않는다.
 	@PostMapping("/remove.do")
-	public String remove(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("removeResult", boardService.removeBoard(request));
-		return "redirect:/board/list.do";
+	public void remove(HttpServletRequest request, HttpServletResponse response) {
+		boardService.removeBoard(request, response);
 	}
 
 }
