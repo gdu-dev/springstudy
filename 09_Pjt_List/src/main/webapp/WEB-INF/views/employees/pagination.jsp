@@ -10,11 +10,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script>
+	$(function(){
+		// recordPerPage의 변경
+		$('#recordPerPage').on('change', function(){
+			location.href = '${contextPath}/employees/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
+		})
+		// 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
+		let recordPerPage = '${sessionScope.recordPerPage}' == '' ? 10 : ${sessionScope.recordPerPage};
+		$('#recordPerPage').val(recordPerPage);
+	})
+</script>
 </head>
 <body>
 
 	<div>
-		<a href="${contextPath}/employee/search.form">사원 조회 화면으로 이동</a>
+		<a href="${contextPath}/employees/search.form">사원 조회 화면으로 이동</a>
 	</div>
 	
 	<div>
