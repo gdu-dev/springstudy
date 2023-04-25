@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.prd.mapper.ProductMapper">
+
+	<select id="getProductList" resultType="ProductDTO">
+		SELECT PROD_NO, PROD_NAME, PROD_PRICE, PROD_MADE_AT
+		  FROM PRODUCT
+		 ORDER BY PROD_NO DESC
+	</select>
+	
+	<select id="getProductCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM PRODUCT
+	</select>
+
+</mapper>

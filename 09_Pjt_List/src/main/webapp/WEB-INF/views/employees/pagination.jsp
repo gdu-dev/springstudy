@@ -29,7 +29,7 @@
 	}
 	.pagination span, .pagination a {
 		display: inline-block;
-		width: 50px;
+		margin: 0 15px;
 	}
 	.hidden {
 		visibility: hidden;
