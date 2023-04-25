@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.prd.domain.ProductDTO;
@@ -31,17 +32,20 @@ public class ProductController {
 		return "redirect:/product/list.do";
 	}
 	
+	@GetMapping("/detail.do")
+	public String detail(@RequestParam(value="prodNo", required=false, defaultValue="0") int prodNo, Model model) {
+		productService.loadProduct(prodNo, model);
+		return "product/detail";
+	}
 	
+	@PostMapping("/edit.do")
+	public String edit(ProductDTO product) {
+		return "product/edit";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping("/modify.do")
+	public String modify(ProductDTO product, RedirectAttributes redirectAttributes) {
+		
+	}
 	
 }
