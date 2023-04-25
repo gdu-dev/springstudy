@@ -27,6 +27,7 @@ public class ProductController {
 	@PostMapping("/add.do")
 	public String add(ProductDTO productDTO, RedirectAttributes redirectAttributes) {
 		int addResult = productService.addProduct(productDTO);
+		redirectAttributes.addFlashAttribute("addResult", addResult);
 		return "redirect:/product/list.do";
 	}
 	

@@ -22,10 +22,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int addProduct(ProductDTO productDTO) {
 		int addResult = productMapper.addProduct(productDTO);
-		return 0;
+		return addResult;
 	}
-	
-	
 	
 	
 	

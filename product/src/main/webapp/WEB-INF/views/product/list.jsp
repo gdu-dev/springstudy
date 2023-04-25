@@ -10,6 +10,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script>
+	let addResult = '${addResult}';
+	if(addResult != ''){
+		if(addResult == '1'){
+			alert('삽입 성공!');
+		} else {
+			alert('삽입 실패!');
+		}
+	}
+</script>
 </head>
 <body>
 

@@ -17,7 +17,7 @@
 		  FROM PRODUCT
 	</select>
 	
-	<insert id="addProduct" parameterType="ProductDTO">
+	<insert id="addProduct">
 		INSERT INTO PRODUCT
 			(PROD_NO, PROD_NAME, PROD_PRICE, PROD_MADE_AT)
 		VALUES
