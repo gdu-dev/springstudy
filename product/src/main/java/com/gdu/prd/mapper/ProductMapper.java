@@ -10,4 +10,5 @@ import com.gdu.prd.domain.ProductDTO;
 public interface ProductMapper {
 	public List<ProductDTO> getProductList();
 	public int getProductCount();
+	public int addProduct(ProductDTO productDTO);
 }

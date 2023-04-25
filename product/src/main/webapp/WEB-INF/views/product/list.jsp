@@ -15,6 +15,21 @@
 
 	<div>
 		${productCount}개 제품이 있습니다.
+		<h3>제품 등록 화면</h3>
+		<form method="post" action="${contextPath}/product/add.do">
+			<div>
+				<label for="prodName">제품이름</label>
+				<input id="prodName" name="prodName" required="required">
+			</div>
+			<div>
+				<label for="prodPrice">제품가격</label>
+				<input id="prodPrice" name="prodPrice">
+			</div>
+			<div>
+				<button>제품등록하기</button>
+				<input type="reset" value="다시작성하기">
+			</div>
+		</form>
 	</div>
 	
 	<hr>
@@ -31,11 +46,3 @@
 	
 </body>
 </html>
-
-
-
-
-
-
-
-

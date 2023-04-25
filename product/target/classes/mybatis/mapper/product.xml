@@ -16,5 +16,22 @@
 		SELECT COUNT(*)
 		  FROM PRODUCT
 	</select>
+	
+	<insert id="addProduct" parameterType="ProductDTO">
+		INSERT INTO PRODUCT
+			(PROD_NO, PROD_NAME, PROD_PRICE, PROD_MADE_AT)
+		VALUES
+			(PRODUCT_SEQ.NEXTVAL, #{prodName}, #{prodPrice}, SYSDATE)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>
