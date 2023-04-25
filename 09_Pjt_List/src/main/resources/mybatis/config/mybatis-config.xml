@@ -12,8 +12,8 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="Dept" type="com.gdu.app09.domain.DeptDTO" />
-		<typeAlias alias="Emp" type="com.gdu.app09.domain.EmpDTO" />
+		<typeAlias alias="DeptDTO" type="com.gdu.app09.domain.DeptDTO" />
+		<typeAlias alias="EmpDTO" type="com.gdu.app09.domain.EmpDTO" />
 	</typeAliases>
 
 </configuration>

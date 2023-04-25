@@ -57,8 +57,8 @@
 						<td>${emp.salary}</td>
 						<td>${emp.commissionPct}</td>
 						<td>${emp.managerId}</td>
-						<td>${emp.dept.departmentId}</td>
-						<td>${emp.dept.departmentName}</td>
+						<td>${emp.deptDTO.departmentId}</td>
+						<td>${emp.deptDTO.departmentName}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

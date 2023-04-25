@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.app09.mapper.EmployeeListMapper">
+
+	<select id="getEmployeeCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM EMPLOYEES
+	</select>
+
+	<select id="getEmployeeListUsingPagination" parameterType="Map" resultType="EmpDTO">
+		SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0), NVL(A.DEPARTMENT_NAME, 'None')
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+		          FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+		            ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+		 WHERE A.RN BETWEEN #{begin} AND #{end}
+	</select>
+
+
+
+
+
+
+
+
+
+</mapper>
