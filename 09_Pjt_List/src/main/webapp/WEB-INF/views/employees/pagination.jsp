@@ -17,7 +17,7 @@
 			location.href = '${contextPath}/employees/change/record.do?recordPerPage=' + $(this).val();  // session에 recorePerPage 올리기
 		})
 		// 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
-		let recordPerPage = '${sessionScope.recordPerPage}' == '' ? 10 : ${sessionScope.recordPerPage};
+		let recordPerPage = '${sessionScope.recordPerPage}' == '' ? '10' : '${sessionScope.recordPerPage}';
 		$('#recordPerPage').val(recordPerPage);
 	})
 </script>

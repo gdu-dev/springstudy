@@ -28,7 +28,7 @@ public class EmployeeController {
 			                 , HttpServletRequest request
 			                 , @RequestParam(value="recordPerPage", required=false, defaultValue="10") int recordPerPage) {
 		session.setAttribute("recordPerPage", recordPerPage);
-		return "redirect:/employees/pagination.do";
+		return "redirect:/employees/pagination.do";  // 수정 필요
 	}
 	
 }
