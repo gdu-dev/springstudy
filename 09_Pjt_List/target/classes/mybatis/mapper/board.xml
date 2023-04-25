@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.app08.mapper.BoardMapper">
+
+	<select id="selectBoardList" resultType="Board">
+		SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT
+		  FROM BOARD
+		 ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="selectBoardByNo" parameterType="int" resultType="Board">
+		SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT
+		  FROM BOARD
+		 WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD 
+			(BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT)
+		VALUES
+			(BOARD_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		     , MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+		 WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE
+		  FROM BOARD
+		 WHERE BOARD_NO = #{boardNo}
+	</delete>
+
+	<delete id="deleteBoardList" parameterType="List">
+		DELETE
+		  FROM BOARD
+		<where>
+			<foreach collection="list" item="boardNo" open="BOARD_NO IN(" separator="," close=")">
+				#{boardNo}
+			</foreach>
+		</where>
+	</delete>
+	
+	<select id="selectBoardCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOARD
+	</select>
+
+</mapper>
