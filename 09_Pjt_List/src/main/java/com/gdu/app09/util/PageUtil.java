@@ -68,6 +68,8 @@ public class PageUtil {
 		
 		StringBuilder sb = new StringBuilder();
 		
+		sb.append("<div class=\"pagination\">");
+		
 		// 이전 블록 : 1블록은 이전 블록이 없고, 나머지 블록은 이전 블록이 있다.
 		if(beginPage == 1) {
 			sb.append("<span class=\"hidden\">◀</span>");
@@ -90,6 +92,8 @@ public class PageUtil {
 		} else {
 			sb.append("<a class=\"link\" href=\"" + path + "?page=" + (endPage + 1) + "\">▶</a>");
 		}
+		
+		sb.append("</div>");
 		
 		return sb.toString();
 		
