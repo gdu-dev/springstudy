@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
+
 	let addResult = '${addResult}';
 	if(addResult != ''){
 		if(addResult == '1'){
@@ -19,7 +20,24 @@
 			alert('삽입 실패!');
 		}
 	}
+	
+	$(function(){
+		$('.product').on('click', function(){
+			location.href = '${contextPath}/product/detail.do?prodNo=' + $(this).find('span').text();
+		});
+	})
+	
 </script>
+<style>
+	.product {
+		width: 200px;
+		border: 1px solid gray;
+	}
+	.product:hover {
+		cursor: pointer;
+		background-color: silver;
+	}
+</style>
 </head>
 <body>
 
@@ -46,8 +64,8 @@
 	
 	<div>
 		<c:forEach items="${productList}" var="product">
-			<ul>
-				<li>제품번호 ${product.prodNo}</li>
+			<ul class="product">
+				<li>제품번호 <span>${product.prodNo}</span></li>
 				<li>제품이름 ${product.prodName}</li>
 			</ul>
 			<hr>
