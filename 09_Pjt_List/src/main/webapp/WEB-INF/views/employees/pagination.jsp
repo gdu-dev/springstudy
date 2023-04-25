@@ -20,7 +20,7 @@
 	<div>
 		<h1>사원 목록</h1>
 		<div>
-			<select>
+			<select id="recordPerPage">
 				<option value="10">10개</option>
 				<option value="20">20개</option>
 				<option value="30">30개</option>
