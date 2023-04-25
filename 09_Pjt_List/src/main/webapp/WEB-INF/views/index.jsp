@@ -13,7 +13,9 @@
 </head>
 <body>
 
-	<a href="${contextPath}/board/list.do">게시판</a>
+	<div>
+		<a href="${contextPath}/employees/pagination.do">페이징</a>
+	</div>
 	
 </body>
 </html>
