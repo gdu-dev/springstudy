@@ -81,17 +81,17 @@
 			<thead>
 				<tr>
 					<td>순번</td>
-					<td><span class="title" data-column="EMPLOYEE_ID" data-order="${order}">사원번호</span></td>
-					<td><span class="title" data-column="FIRST_NAME" data-order="${order}">사원명</span></td>
-					<td><span class="title" data-column="EMAIL" data-order="${order}">이메일</span></td>
-					<td><span class="title" data-column="PHONE_NUMBER" data-order="${order}">전화번호</span></td>
-					<td><span class="title" data-column="HIRE_DATE" data-order="${order}">입사일자</span></td>
-					<td><span class="title" data-column="JOB_ID" data-order="${order}">직업</span></td>
-					<td><span class="title" data-column="SALARY" data-order="${order}">연봉</span></td>
-					<td><span class="title" data-column="COMMISSION_PCT" data-order="${order}">커미션</span></td>
-					<td><span class="title" data-column="MANAGER_ID" data-order="${order}">매니저</span></td>
-					<td><span class="title" data-column="DEPARTMENT_ID" data-order="${order}">부서번호</span></td>
-					<td><span class="title" data-column="DEPARTMENT_NAME" data-order="${order}">부서명</span></td>
+					<td><span class="title" data-column="E.EMPLOYEE_ID" data-order="${order}">사원번호</span></td>
+					<td><span class="title" data-column="E.FIRST_NAME" data-order="${order}">사원명</span></td>
+					<td><span class="title" data-column="E.EMAIL" data-order="${order}">이메일</span></td>
+					<td><span class="title" data-column="E.PHONE_NUMBER" data-order="${order}">전화번호</span></td>
+					<td><span class="title" data-column="E.HIRE_DATE" data-order="${order}">입사일자</span></td>
+					<td><span class="title" data-column="E.JOB_ID" data-order="${order}">직업</span></td>
+					<td><span class="title" data-column="E.SALARY" data-order="${order}">연봉</span></td>
+					<td><span class="title" data-column="E.COMMISSION_PCT" data-order="${order}">커미션</span></td>
+					<td><span class="title" data-column="E.MANAGER_ID" data-order="${order}">매니저</span></td>
+					<td><span class="title" data-column="E.DEPARTMENT_ID" data-order="${order}">부서번호</span></td>
+					<td><span class="title" data-column="D.DEPARTMENT_NAME" data-order="${order}">부서명</span></td>
 				</tr>
 			</thead>
 			<tbody>
