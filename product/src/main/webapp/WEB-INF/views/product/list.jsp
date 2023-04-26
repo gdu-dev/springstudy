@@ -21,6 +21,15 @@
 		}
 	}
 	
+	let deleteResult = '${deleteResult}';
+	if(deleteResult != ''){
+		if(deleteResult == '1'){
+			alert('삭제 성공!');
+		} else {
+			alert('삭제 실패!');
+		}
+	}
+	
 	$(function(){
 		$('.product').on('click', function(){
 			location.href = '${contextPath}/product/detail.do?prodNo=' + $(this).find('span').text();
@@ -67,6 +76,7 @@
 			<ul class="product">
 				<li>제품번호 <span>${product.prodNo}</span></li>
 				<li>제품이름 ${product.prodName}</li>
+				<li><a href="${contextPath}/product/delete.do?prodNo=${product.prodNo}">제품삭제하기</a></li>
 			</ul>
 			<hr>
 		</c:forEach>

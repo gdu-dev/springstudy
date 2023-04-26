@@ -10,6 +10,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script>
+	let modifyResult = '${modifyResult}';
+	if(modifyResult != ''){
+		if(modifyResult == '1'){
+			alert('수정 성공!');
+		} else {
+			alert('수정 실패!');
+		}
+	}
+</script>
 </head>
 <body>
 
@@ -26,6 +36,7 @@
 		<input type="hidden" name="prodPrice" value="${productDTO.prodPrice}">
 		<input type="hidden" name="prodMadeAt" value="${productDTO.prodMadeAt}">
 		<button>편집</button>
+		
 	</form>
 	
 </body>

@@ -33,14 +33,14 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public int modifyProduct(ProductDTO productDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+		int modifyResult = productMapper.modifyProduct(productDTO);
+		return modifyResult;
 	}
 	
 	@Override
 	public int deleteProduct(int prodNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int deleteResult = productMapper.deleteProduct(prodNo);
+		return deleteResult;
 	}
 	
 }

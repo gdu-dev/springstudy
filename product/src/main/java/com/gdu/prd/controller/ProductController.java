@@ -50,4 +50,11 @@ public class ProductController {
 		return "redirect:/product/detail.do?prodNo=" + productDTO.getProdNo();
 	}
 	
+	@GetMapping("/delete.do")
+	public String delete(@RequestParam(value="prodNo", required=false, defaultValue="0") int prodNo, RedirectAttributes redirectAttributes) {
+		int deleteResult = productService.deleteProduct(prodNo);
+		redirectAttributes.addFlashAttribute("deleteResult", deleteResult);
+		return "redirect:/product/list.do";
+	}
+	
 }

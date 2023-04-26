@@ -21,7 +21,7 @@
 		$('#recordPerPage').val(recordPerPage);
 		// 제목을 클릭하면 정렬 방식을 바꿈
 		$('.title').on('click', function(){
-			location.href = '${contextPath}/employees/pagination.do?order=' + $(this).data('order');
+			location.href = '${contextPath}/employees/pagination.do?order=' + $(this).data('order') + "&page=${page}";
 		})
 	})
 </script>
@@ -66,7 +66,7 @@
 			<thead>
 				<tr>
 					<td>순번</td>
-					<td><span class="title" data-order="DESC">사원번호</span></td>
+					<td><span class="title" data-order="${order}">사원번호</span></td>
 					<td>사원명</td>
 					<td>이메일</td>
 					<td>전화번호</td>

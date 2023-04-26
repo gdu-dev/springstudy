@@ -58,8 +58,13 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		
 		// pagination.jsp로 전달할(forward)할 정보 저장하기
 		model.addAttribute("employees", employees);
-		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/pagination.do"));
+		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/pagination.do?order=" + order));
 		model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
+		switch(order) {
+		case "ASC" : model.addAttribute("order", "DESC"); break;  // 현재 ASC 정렬이므로 다음 정렬은 DESC이라고 Jsp에 알려준다.
+		case "DESC": model.addAttribute("order", "ASC"); break;
+		}
+		model.addAttribute("page", page);
 		
 	}
 
