@@ -29,17 +29,28 @@
 			data: 'page=' + page,  // page=1, page=2, page=3, ... 으로 동작
 			// 응답
 			dataType: 'json',
-			success: function(resData){
+			success: function(resData){  // resData = {"employees": [{}, {}, {}, ...]}
 				page++;  // 스크롤을 통해서 목록을 9개씩 가져올때마다 page가 증가해야 한다.
 				// 화면에 뿌리기
-				
+				// $.each(배열, function(인덱스, 요소){})
+				$.each(resData.employees, function(i, employee){
+					let str = '<div class="employee">';
+					str += '<div>사원번호: ' + employee.employeeId + '</div>';
+					str += '<div>사원명: ' + employee.firstName + ' ' + employee.lastName + '</div>';
+					str += '<div>부서명: ' + employee.deptDTO.departmentName + '</div>';
+					str += '</div>';
+					$('.employees').append(str);
+				})
 				// 목록 보여주기
 				$('.employees').show();
 				// 로딩 숨기기
 				$('.loading_wrap').hide();
 			}
 		})
-	}
+	}  // fnGetEmployees
+	
+	// 함수 호출
+	fnGetEmployees();
 	
 </script>
 <style>
