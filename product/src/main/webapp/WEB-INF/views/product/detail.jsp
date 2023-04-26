@@ -36,7 +36,12 @@
 		<input type="hidden" name="prodPrice" value="${productDTO.prodPrice}">
 		<input type="hidden" name="prodMadeAt" value="${productDTO.prodMadeAt}">
 		<button>편집</button>
-		
+		<input type="button" value="목록" onclick="fnList()">
+		<script>
+			function fnList(){
+				location.href = '${contextPath}/product/list.do';
+			}
+		</script>
 	</form>
 	
 </body>

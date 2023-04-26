@@ -66,7 +66,7 @@
 			<thead>
 				<tr>
 					<td>순번</td>
-					<td><span class="title" data-order="${order}">사원번호</span></td>
+					<td><span class="title" data-column="EMPLOYEE_ID" data-order="${order}">사원번호</span></td>
 					<td>사원명</td>
 					<td>이메일</td>
 					<td>전화번호</td>
