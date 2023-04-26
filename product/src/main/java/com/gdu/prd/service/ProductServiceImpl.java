@@ -31,10 +31,16 @@ public class ProductServiceImpl implements ProductService {
 		model.addAttribute("productDTO", productDTO);
 	}
 	
+	@Override
+	public int modifyProduct(ProductDTO productDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
+	@Override
+	public int deleteProduct(int prodNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
-	
-	
-	
-
 }

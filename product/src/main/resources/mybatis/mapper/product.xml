@@ -17,7 +17,7 @@
 		  FROM PRODUCT
 	</select>
 	
-	<insert id="addProduct">
+	<insert id="addProduct" parameterType="ProductDTO">
 		INSERT INTO PRODUCT
 			(PROD_NO, PROD_NAME, PROD_PRICE, PROD_MADE_AT)
 		VALUES
@@ -30,12 +30,17 @@
 		 WHERE PROD_NO = #{prodNo}
 	</select>
 	
+	<update id="modifyProduct" parameterType="ProductDTO">
+		UPDATE PRODUCT
+		   SET PROD_NAME = #{prodName}
+		     , PROD_PRICE = #{prodPrice}
+		 WHERE PROD_NO = #{prodNo}
+	</update>
 	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE
+		  FROM PRODUCT
+		 WHERE PROD_NO = #{prodNo}		  
+	</delete>
 	
-	
-	
-	
-	
-	
-
 </mapper>

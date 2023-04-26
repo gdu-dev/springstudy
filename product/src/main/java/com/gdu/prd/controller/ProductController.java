@@ -39,13 +39,15 @@ public class ProductController {
 	}
 	
 	@PostMapping("/edit.do")
-	public String edit(ProductDTO product) {
+	public String edit(ProductDTO productDTO) {
 		return "product/edit";
 	}
 	
 	@PostMapping("/modify.do")
-	public String modify(ProductDTO product, RedirectAttributes redirectAttributes) {
-		
+	public String modify(ProductDTO productDTO, RedirectAttributes redirectAttributes) {
+		int modifyResult = productService.modifyProduct(productDTO);
+		redirectAttributes.addFlashAttribute("modifyResult", modifyResult);
+		return "redirect:/product/detail.do?prodNo=" + productDTO.getProdNo();
 	}
 	
 }

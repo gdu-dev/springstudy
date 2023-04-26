@@ -19,6 +19,10 @@
 		// 세션에 저장된 recordPerPage값으로 <select> 태그의 값을 세팅
 		let recordPerPage = '${sessionScope.recordPerPage}' == '' ? '10' : '${sessionScope.recordPerPage}';
 		$('#recordPerPage').val(recordPerPage);
+		// 제목을 클릭하면 정렬 방식을 바꿈
+		$('.title').on('click', function(){
+			location.href = '${contextPath}/employees/pagination.do?order=' + $(this).data('order');
+		})
 	})
 </script>
 <style>
@@ -62,7 +66,7 @@
 			<thead>
 				<tr>
 					<td>순번</td>
-					<td>사원번호</td>
+					<td><span class="title" data-order="DESC">사원번호</span></td>
 					<td>사원명</td>
 					<td>이메일</td>
 					<td>전화번호</td>
@@ -78,7 +82,7 @@
 			<tbody>
 				<c:forEach items="${employees}" var="emp" varStatus="vs">
 					<tr>
-						<td>${vs.index}</td>
+						<td>${beginNo - vs.index}</td>
 						<td>${emp.employeeId}</td>
 						<td>${emp.firstName} ${emp.lastName}</td>
 						<td>${emp.email}</td>

@@ -39,6 +39,10 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		HttpSession session = request.getSession();
 		Optional<Object> opt2 = Optional.ofNullable(session.getAttribute("recordPerPage"));
 		int recordPerPage = (int)(opt2.orElse(10));
+
+		// 파라미터 order가 전달되지 않는 경우 order=ASC로 처리한다.
+		Optional<String> opt3 = Optional.ofNullable(request.getParameter("order"));
+		String order = opt3.orElse("ASC");
 		
 		// PageUtil(Pagination에 필요한 모든 정보) 계산하기
 		pageUtil.setPageUtil(page, totalRecord, recordPerPage);
@@ -47,6 +51,7 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("begin", pageUtil.getBegin());
 		map.put("end", pageUtil.getEnd());
+		map.put("order", order);
 		
 		// begin ~ end 사이의 목록 가져오기
 		List<EmpDTO> employees = employeeListMapper.getEmployeeListUsingPagination(map);
@@ -54,6 +59,7 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		// pagination.jsp로 전달할(forward)할 정보 저장하기
 		model.addAttribute("employees", employees);
 		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/pagination.do"));
+		model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
 		
 	}
 
