@@ -19,10 +19,6 @@
 	
 	// DB에서 목록을 가져오는 함수
 	function fnGetEmployees(){
-		// 목록 숨기기
-		$('.employees').addClass('blind');
-		// 로딩 보여주기
-		$('.loading_wrap').removeClass('blind');
 		// 목록을 가져오는 ajax 처리
 		$.ajax({
 			// 요청
@@ -46,10 +42,6 @@
 					str += '</div>';
 					$('.employees').append(str);
 				})
-				// 목록 보여주기
-				$('.employees').removeClass('blind');
-				// 로딩 숨기기
-				$('.loading_wrap').addClass('blind');
 			}
 		})
 	}  // fnGetEmployees
@@ -66,13 +58,13 @@
 		
 		// timerId = setTimeout(function(){}, 200);  // 200밀리초(0.2초) 후에 function()을 수행한다.
 		timerId = setTimeout(function(){			
-			let scrollTop = $(this).scrollTop();  // 스크롤 된 길이
-			let windowHeight = $(this).height();  // 화면 높이(브라우저의 크기)
+			let scrollTop = $(this).scrollTop();        // 스크롤 된 길이
+			let windowHeight = $(this).height();        // 화면 높이(브라우저의 크기)
 			let documentHeight = $(document).height();  // 문서 높이
 			if((scrollTop + windowHeight + 50) >= documentHeight) {  // 스크롤이 바닥에 닿기 전 50px 정도 위치(스크롤이 충분히 바닥까지 내려왔음)
 				if(page > totalPage){  // 마지막 페이지를 보여 준 상태에서는 스크롤이 이동해도 더 이상 요청하지 않는다.					
 					// 최종 로딩 숨기기
-					$('.loading_wrap').addClass('blind2');
+					$('.loading_wrap').addClass('blind');
 					return;
 				}
 				fnGetEmployees();
@@ -85,9 +77,6 @@
 <style>
 	div {
 		box-sizing: border-box;
-	}
-	.blind {
-		display: none;
 	}
 	.employees {
 		width: 1000px;
@@ -116,8 +105,9 @@
 		background-size: 300px 300px;
 		background-repeat: no-repeat;
 	}
-	.blind2 {  /* 반드시 .loading_wrap 이후에 작성 */
-		display: none;
+	.blind {  /* 반드시 .loading_wrap 이후에 작성 */
+		/* display: none; */
+		visibility: hidden;
 	}
 </style>
 </head>
