@@ -100,6 +100,7 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		// scroll.jsp로 응답할 데이터
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("employees", employees);
+		resultMap.put("totalPage", pageUtil.getTotalPage());
 		
 		// 응답
 		return resultMap;
@@ -132,7 +133,8 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 						}
 					},
 					...
-				]
+				],
+				"totalPage": 12
 			}
 		*/
 		
