@@ -70,10 +70,9 @@
 			let windowHeight = $(this).height();  // 화면 높이(브라우저의 크기)
 			let documentHeight = $(document).height();  // 문서 높이
 			if((scrollTop + windowHeight + 50) >= documentHeight) {  // 스크롤이 바닥에 닿기 전 50px 정도 위치(스크롤이 충분히 바닥까지 내려왔음)
-				if(page > totalPage){  // 마지막 페이지를 보여 준 상태에서는 스크롤이 이동해도 더 이상 요청하지 않는다.
-					return;
+				if(page <= totalPage){  // 마지막 페이지를 보여 준 상태에서는 스크롤이 이동해도 더 이상 요청하지 않는다.					
+					fnGetEmployees();
 				}
-				fnGetEmployees();
 			}
 		}, 200);  // 시간 결정을 각자 알아서 임의로 조정해도 된다.
 		
