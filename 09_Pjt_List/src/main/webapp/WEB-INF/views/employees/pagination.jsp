@@ -21,11 +21,20 @@
 		$('#recordPerPage').val(recordPerPage);
 		// 제목을 클릭하면 정렬 방식을 바꿈
 		$('.title').on('click', function(){
-			location.href = '${contextPath}/employees/pagination.do?order=' + $(this).data('order') + "&page=${page}";
+			location.href = '${contextPath}/employees/pagination.do?column=' + $(this).data('column') + '&order=' + $(this).data('order') + "&page=${page}";
 		})
 	})
 </script>
 <style>
+	.title {
+		cursor: pointer;
+	}
+	.title:hover {
+		color: gray;
+	}
+	.title:active {
+		color: silver;
+	}
 	.pagination {
 		width: 350px;
 		margin: 0 auto;
@@ -42,8 +51,14 @@
 		font-weight: 900;
 	}
 	.link {
-		
+		color: orange;
 	}
+	table {
+		width: 1500px;
+	}
+	table td:nth-of-type(1) { width: 100px; }
+	table td:nth-of-type(2) { width: 150px; }
+	table td:nth-of-type(3) { width: 300px; }
 </style>
 </head>
 <body>
@@ -67,16 +82,16 @@
 				<tr>
 					<td>순번</td>
 					<td><span class="title" data-column="EMPLOYEE_ID" data-order="${order}">사원번호</span></td>
-					<td>사원명</td>
-					<td>이메일</td>
-					<td>전화번호</td>
-					<td>입사일자</td>
-					<td>직업</td>
-					<td>연봉</td>
-					<td>커미션</td>
-					<td>매니저</td>
-					<td>부서번호</td>
-					<td>부서명</td>
+					<td><span class="title" data-column="FIRST_NAME" data-order="${order}">사원명</span></td>
+					<td><span class="title" data-column="EMAIL" data-order="${order}">이메일</span></td>
+					<td><span class="title" data-column="PHONE_NUMBER" data-order="${order}">전화번호</span></td>
+					<td><span class="title" data-column="HIRE_DATE" data-order="${order}">입사일자</span></td>
+					<td><span class="title" data-column="JOB_ID" data-order="${order}">직업</span></td>
+					<td><span class="title" data-column="SALARY" data-order="${order}">연봉</span></td>
+					<td><span class="title" data-column="COMMISSION_PCT" data-order="${order}">커미션</span></td>
+					<td><span class="title" data-column="MANAGER_ID" data-order="${order}">매니저</span></td>
+					<td><span class="title" data-column="DEPARTMENT_ID" data-order="${order}">부서번호</span></td>
+					<td><span class="title" data-column="DEPARTMENT_NAME" data-order="${order}">부서명</span></td>
 				</tr>
 			</thead>
 			<tbody>

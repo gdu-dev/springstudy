@@ -43,6 +43,10 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		// 파라미터 order가 전달되지 않는 경우 order=ASC로 처리한다.
 		Optional<String> opt3 = Optional.ofNullable(request.getParameter("order"));
 		String order = opt3.orElse("ASC");
+
+		// 파라미터 column이 전달되지 않는 경우 column=EMPLOYEE_ID로 처리한다.
+		Optional<String> opt4 = Optional.ofNullable(request.getParameter("column"));
+		String column = opt4.orElse("EMPLOYEE_ID");
 		
 		// PageUtil(Pagination에 필요한 모든 정보) 계산하기
 		pageUtil.setPageUtil(page, totalRecord, recordPerPage);
@@ -52,13 +56,14 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		map.put("begin", pageUtil.getBegin());
 		map.put("end", pageUtil.getEnd());
 		map.put("order", order);
+		map.put("column", column);
 		
 		// begin ~ end 사이의 목록 가져오기
 		List<EmpDTO> employees = employeeListMapper.getEmployeeListUsingPagination(map);
 		
 		// pagination.jsp로 전달할(forward)할 정보 저장하기
 		model.addAttribute("employees", employees);
-		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/pagination.do?order=" + order));
+		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/pagination.do?column=" + column + "&order=" + order));
 		model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
 		switch(order) {
 		case "ASC" : model.addAttribute("order", "DESC"); break;  // 현재 ASC 정렬이므로 다음 정렬은 DESC이라고 Jsp에 알려준다.
