@@ -11,4 +11,5 @@ import com.gdu.app10.domain.BbsDTO;
 public interface BbsMapper {
 	public int getBbsCount();
 	public List<BbsDTO> getBbsList(Map<String, Object> map);
+	public int addBbs(BbsDTO bbsDTO);
 }

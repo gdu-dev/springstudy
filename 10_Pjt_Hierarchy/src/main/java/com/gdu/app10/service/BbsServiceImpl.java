@@ -47,5 +47,37 @@ public class BbsServiceImpl implements BbsService {
 		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/bbs/list.do"));
 		
 	}
+	
+	@Override
+	public int addBbs(HttpServletRequest request) {
+		
+		// 파라미터 writer, title
+		String writer = request.getParameter("writer");
+		String title = request.getParameter("title");
+		
+		// IP
+		String ip = request.getRemoteAddr();
+		
+		// DB로 보낼 BbsDTO 객체
+		BbsDTO bbsDTO = new BbsDTO();
+		bbsDTO.setWriter(writer);
+		bbsDTO.setTitle(title);
+		bbsDTO.setIp(ip);
+		
+		// 원글 달기
+		int addResult = bbsMapper.addBbs(bbsDTO);
+		
+		// 결과 반환
+		return addResult;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

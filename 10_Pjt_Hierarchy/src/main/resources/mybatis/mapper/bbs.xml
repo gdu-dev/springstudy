@@ -18,10 +18,12 @@
 		 WHERE A.RN BETWEEN #{begin} AND #{end}
 	</select>
 	
+	<!-- 원글 달기 -->
+	<insert id="addBbs" parameterType="BbsDTO">
+		INSERT INTO BBS
+			(BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER)
+		VALUES
+			(BBS_SEQ.NEXTVAL, #{writer}, #{title}, #{ip}, SYSDATE, 1, 0, BBS_SEQ.CURRVAL, 0)
+	</insert>
 	
-	
-	
-	
-	
-
 </mapper>

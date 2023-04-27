@@ -14,6 +14,15 @@
 
 	$(function(){
 		
+		// 원글 달기 결과 메시지
+		if('${addResult}' != ''){
+			if('${addResult}' == '1') {
+				alert('원글이 달렸습니다.');
+			} else {
+				alert('원글 달기가 실패했습니다.');
+			}
+		}
+		
 		// 삭제 버튼 이벤트
 		$('.frm_remove').on('submit', function(event){
 			if(confirm('BBS를 삭제할까요?') == false){

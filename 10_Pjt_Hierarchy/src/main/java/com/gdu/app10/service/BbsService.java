@@ -6,4 +6,5 @@ import org.springframework.ui.Model;
 
 public interface BbsService {
 	public void loadBbsList(HttpServletRequest request, Model model);
+	public int addBbs(HttpServletRequest request);
 }

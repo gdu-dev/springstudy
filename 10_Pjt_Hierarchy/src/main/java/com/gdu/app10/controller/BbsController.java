@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.app10.service.BbsService;
 
@@ -30,8 +31,9 @@ public class BbsController {
 	}
 	
 	@PostMapping("/add.do")
-	public String add(HttpServletRequest request) {
-		
+	public String add(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		int addResult = bbsService.addBbs(request);
+		redirectAttributes.addFlashAttribute("addResult", addResult);
 		return "redirect:/bbs/list.do";
 	}
 	
