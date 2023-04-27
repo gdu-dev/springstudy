@@ -23,6 +23,15 @@
 			}
 		}
 		
+		// 게시글 삭제 결과 메시지
+		if('${removeResult}' != ''){
+			if('${removeResult}' == '1') {
+				alert('게시글이 삭제되었습니다.');
+			} else {
+				alert('게시글 삭제가 실패했습니다.');
+			}
+		}
+		
 		// 삭제 버튼 이벤트
 		$('.frm_remove').on('submit', function(event){
 			if(confirm('BBS를 삭제할까요?') == false){
@@ -58,19 +67,27 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${bbsList}" var="bbs" varStatus="vs">
-					<tr>
-						<td>${beginNo - vs.index}</td>
-						<td>${bbs.writer}</td>
-						<td>${bbs.title}</td>
-						<td>${bbs.ip}</td>
-						<td>${bbs.createdAt}</td>
-						<td>
-							<form class="frm_remove" method="post" action="${contextPath}/bbs/remove.do">
-								<input type="hidden" name="bbsNo" value="${bbs.bbsNo}">
-								<button>삭제</button>
-							</form>
-						</td>
-					</tr>
+					<c:if test="${bbs.state == 1}">
+						<tr>
+							<td>${beginNo - vs.index}</td>
+							<td>${bbs.writer}</td>
+							<td>${bbs.title}</td>
+							<td>${bbs.ip}</td>
+							<td>${bbs.createdAt}</td>
+							<td>
+								<form class="frm_remove" method="post" action="${contextPath}/bbs/remove.do">
+									<input type="hidden" name="bbsNo" value="${bbs.bbsNo}">
+									<button>삭제</button>
+								</form>
+							</td>
+						</tr>
+					</c:if>
+					<c:if test="${bbs.state == 0}">
+						<tr>
+							<td>${beginNo - vs.index}</td>
+							<td colspan="5">삭제된 게시글입니다.</td>
+						</tr>
+					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -78,3 +95,5 @@
 	
 </body>
 </html>
+
+

@@ -72,6 +72,22 @@ public class BbsServiceImpl implements BbsService {
 		
 	}
 	
+	@Override
+	public int removeBbs(int bbsNo) {
+		int removeResult = bbsMapper.removeBbs(bbsNo);
+		return removeResult;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

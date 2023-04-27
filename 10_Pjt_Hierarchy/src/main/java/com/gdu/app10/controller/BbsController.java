@@ -38,8 +38,9 @@ public class BbsController {
 	}
 	
 	@PostMapping("/remove.do")
-	public String remove(int bbsNo) {
-		System.out.println(bbsNo);
+	public String remove(int bbsNo, RedirectAttributes redirectAttributes) {  // @RequestParam 생략
+		int removeResult = bbsService.removeBbs(bbsNo);
+		redirectAttributes.addFlashAttribute("removeResult", removeResult);
 		return "redirect:/bbs/list.do";
 	}
 	

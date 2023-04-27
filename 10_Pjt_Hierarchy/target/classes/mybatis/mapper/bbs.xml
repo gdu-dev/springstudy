@@ -26,4 +26,11 @@
 			(BBS_SEQ.NEXTVAL, #{writer}, #{title}, #{ip}, SYSDATE, 1, 0, BBS_SEQ.CURRVAL, 0)
 	</insert>
 	
+	<!-- 삭제 -->
+	<update id="removeBbs" parameterType="int">
+		UPDATE BBS
+		   SET STATE = 0
+		 WHERE BBS_NO = #{bbsNo}
+	</update>
+	
 </mapper>
