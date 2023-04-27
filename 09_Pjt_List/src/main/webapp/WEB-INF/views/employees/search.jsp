@@ -12,7 +12,20 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 	$(function(){
-
+		$('#query').on('keyup', function(){
+			$('#auto_complete').empty();
+			$.ajax({
+				// 요청
+				type: 'get',
+				url: '${contextPath}/employees/autoComplete.do',
+				data: $('#frm1').serialize(),
+				// 응답
+				dataType: 'json',
+				success: function(resData){
+					
+				}
+			})
+		})
 	})
 </script>
 <style>
@@ -48,8 +61,9 @@
 		<h1>사원 검색</h1>
 		<form id="frm1" action="${contextPath}/employees/search.do">
 			<select name="column">
-				<option value="FIRST_NAME">FIRST_NAME</option>
-				<option value="PHONE_NUMBER">PHONE_NUMBER</option>
+				<option value="E.FIRST_NAME">FIRST_NAME</option>
+				<option value="E.PHONE_NUMBER">PHONE_NUMBER</option>
+				<option value="D.DEPARTMENT_NAME">DEPARTMENT_NAME</option>
 			</select>
 			<input list="auto_complete" type="text" name="query" id="query">
 			<datalist id="auto_complete"></datalist>

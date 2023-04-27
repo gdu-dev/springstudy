@@ -51,7 +51,10 @@ public class EmployeeController {
 		return "employees/search";
 	}
 	
-	
-	
+	@ResponseBody
+	@GetMapping(value="/employees/autoComplete.do", produces="application/json")
+	public Map<String, Object> autoComplete(HttpServletRequest request) {
+		return employeeListService.getAutoComplete(request);
+	}
 	
 }
