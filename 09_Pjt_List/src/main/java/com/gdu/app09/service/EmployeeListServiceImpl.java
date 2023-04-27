@@ -202,7 +202,7 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		// 검색 결과 목록 가져오기
 		List<EmpDTO> employees = employeeListMapper.getAutoComplete(map);
 		
-		// scroll.jsp로 응답할 데이터
+		// search.jsp로 응답할 데이터
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("employees", employees);
 		

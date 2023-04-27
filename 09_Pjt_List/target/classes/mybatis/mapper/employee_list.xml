@@ -85,7 +85,7 @@
 		SELECT DISTINCT ${column}
           FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
             ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
-         WHERE ${column} LIKE CONCAT(#{query}, '%')
+         WHERE ${column} LIKE CONCAT(UPPER(#{query}), '%')
 	</select>
 
 </mapper>
