@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<!-- settings -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+
+	<!-- typeAliases -->
+	<typeAliases>
+		<typeAlias alias="BbsDTO" type="com.gdu.app10.domain.BbsDTO" />
+	</typeAliases>
+
+</configuration>

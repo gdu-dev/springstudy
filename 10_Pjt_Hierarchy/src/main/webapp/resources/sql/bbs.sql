@@ -7,7 +7,7 @@ CREATE TABLE BBS (
     WRITER VARCHAR2(30 BYTE) NOT NULL,
     TITLE  VARCHAR2(1000 BYTE) NOT NULL, /* 제목이 곧 내용 */
     IP     VARCHAR2(30 BYTE) NOT NULL,
-    CREATE_DATE DATE NOT NULL,
+    CREATED_AT DATE NOT NULL,
     STATE  NUMBER(1) NOT NULL,           /* 정상:1, 삭제:0 */
     DEPTH  NUMBER(2) NOT NULL,           /* 원글:0, 1차댓글:1, 2차댓글:2, ... */
     GROUP_NO NUMBER NOT NULL,            /* 원글과 모든 댓글은 같은 GROUP_NO, 원글:BBS_NO, 댓글:원글의 BBS_NO */
