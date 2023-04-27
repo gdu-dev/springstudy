@@ -178,7 +178,7 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		
 		// search.jsp로 전달할(forward)할 정보 저장하기
 		model.addAttribute("employees", employees);
-		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/search.do"));
+		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/search.do?column=" + column + "&query=" + query));
 		model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
 		
 	}
