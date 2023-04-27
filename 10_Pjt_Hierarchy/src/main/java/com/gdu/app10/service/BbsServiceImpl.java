@@ -44,7 +44,8 @@ public class BbsServiceImpl implements BbsService {
 		
 		model.addAttribute("bbsList", bbsList);
 		model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
-		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/bbs/list.do"));
+		//model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/bbs/list.do"));  // 아래 코드로 대체 가능합니다.
+		model.addAttribute("pagination", pageUtil.getPagination(request.getRequestURI()));
 		
 	}
 	
