@@ -16,7 +16,7 @@
 		<level value="debug" />
 	</logger>
 	
-	<!-- 3rdparty Loggers : Spring Framework가 info 수준의 로그 레벨을 가진다. -->
+	<!-- 3rdparty Loggers : 외부 라이브러리는 info 수준의 로그 레벨을 가진다. -->
 	<logger name="org.springframework.core">
 		<level value="info" />
 	</logger>
@@ -27,6 +27,21 @@
 		<level value="info" />
 	</logger>
 	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+	<logger name="org.springframework.jndi">
+		<level value="info" />
+	</logger>
+	<logger name="org.springframework.ui">
+		<level value="info" />
+	</logger>
+	<logger name="org.apache.ibatis">
+		<level value="info" />
+	</logger>
+	<logger name="org.mybatis.spring">
+		<level value="info" />
+	</logger>
+	<logger name="com.zaxxer.hikari">
 		<level value="info" />
 	</logger>
 
