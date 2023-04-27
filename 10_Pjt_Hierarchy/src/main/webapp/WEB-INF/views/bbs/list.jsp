@@ -13,9 +13,7 @@
 </head>
 <body>
 
-	<div>
-		<a href="${contextPath}/bbs/list.do">BBS</a>
-	</div>
+
 	
 </body>
 </html>
