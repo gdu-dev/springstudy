@@ -40,9 +40,18 @@ public class EmployeeController {
 	}
 	
 	@ResponseBody
-	@GetMapping(value="/employee/scroll.do", produces="application/json")
+	@GetMapping(value="/employees/scroll.do", produces="application/json")
 	public Map<String, Object> scroll(HttpServletRequest request) {
 		return employeeListService.getEmployeeListUsingScroll(request);
 	}
+	
+	@GetMapping("/employees/search.do")
+	public String search(HttpServletRequest request, Model model) {
+		employeeListService.getEmployeeListUsingSearch(request, model);
+		return "employees/search";
+	}
+	
+	
+	
 	
 }

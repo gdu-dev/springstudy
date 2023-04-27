@@ -140,4 +140,45 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		
 	}
 	
+	@Override
+	public void getEmployeeListUsingSearch(HttpServletRequest request, Model model) {
+		
+		// 파라미터 page가 전달되지 않는 경우 page=1로 처리한다.
+		Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
+		int page = Integer.parseInt(opt1.orElse("1"));
+		
+		// 전체 레코드 개수를 구한다.
+		int totalRecord = employeeListMapper.getEmployeeCount();
+		
+		// recordPerPage=10으로 처리한다.
+		int recordPerPage = 10;
+
+		// PageUtil(Pagination에 필요한 모든 정보) 계산하기
+		pageUtil.setPageUtil(page, totalRecord, recordPerPage);
+		
+		// 파라미터 column이 전달되지 않는 경우 column=""로 처리한다.
+		Optional<String> opt2 = Optional.ofNullable(request.getParameter("column"));
+		String column = opt2.orElse("");
+		
+		// 파라미터 query가 전달되지 않는 경우 query=""로 처리한다.
+		Optional<String> opt3 = Optional.ofNullable(request.getParameter("query"));
+		String query = opt3.orElse("");
+		
+		// DB로 보낼 Map 만들기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("begin", pageUtil.getBegin());
+		map.put("end", pageUtil.getEnd());
+		map.put("column", column);
+		map.put("query", query);
+		
+		// begin ~ end 사이의 목록 가져오기
+		List<EmpDTO> employees = employeeListMapper.getEmployeeListUsingSearch(map);
+		
+		// search.jsp로 전달할(forward)할 정보 저장하기
+		model.addAttribute("employees", employees);
+		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/employees/search.do"));
+		model.addAttribute("beginNo", totalRecord - (page - 1) * recordPerPage);
+		
+	}
+	
 }
