@@ -45,6 +45,7 @@
 <body>
 
 	<div>
+		<h1>사원 검색</h1>
 		<form id="frm1" action="${contextPath}/employees/search.do">
 			<select name="column">
 				<option value="FIRST_NAME">FIRST_NAME</option>
@@ -55,6 +56,8 @@
 			<button>조회</button>
 		</form>
 	</div>
+	
+	<hr>
 	
 	<div>
 		<table border="1">

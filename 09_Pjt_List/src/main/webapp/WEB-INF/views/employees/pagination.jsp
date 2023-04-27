@@ -62,13 +62,9 @@
 </style>
 </head>
 <body>
-
-	<div>
-		<a href="${contextPath}/employees/search.do">사원 조회 화면으로 이동</a>
-	</div>
 	
 	<div>
-		<h1>사원 목록</h1>
+		<h1>사원 전체 목록</h1>
 		<div>
 			<select id="recordPerPage">
 				<option value="10">10개</option>
