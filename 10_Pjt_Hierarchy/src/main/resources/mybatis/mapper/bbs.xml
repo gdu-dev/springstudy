@@ -33,4 +33,32 @@
 		 WHERE BBS_NO = #{bbsNo}
 	</update>
 	
+	<!-- 기존 답글에 선행 작업(같은 GROUP_NO를 가진 게시글 중 원글의 GROUP_ORDER보다 큰 GROUP_ORDER를 가진 게시글의 GROUP_ORDER를 1씩 증가) -->
+	<update id="increaseGroupOrder" parameterType="BbsDTO">  <!-- parameterType="BbsDTO"는 원글을 의미한다. -->
+		UPDATE BBS
+		   SET GROUP_ORDER = GROUP_ORDER + 1
+		 WHERE GROUP_NO = #{groupNo}         <!-- #{groupNo}는 원글의 groupNo를 의미한다. -->
+		   AND GROUP_ORDER > #{groupOrder}   <!-- #{groupOrder}는 원글의 groupOrder를 의미한다. -->
+	</update>
+
+	<!-- 답글 달기 -->
+	<insert id="addReply" parameterType="BbsDTO">  <!-- parameterType="BbsDTO"는 답글을 의미한다. -->
+		INSERT INTO BBS
+			(BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER)
+		VALUES
+			(BBS_SEQ.NEXTVAL, #{writer}, #{title}, #{ip}, SYSDATE, 1, #{depth}, #{groupNo}, #{groupOrder})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

@@ -68,16 +68,48 @@
 			<tbody>
 				<c:forEach items="${bbsList}" var="bbs" varStatus="vs">
 					<c:if test="${bbs.state == 1}">
+						<!-- 게시글 내용 -->
 						<tr>
 							<td>${beginNo - vs.index}</td>
 							<td>${bbs.writer}</td>
-							<td>${bbs.title}</td>
+							<td>
+								<!-- DEPTH에 의한 들여쓰기 -->
+								<c:forEach begin="1" end="${bbs.depth}" step="1">&nbsp;&nbsp;&nbsp;</c:forEach>
+								<!-- 답글은 [Re] 표시하기 -->
+								<c:if test="${bbs.depth > 0}">[Re]</c:if>
+								<!-- 제목 -->
+								${bbs.title}
+								<!-- 답글작성하기 버튼 -->
+								<input type="button" value="답글" class="btn_reply">
+							</td>
 							<td>${bbs.ip}</td>
 							<td>${bbs.createdAt}</td>
 							<td>
 								<form class="frm_remove" method="post" action="${contextPath}/bbs/remove.do">
 									<input type="hidden" name="bbsNo" value="${bbs.bbsNo}">
 									<button>삭제</button>
+								</form>
+							</td>
+						</tr>
+						<!-- 답글 작성 화면 -->
+						<tr>
+							<td colspan="6">
+								<form method="post" action="${contextPath}/bbs/reply/add.do">
+									<div>
+										<label for="writer">작성자</label>
+										<input id="writer" name="writer" required="required">
+									</div>
+									<div>
+										<label for="title">제목</label>
+										<input id="title" name="title" required="required">
+									</div>
+									<div>
+										<button>답글달기</button>
+										<!-- 원글의 depth, groupNo, groupOrder를 함께 보낸다. -->
+										<input type="hidden" name="depth" value="${bbs.depth}">
+										<input type="hidden" name="groupNo" value="${bbs.groupNo}">
+										<input type="hidden" name="groupOrder" value="${bbs.groupOrder}">
+									</div>
 								</form>
 							</td>
 						</tr>
