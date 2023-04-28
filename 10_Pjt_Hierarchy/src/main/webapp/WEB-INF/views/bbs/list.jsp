@@ -32,6 +32,15 @@
 			}
 		}
 		
+		// 답글 달기 결과 메시지
+		if('${addReplyResult}' != ''){
+			if('${addReplyResult}' == '1') {
+				alert('답글이 달렸습니다.');
+			} else {
+				alert('답글 달기가 실패했습니다.');
+			}
+		}
+		
 		// 삭제 버튼 이벤트
 		$('.frm_remove').on('submit', function(event){
 			if(confirm('BBS를 삭제할까요?') == false){
@@ -40,9 +49,21 @@
 			}
 		})
 		
+		// 답글 작성 화면 표시/숨기기
+		$('.btn_reply').on('click', function(){
+			$('.write').addClass('blind');
+			let write = $(this).closest('.list').next();  // write는 jQuery객체이다. (jQuery wrapper가 필요 없다.)
+			write.removeClass('blind');
+		})
+		
 	})
 
 </script>
+<style>
+	.blind {
+		display: none;
+	}
+</style>
 </head>
 <body>
 
@@ -69,7 +90,7 @@
 				<c:forEach items="${bbsList}" var="bbs" varStatus="vs">
 					<c:if test="${bbs.state == 1}">
 						<!-- 게시글 내용 -->
-						<tr>
+						<tr class="list">
 							<td>${beginNo - vs.index}</td>
 							<td>${bbs.writer}</td>
 							<td>
@@ -92,7 +113,7 @@
 							</td>
 						</tr>
 						<!-- 답글 작성 화면 -->
-						<tr>
+						<tr class="write blind">
 							<td colspan="6">
 								<form method="post" action="${contextPath}/bbs/reply/add.do">
 									<div>
