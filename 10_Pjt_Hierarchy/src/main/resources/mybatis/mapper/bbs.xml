@@ -13,7 +13,7 @@
 	
 	<select id="getBbsList" parameterType="Map" resultType="BbsDTO">
 		SELECT A.RN, A.BBS_NO, A.WRITER, A.TITLE, A.IP, A.CREATED_AT, A.STATE, A.DEPTH, A.GROUP_NO, A.GROUP_ORDER
-		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY BBS_NO DESC) AS RN, BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUP_NO DESC, GROUP_ORDER ASC) AS RN, BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER
 		          FROM BBS) A
 		 WHERE A.RN BETWEEN #{begin} AND #{end}
 	</select>
@@ -48,17 +48,5 @@
 		VALUES
 			(BBS_SEQ.NEXTVAL, #{writer}, #{title}, #{ip}, SYSDATE, 1, #{depth}, #{groupNo}, #{groupOrder})
 	</insert>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 </mapper>
