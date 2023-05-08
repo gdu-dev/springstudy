@@ -14,7 +14,7 @@
 <body>
 
 	<div>
-		<a href="${contextPath}/upload/list.do">UPLOAD</a>
+		<a href="${contextPath}/upload/write.do">게시글 작성하러 가기</a>
 	</div>
 	
 </body>

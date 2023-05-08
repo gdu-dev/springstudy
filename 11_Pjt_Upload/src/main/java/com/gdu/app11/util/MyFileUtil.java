@@ -1,10 +1,25 @@
 package com.gdu.app11.util;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.util.UUID;
+import java.util.regex.Matcher;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class MyFileUtil {
 
+	// 경로 구분자
+	private String sep = Matcher.quoteReplacement(File.separator);
+	
+	// String path 만들기
+	public String getPath() {
+		LocalDate now = LocalDate.now();
+		// 루트/storage/2023/05/08
+		return "/storage" + now.getYear() + sep + String.format("%02d", now.getMonthValue()) + sep + String.format("%02d", now.getDayOfMonth());
+	}
+	
 	// String filesystemName 만들기
 	public String getFilesystemName(String originName) {
 		
@@ -25,15 +40,8 @@ public class MyFileUtil {
 		
 		// 결과 반환
 		// UUID.extName
-		
+		return UUID.randomUUID().toString().replace("-", "") + "." + extName;
 		
 	}
 	
 }
-
-
-
-
-
-
-
