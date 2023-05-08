@@ -17,7 +17,7 @@ public class MyFileUtil {
 	public String getPath() {
 		LocalDate now = LocalDate.now();
 		// 루트/storage/2023/05/08
-		return "/storage" + now.getYear() + sep + String.format("%02d", now.getMonthValue()) + sep + String.format("%02d", now.getDayOfMonth());
+		return "/storage" + sep + now.getYear() + sep + String.format("%02d", now.getMonthValue()) + sep + String.format("%02d", now.getDayOfMonth());
 	}
 	
 	// String filesystemName 만들기

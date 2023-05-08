@@ -40,6 +40,8 @@ public class UploadServiceImpl implements UploadService {
 				// 예외 처리
 				try {
 					
+					/* HDD에 첨부 파일 저장하기 */
+					
 					// 첨부 파일의 저장 경로
 					String path = myFileUtil.getPath();
 					
@@ -49,10 +51,6 @@ public class UploadServiceImpl implements UploadService {
 						dir.mkdirs();
 					}
 					
-					// 첨부 파일의 원래 이름
-					String originName = multipartFile.getOriginalFilename();
-					originName = originName.substring(originName.lastIndexOf("\\") + 1);  // IE는 전체 경로가 오기 때문에 마지막 역슬래시 뒤에 있는 파일명만 사용한다.
-					
 					// 첨부 파일의 저장 이름
 					String filesystemName = myFileUtil.getFilesystemName(originName);
 					
@@ -61,6 +59,12 @@ public class UploadServiceImpl implements UploadService {
 					
 					// 첨부 파일을 HDD에 저장
 					multipartFile.transferTo(file);  // 실제로 서버에 저장된다.
+					
+					/* DB에 첨부 파일 정보 저장하기 */
+					
+					// 첨부 파일의 원래 이름
+					String originName = multipartFile.getOriginalFilename();
+					originName = originName.substring(originName.lastIndexOf("\\") + 1);  // IE는 전체 경로가 오기 때문에 마지막 역슬래시 뒤에 있는 파일명만 사용한다.
 					
 				} catch(Exception e) {
 					e.printStackTrace();
