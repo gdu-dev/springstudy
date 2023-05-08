@@ -64,6 +64,8 @@ public class UploadServiceImpl implements UploadService {
 					// 첨부 파일을 HDD에 저장
 					multipartFile.transferTo(file);  // 실제로 서버에 저장된다.
 					
+					// 썸네일
+					
 					/* DB에 첨부 파일 정보 저장하기 */
 					
 					

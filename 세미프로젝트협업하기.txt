@@ -1,0 +1,59 @@
+1. 각 조에서 1명이 프로젝트를 만든다.
+-src/main/java
+  -com.gdu.semi.aop
+    각자 작성
+  -com.gdu.semi.batch
+    각자 작성
+  -com.gdu.semi.config
+    DBConfig.java
+    FileConfig.java
+    ...
+  -com.gdu.semi.controller
+    MvcController.java
+    각자 작성
+  -com.gdu.semi.domain
+    각자 작성
+  -com.gdu.semi.intercept
+    각자 작성
+  -com.gdu.semi.mapper
+    각자 작성
+  -com.gdu.semi.service
+    각자 작성
+  -com.gdu.semi.util
+    MyFileUtil.java
+    PageUtil.java
+    ...
+-src/main/resources
+  META-INF
+  mybatis
+    config
+      - typealias : 모든 조원들이 각자 사용할 DTO이름을 알려주면 작성한다.
+    mapper
+      - 각자 작성
+  application.properties
+  logback.xml
+-src/main/webapp
+  -resources
+    -images
+    -css
+    -js
+    -summernote
+    ...
+  -WEB-INF
+    -views
+      폴더 및 JSP 각자 작성
+      -layout폴더
+        -header.jsp (모든 조원들이 사용할 mapping을 기반으로 gnb 작성)
+        -footer.jsp
+      index.jsp
+    web.xml (인코딩)
+-pom.xml
+
+2. 프로젝트를 만든 1명이 github에 원격 레파지토리를 만든다.
+
+3. 프로젝트를 만든 1명이 생성한 프로젝트를 로컬 레파지토리로 만들고 github의 원격 레파지토리와 연동한다.
+
+
+
+
+
