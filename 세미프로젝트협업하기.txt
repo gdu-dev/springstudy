@@ -1,8 +1,10 @@
 1. 각 조에서 1명이 프로젝트를 만든다.
 -src/main/java
   -com.gdu.semi.aop
+    임시파일.java
     각자 작성
   -com.gdu.semi.batch
+    임시파일.java
     각자 작성
   -com.gdu.semi.config
     DBConfig.java
@@ -12,12 +14,17 @@
     MvcController.java
     각자 작성
   -com.gdu.semi.domain
+    UserDTO.java
     각자 작성
   -com.gdu.semi.intercept
+    임시파일.java
     각자 작성
   -com.gdu.semi.mapper
+    UserMapper.java
     각자 작성
   -com.gdu.semi.service
+    UserService.java
+    UserServiceImpl.java
     각자 작성
   -com.gdu.semi.util
     MyFileUtil.java
@@ -29,9 +36,13 @@
     config
       - typealias : 모든 조원들이 각자 사용할 DTO이름을 알려주면 작성한다.
     mapper
+      - user.xml
       - 각자 작성
   application.properties
   logback.xml
+-src/test/main
+-src/test/resources
+  log4j.xml 제거
 -src/main/webapp
   -resources
     -images
@@ -53,7 +64,46 @@
 
 3. 프로젝트를 만든 1명이 생성한 프로젝트를 로컬 레파지토리로 만들고 github의 원격 레파지토리와 연동한다.
 
+4. 프로젝트를 만든 1명이 gitignore.io 사이트에서 .gitignore를 만든다. .project 파일을 주석(#) 처리한다.
+   (Windows, Java, Eclipse, Maven)
 
+5. 프로젝트를 만든 1명이 .gitignore 파일을 로컬 레파지토리로 옮긴다.
 
+6. 프로젝트를 만든 1명이 로컬 레파지토리에서 .gitignore 파일을 제외한 모든 파일을 임시로 다른 곳으로 옮긴다.
 
+7. 프로젝트를 만든 1명이 원격 레파지토리로 올린다. (push) - .gitignore만 올린다.
 
+8. 프로젝트를 만든 1명이 임시로 옮긴 모든 파일을 다시 로컬 레파지토리로 옮긴다.
+
+9. 프로젝트를 만든 1명이 원격 레파지토리로 올린다. (push)  - .gitignore가 동작하면서 올린다.
+
+10. 프로젝트를 만든 1명이 나머지 조원을 Collaborator로 초대한다. (github의 레파지토리에서 settings 메뉴)
+
+-------------------------------
+
+11. 나머지 조원은 프로젝트를 복제할 디렉터리에서 git bash를 실행한다.
+
+12. 나머지 조원은 git clone 원격레파지토리주소   이용해서 각자 자리에 로컬 레파지토리를 만든다.
+
+13. 나머지 조원은 sts를 열고 로컬 레파지토리를 연다. (import - maven - Existing Maven Project)
+
+-------------------------------
+
+이제 모든 조원은 main에서 작업하지 않는다.
+
+각자 작업 브랜치를 만들어서 이동하고(git branch user + git checkout user)
+코드를 작성한다.
+코드가 끝나면 본인의 main 브랜치로 이동하고, 작업 브랜치를 main에 병합한다.(git checkout main + git merge user)
+main 브랜치를 github에 올린다. (git push origin main)
+
+나머지 조원들은 새롭게 업데이트 된 main 브랜치를 받아 온다. (git checkout main + git pull origin main)
+다시 작업 브랜치로 이동해서 작업한다.(git checkout bbs)
+코드를 작성한다.
+코드가 끝나면 본인의 main 브랜치로 이동하고, 작업 브랜치를 main에 병합한다.(git checkout main + git merge bbs)
+main 브랜치를 github에 올린다. (git push origin main)
+
+나머지 조원들은 새롭게 업데이트 된 main 브랜치를 받아 온다. (git checkout main + git pull origin main)
+다시 작업 브랜치로 이동해서 작업한다.(git checkout upload)
+코드를 작성한다.
+코드가 끝나면 본인의 main 브랜치로 이동하고, 작업 브랜치를 main에 병합한다.(git checkout main + git merge upload)
+main 브랜치를 github에 올린다. (git push origin main)
