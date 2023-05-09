@@ -2,13 +2,14 @@
 
 <configuration scan="true" scanPeriod="30 seconds">
 
-	<!-- logback 로그 레벨 5단계 -->
+	<!-- logback 로그 레벨 6단계 -->
 	<!--
-		1. ERROR : 일반 에러
-		2. WARN  : 주의 필요(잠재적 문제)
-		3. INFO  : 일반 정보(프로그램이 진행되는 상황)
-		4. DEBUG : 상세 정보(디버깅)
-		5. TRACE : 경로 추적(DEBUG보다 세밀한 정보)
+		1. OFF   : 로그 출력 안 함
+		2. ERROR : 일반 에러
+		3. WARN  : 주의 필요(잠재적 문제)
+		4. INFO  : 일반 정보(프로그램이 진행되는 상황)
+		5. DEBUG : 상세 정보(디버깅)
+		6. TRACE : 경로 추적(DEBUG보다 세밀한 정보)
 	-->
 
 	<!-- Appenders : 로그를 출력하는 Appender를 모아 둔다. -->
@@ -49,24 +50,18 @@
 		</encoder>
 	</appender>
 	
-	<!-- Application Loggers : com.gdu.app05 패키지는 debug 수준의 로그 레벨을 가진다. -->
-	<logger name="com.gdu.app05">
-		<level value="debug" />
-	</logger>
-	
-	<!-- 3rdparty Loggers : Spring Framework가 info 수준의 로그 레벨을 가진다. -->
-	<logger name="org.springframework.core">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.beans">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
+	<!-- Application Loggers : com.gdu.app05 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
+	<logger name="com.gdu.app05"       level="DEBUG" />
+
+	<!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
+	<logger name="org.springframework" level="INFO" />
+	<logger name="log4jdbc"            level="INFO" />
+	<logger name="jdbc.sqlonly"        level="OFF" />   <!-- SQL 출력 -->
+	<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+	<logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
+	<logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
+	<logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
+	<logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->
 
 	<!-- Root Logger -->
 	<root>

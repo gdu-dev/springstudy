@@ -21,6 +21,7 @@
 	
 	<div>
 		<table border="1">
+			<caption>${pagination}</caption>
 			<thead>
 				<tr>
 					<td>UPLOAD게시글번호</td>

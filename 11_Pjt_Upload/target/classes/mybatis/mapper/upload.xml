@@ -6,16 +6,30 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app11.mapper.UploadMapper">
 
-	<select id="getUploadList" resultType="UploadDTO">
-		SELECT U.UPLOAD_NO
-		     , U.UPLOAD_TITLE
-		     , U.UPLOAD_CONTENT
-		     , U.CREATED_AT
-		     , U.MODIFIED_AT
-		     , (SELECT COUNT(*)
-		          FROM ATTACH A
-		         WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_COUNT
-		  FROM UPLOAD U
+	<select id="getUploadCount" resultType="int">
+		SELECT COUNT(*)
+		  FROM UPLOAD
+	</select>
+
+	<select id="getUploadList" parameterType="Map" resultType="UploadDTO">
+		SELECT B.RN
+		     , B.UPLOAD_NO
+		     , B.UPLOAD_TITLE
+		     , B.UPLOAD_CONTENT
+		     , B.CREATED_AT
+		     , B.MODIFIED_AT
+		     , B.ATTACH_COUNT
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY UPLOAD_NO DESC) AS RN
+		             , U.UPLOAD_NO
+		             , U.UPLOAD_TITLE
+		             , U.UPLOAD_CONTENT
+		             , U.CREATED_AT
+		             , U.MODIFIED_AT
+		             , (SELECT COUNT(*)
+		                  FROM ATTACH A
+		                 WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_COUNT
+		          FROM UPLOAD U) B
+		 WHERE B.RN BETWEEN #{begin} AND #{end}
 	</select>
 
 	<insert id="addUpload" parameterType="UploadDTO">

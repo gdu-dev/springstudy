@@ -11,40 +11,22 @@
 		</encoder>
 	</appender>
 	
-	<!-- Application Loggers : com.gdu.app09 패키지는 debug 수준의 로그 레벨을 가진다. -->
-	<logger name="com.gdu.app09">
-		<level value="debug" />
-	</logger>
-	
-	<!-- 3rdparty Loggers : 외부 라이브러리는 info 수준의 로그 레벨을 가진다. -->
-	<logger name="org.springframework.core">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.beans">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.jndi">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.ui">
-		<level value="info" />
-	</logger>
-	<logger name="org.apache.ibatis">
-		<level value="info" />
-	</logger>
-	<logger name="org.mybatis.spring">
-		<level value="info" />
-	</logger>
-	<logger name="com.zaxxer.hikari">
-		<level value="info" />
-	</logger>
+	<!-- Application Loggers : com.gdu.app09 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
+	<logger name="com.gdu.app09"       level="DEBUG" />
 
+	<!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
+	<logger name="org.springframework" level="INFO" />
+	<logger name="org.apache.ibatis"   level="INFO" />
+	<logger name="org.mybatis.spring"  level="INFO" />
+	<logger name="com.zaxxer.hikari"   level="INFO" />
+	<logger name="log4jdbc"            level="INFO" />
+	<logger name="jdbc.sqlonly"        level="OFF" />   <!-- SQL 출력 -->
+	<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+	<logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
+	<logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
+	<logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
+	<logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->
+	
 	<!-- Root Logger -->
 	<root>
 		<appender-ref ref="console" />

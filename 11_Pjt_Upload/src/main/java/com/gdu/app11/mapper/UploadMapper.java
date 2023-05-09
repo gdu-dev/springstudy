@@ -1,6 +1,7 @@
 package com.gdu.app11.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +12,8 @@ import com.gdu.app11.domain.UploadDTO;
 public interface UploadMapper {
 	
 	// getUploadList
-	public List<UploadDTO> getUploadList();
+	public int getUploadCount();
+	public List<UploadDTO> getUploadList(Map<String, Object> map);
 	
 	// addUpload
 	public int addUpload(UploadDTO uploadDTO);

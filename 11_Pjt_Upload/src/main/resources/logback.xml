@@ -10,40 +10,15 @@
 			</pattern>
 		</encoder>
 	</appender>
-	
+
 	<!-- Application Loggers : com.gdu.app11 패키지는 debug 수준의 로그 레벨을 가진다. -->
-	<logger name="com.gdu.app11">
-		<level value="debug" />
-	</logger>
+	<logger name="com.gdu.app11" level="debug" />
 	
 	<!-- 3rdparty Loggers : 외부 라이브러리는 info 수준의 로그 레벨을 가진다. -->
-	<logger name="org.springframework.core">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.beans">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.jndi">
-		<level value="info" />
-	</logger>
-	<logger name="org.springframework.ui">
-		<level value="info" />
-	</logger>
-	<logger name="org.apache.ibatis">
-		<level value="info" />
-	</logger>
-	<logger name="org.mybatis.spring">
-		<level value="info" />
-	</logger>
-	<logger name="com.zaxxer.hikari">
-		<level value="info" />
-	</logger>
+	<logger name="org.springframework" level="info" />
+	<logger name="org.apache.ibatis" level="info" />
+	<logger name="org.mybatis.spring" level="info" />
+	<logger name="com.zaxxer.hikari" level="info" />
 
 	<!-- Root Logger -->
 	<root>

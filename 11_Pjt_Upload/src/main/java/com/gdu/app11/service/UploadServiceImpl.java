@@ -2,7 +2,12 @@ package com.gdu.app11.service;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,7 @@ import com.gdu.app11.domain.AttachDTO;
 import com.gdu.app11.domain.UploadDTO;
 import com.gdu.app11.mapper.UploadMapper;
 import com.gdu.app11.util.MyFileUtil;
+import com.gdu.app11.util.PageUtil;
 
 import lombok.AllArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
@@ -29,13 +35,29 @@ public class UploadServiceImpl implements UploadService {
 	// field
 	private UploadMapper uploadMapper;
 	private MyFileUtil myFileUtil;
+	private PageUtil pageUtil;
 
 	
-	// 권장사항 : Pagination 처리 해 보기
 	@Override
-	public void getUploadList(Model model) {
-		List<UploadDTO> uploadList = uploadMapper.getUploadList();
+	public void getUploadList(HttpServletRequest request, Model model) {
+		
+		Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+		int page = Integer.parseInt(opt.orElse("1"));
+		
+		int uploadCount = uploadMapper.getUploadCount();
+		
+		int recordPerPage = 10;
+		
+		pageUtil.setPageUtil(page, uploadCount, recordPerPage);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("begin", pageUtil.getBegin());
+		map.put("end", pageUtil.getEnd());
+		
+		List<UploadDTO> uploadList = uploadMapper.getUploadList(map);
 		model.addAttribute("uploadList", uploadList);
+		model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/upload/list.do"));
+		
 	}
 	
 	
@@ -163,16 +185,6 @@ public class UploadServiceImpl implements UploadService {
 		return image;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
