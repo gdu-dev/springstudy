@@ -11,8 +11,8 @@
 		</encoder>
 	</appender>
 	
-	<!-- Application Loggers : com.gdu.app09 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
-	<logger name="com.gdu.app09"       level="DEBUG" />
+	<!-- Application Loggers : com.gdu 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
+	<logger name="com.gdu"             level="DEBUG" />
 
 	<!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
 	<logger name="org.springframework" level="INFO" />
