@@ -9,7 +9,16 @@ import com.gdu.app11.domain.UploadDTO;
 
 @Mapper
 public interface UploadMapper {
+	
+	// getUploadList
 	public List<UploadDTO> getUploadList();
+	
+	// addUpload
 	public int addUpload(UploadDTO uploadDTO);
 	public int addAttach(AttachDTO attachDTO);
+	
+	// getUploadByNo
+	public UploadDTO getUploadByNo(int uploadNo);
+	public List<AttachDTO> getAttachList(int uploadNo);
+	
 }
