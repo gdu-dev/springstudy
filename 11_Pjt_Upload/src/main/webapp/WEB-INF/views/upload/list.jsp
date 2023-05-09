@@ -17,5 +17,30 @@
 		<a href="${contextPath}/upload/write.do">게시글 작성하러 가기</a>
 	</div>
 	
+	<hr>
+	
+	<div>
+		<table border="1">
+			<thead>
+				<tr>
+					<td>UPLOAD게시글번호</td>
+					<td>제목</td>
+					<td>작성일자</td>
+					<td>첨부개수</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${uploadList}" var="upload">
+					<tr>
+						<td>${upload.uploadNo}</td>
+						<td>${upload.uploadTitle}</td>
+						<td>${upload.createdAt}</td>
+						<td>${upload.attachCount}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	
 </body>
 </html>

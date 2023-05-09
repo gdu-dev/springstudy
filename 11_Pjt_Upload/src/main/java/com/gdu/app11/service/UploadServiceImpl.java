@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -21,9 +22,19 @@ import net.coobird.thumbnailator.Thumbnails;
 @AllArgsConstructor  // field @Autowired 처리
 public class UploadServiceImpl implements UploadService {
 
+	
 	// field
 	private UploadMapper uploadMapper;
 	private MyFileUtil myFileUtil;
+
+	
+	// 권장사항 : Pagination 처리 해 보기
+	@Override
+	public void getUploadList(Model model) {
+		List<UploadDTO> uploadList = uploadMapper.getUploadList();
+		model.addAttribute("uploadList", uploadList);
+	}
+	
 	
 	@Transactional(readOnly = true)  // INSERT문을 2개 이상 수행하기 때문에 트랜잭션 처리가 필요하다.
 	@Override

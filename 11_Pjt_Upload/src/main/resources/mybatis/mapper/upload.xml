@@ -6,6 +6,18 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app11.mapper.UploadMapper">
 
+	<select id="getUploadList" resultType="UploadDTO">
+		SELECT U.UPLOAD_NO
+		     , U.UPLOAD_TITLE
+		     , U.UPLOAD_CONTENT
+		     , U.CREATED_AT
+		     , U.MODIFIED_AT
+		     , (SELECT COUNT(*)
+		          FROM ATTACH A
+		         WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_COUNT
+		  FROM UPLOAD U
+	</select>
+
 	<insert id="addUpload" parameterType="UploadDTO">
 		<!-- INSERT 수행 이전(BEFORE)에 addUpload 서비스가 전달한 UploadDTO의 uploadNo필드에 UPLOAD_SEQ.NEXTVAL값을 저장한다. -->
 		<selectKey order="BEFORE" resultType="int" keyProperty="uploadNo">
