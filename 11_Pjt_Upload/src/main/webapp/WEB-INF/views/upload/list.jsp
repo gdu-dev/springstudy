@@ -33,7 +33,7 @@
 				<c:forEach items="${uploadList}" var="upload">
 					<tr>
 						<td>${upload.uploadNo}</td>
-						<td>${upload.uploadTitle}</td>
+						<td><a href="${contextPath}/upload/detail.do?uploadNo=${upload.uploadNo}">${upload.uploadTitle}</a></td>
 						<td>${upload.createdAt}</td>
 						<td>${upload.attachCount}</td>
 					</tr>

@@ -4,9 +4,12 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -136,4 +139,40 @@ public class UploadServiceImpl implements UploadService {
 		
 	}
 
+	
+	@Override
+	public void getUploadByNo(int uploadNo, Model model) {
+		model.addAttribute("upload", uploadMapper.getUploadByNo(uploadNo));
+		model.addAttribute("attachList", uploadMapper.getAttachList(uploadNo));
+	}
+	
+	
+	@Override
+	public ResponseEntity<byte[]> display(int attachNo) {
+		
+		AttachDTO attachDTO = uploadMapper.getAttachByNo(attachNo);
+		
+		ResponseEntity<byte[]> image = null;
+		
+		try {
+			File thumbnail = new File(attachDTO.getPath(), "s_" + attachDTO.getFilesystemName());
+			image = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(thumbnail), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return image;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

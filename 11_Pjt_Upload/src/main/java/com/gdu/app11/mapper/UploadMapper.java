@@ -21,4 +21,7 @@ public interface UploadMapper {
 	public UploadDTO getUploadByNo(int uploadNo);
 	public List<AttachDTO> getAttachList(int uploadNo);
 	
+	// display
+	public AttachDTO getAttachByNo(int attachNo);
+	
 }

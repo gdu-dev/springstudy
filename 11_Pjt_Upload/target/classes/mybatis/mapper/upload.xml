@@ -49,7 +49,11 @@
 		 WHERE UPLOAD_NO = #{uploadNo}
 	</select>
 	
-	
+	<select id="getAttachByNo" parameterType="int" resultType="AttachDTO">
+		SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+		  FROM ATTACH
+		 WHERE ATTACH_NO = #{attachNo}
+	</select>
 	
 	
 	
