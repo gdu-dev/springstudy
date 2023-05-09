@@ -29,6 +29,7 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.5</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
 		<dependency>
 		    <groupId>net.coobird</groupId>

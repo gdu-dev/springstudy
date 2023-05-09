@@ -6,7 +6,7 @@
 -- 첨부 파일 정보 테이블
 DROP TABLE ATTACH;
 CREATE TABLE ATTACH (
-    ATTACH_NO       NUMBER NOT NULL,  -- PK
+    ATTACH_NO       NUMBER NOT NULL,              -- PK
     PATH            VARCHAR2(300 BYTE) NOT NULL,  -- 첨부 파일 경로
     ORIGIN_NAME     VARCHAR2(300 BYTE) NOT NULL,  -- 첨부 파일의 원래 이름
     FILESYSTEM_NAME VARCHAR2(50 BYTE) NOT NULL,   -- 첨부 파일의 저장 이름
