@@ -5,9 +5,11 @@ import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.gdu.app11.domain.AttachDTO;
 import com.gdu.app11.domain.UploadDTO;
 import com.gdu.app11.mapper.UploadMapper;
 import com.gdu.app11.util.MyFileUtil;
@@ -23,6 +25,7 @@ public class UploadServiceImpl implements UploadService {
 	private UploadMapper uploadMapper;
 	private MyFileUtil myFileUtil;
 	
+	@Transactional(readOnly = true)  // INSERT문을 2개 이상 수행하기 때문에 트랜잭션 처리가 필요하다.
 	@Override
 	public int addUpload(MultipartHttpServletRequest multipartRequest) {
 		
@@ -38,7 +41,7 @@ public class UploadServiceImpl implements UploadService {
 		uploadDTO.setUploadContent(uploadContent);
 		
 		// DB로 UploadDTO 보내기
-		int uploadResult = uploadMapper.addUpload(uploadDTO);
+		int uploadResult = uploadMapper.addUpload(uploadDTO);  // <selectKey>에 의해서 uploadDTO 객체의 uploadNo 필드에 UPLOAD_SEQ.NEXTVAL값이 저장된다.
 		
 		/* Attach 테이블에 AttachDTO 넣기 */
 		
@@ -99,6 +102,16 @@ public class UploadServiceImpl implements UploadService {
 					
 					/* DB에 첨부 파일 정보 저장하기 */
 					
+					// DB로 보낼 AttachDTO 만들기
+					AttachDTO attachDTO = new AttachDTO();
+					attachDTO.setFilesystemName(filesystemName);
+					attachDTO.setHasThumbnail(hasThumbnail ? 1 : 0);
+					attachDTO.setOriginName(originName);
+					attachDTO.setPath(path);
+					attachDTO.setUploadNo(uploadDTO.getUploadNo());
+					
+					// DB로 AttachDTO 보내기
+					uploadMapper.addAttach(attachDTO);
 					
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -108,22 +121,7 @@ public class UploadServiceImpl implements UploadService {
 			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return 0;
+		return uploadResult;
 		
 	}
 

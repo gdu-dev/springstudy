@@ -7,17 +7,22 @@
 <mapper namespace="com.gdu.app11.mapper.UploadMapper">
 
 	<insert id="addUpload" parameterType="UploadDTO">
+		<!-- INSERT 수행 이전(BEFORE)에 addUpload 서비스가 전달한 UploadDTO의 uploadNo필드에 UPLOAD_SEQ.NEXTVAL값을 저장한다. -->
+		<selectKey order="BEFORE" resultType="int" keyProperty="uploadNo">
+			SELECT UPLOAD_SEQ.NEXTVAL
+			  FROM DUAL
+		</selectKey>
 		INSERT INTO UPLOAD
 			(UPLOAD_NO, UPLOAD_TITLE, UPLOAD_CONTENT, CREATED_AT, MODIFIED_AT)
 		VALUES
-			(UPLOAD_SEQ.NEXTVAL, #{uploadTitle}, #{uploadContent}, SYSTIMESTAMP, SYSTIMESTAMP)
+			(#{uploadNo}, #{uploadTitle}, #{uploadContent}, SYSTIMESTAMP, SYSTIMESTAMP)
 	</insert>
 
 	<insert id="addAttach" parameterType="AttachDTO">
 		INSERT INTO ATTACH
-			(ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL)
+			(ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO)
 		VALUES
-			(ATTACH_SEQ.NEXTVAL, #{path}, #{originName}, #{filesystemName}, 0, #{hasThumbnail})
+			(ATTACH_SEQ.NEXTVAL, #{path}, #{originName}, #{filesystemName}, 0, #{hasThumbnail}, #{uploadNo})
 	</insert>
 	
 </mapper>
