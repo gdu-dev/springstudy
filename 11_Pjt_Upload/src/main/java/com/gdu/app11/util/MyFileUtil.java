@@ -54,5 +54,11 @@ public class MyFileUtil {
 		return UUID.randomUUID().toString().replace("-", "") + ".zip";
 	}
 	
+	// String yesterdayPath 만들기
+	public String getYesterdayPath() {
+		LocalDate date = LocalDate.now();
+		date.minusDays(1);  // 1일 전
+		return "/storage" + sep + date.getYear() + sep + String.format("%02d", date.getMonthValue()) + sep + String.format("%02d", date.getDayOfMonth());
+	}
 	
 }

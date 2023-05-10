@@ -26,6 +26,9 @@
 		frm.prop('action', '${contextPath}/upload/removeUpload.do');
 		frm.submit();
 	}
+	function fnList(){
+		location.href = '${contextPath}/upload/list.do';
+	}
 	let modifyResult = '${modifyResult}';
 	if(modifyResult != ''){
 		if(modifyResult == '1'){
@@ -50,6 +53,7 @@
 			<input type="hidden" name="uploadNo" value="${upload.uploadNo}">
 			<input type="button" value="편집" onclick="fnEditUpload()">
 			<input type="button" value="삭제" onclick="fnRemoveUpload()">
+			<input type="button" value="목록" onclick="fnList()">
 		</form>
 	</div>
 	

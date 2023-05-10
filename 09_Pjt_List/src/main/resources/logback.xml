@@ -4,10 +4,8 @@
 
 	<!-- Console 화면에 로그를 찍는 console Appender -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>
-				[%date{HH:mm:ss.SSS, Asia/Seoul}][%-5level][%logger] - %msg%n
-			</pattern>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="com.gdu.app09.logback.MyLogbackLayout" />
 		</encoder>
 	</appender>
 	
@@ -20,12 +18,9 @@
 	<logger name="org.mybatis.spring"  level="INFO" />
 	<logger name="com.zaxxer.hikari"   level="INFO" />
 	<logger name="log4jdbc"            level="INFO" />
-	<logger name="jdbc.sqlonly"        level="OFF" />   <!-- SQL 출력 -->
-	<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+	<logger name="jdbc"                level="OFF" />
+	<logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
 	<logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
-	<logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
-	<logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
-	<logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->
 	
 	<!-- Root Logger -->
 	<root>
