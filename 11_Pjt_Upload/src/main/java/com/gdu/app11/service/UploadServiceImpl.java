@@ -1,12 +1,17 @@
 package com.gdu.app11.service;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -241,6 +246,85 @@ public class UploadServiceImpl implements UploadService {
 		return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
 		
 	}
+	
+	
+	@Override
+	public ResponseEntity<Resource> downloadAll(int uploadNo) {
+		
+		// 모든 첨부 파일을 zip 파일로 압축해서 다운로드 하는 서비스
+		
+		// zip 파일이 저장될 경로
+		String tempPath = myFileUtil.getTempPath();
+		File dir = new File(tempPath);
+		if(dir.exists() == false) {
+			dir.mkdirs();
+		}
+		
+		// zip 파일의 이름
+		String tempfileName = myFileUtil.getTempfileName();
+		
+		// zip 파일의 File 객체
+		File zfile = new File(tempPath, tempfileName);
+		
+		// zip 파일을 생성하기 위한 Java IO Stream 선언
+		BufferedInputStream bin = null;    // 각 첨부 파일을 읽어 들이는 스트림
+		ZipOutputStream zout = null;  // zip 파일을 만드는 스트림
+		
+		// 다운로드 할 첨부 파일들의 정보(경로, 원래 이름, 저장된 이름) 가져오기
+		List<AttachDTO> attachList = uploadMapper.getAttachList(uploadNo);
+		
+		try {
+			
+			// ZipOutputStream zout 객체 생성
+			zout = new ZipOutputStream(new FileOutputStream(zfile));
+			
+			// 첨부 파일들을 하나씩 순회하면서 읽어 들인 뒤 zip 파일에 추가하기 + 각 첨부 파일들의 다운로드 횟수 증가
+			for(AttachDTO attachDTO : attachList) {
+				
+				// zip 파일에 추가할 첨부 파일 이름 등록(첨부 파일의 원래 이름)
+				ZipEntry zipEntry = new ZipEntry(attachDTO.getOriginName());
+				zout.putNextEntry(zipEntry);
+				
+				// zip 파일에 첨부 파일 추가
+				bin = new BufferedInputStream(new FileInputStream(new File(attachDTO.getPath(), attachDTO.getFilesystemName())));
+				
+				// bin -> zout으로 파일 복사하기 (Java 코드)
+				byte[] b = new byte[1024];  // 첨부 파일을 1KB 단위로 읽겠다.
+				int readByte = 0;           // 실제로 읽어 들인 바이트 수
+				while((readByte = bin.read(b)) != -1) {
+					zout.write(b, 0, readByte);
+				}
+				bin.close();
+				zout.closeEntry();
+				
+				// bin -> zout으로 파일 복사하기 (Spring 코드)
+				// FileCopyUtils.copy(bin, zout);
+				
+				// 각 첨부 파일들의 다운로드 횟수 증가
+				uploadMapper.increaseDownloadCount(attachDTO.getAttachNo());
+				
+			}
+			
+			zout.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// 다운로드 할 zip 파일의 File 객체 -> Resource 객체
+		Resource resource = new FileSystemResource(zfile);
+		
+		// 다운로드 응답 헤더 만들기
+		MultiValueMap<String, String> responseHeader = new HttpHeaders();
+		responseHeader.add("Content-Disposition", "attachment; filename=" + tempfileName);
+		responseHeader.add("Content-Length", zfile.length() + "");
+		
+		// 응답
+		return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
+		
+	}
+	
+	
 	
 	
 	

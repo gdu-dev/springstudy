@@ -29,7 +29,8 @@ public interface UploadMapper {
 	// download
 	public int increaseDownloadCount(int attachNo);
 	
-	
+	// downloadAll
+	// public List<AttachDTO> getAttachList(int uploadNo);
 	
 	
 	

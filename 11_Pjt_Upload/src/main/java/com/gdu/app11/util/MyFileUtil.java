@@ -43,5 +43,16 @@ public class MyFileUtil {
 		return UUID.randomUUID().toString().replace("-", "") + "." + extName;
 		
 	}
+
+	// String tempPath 만들기
+	public String getTempPath() {
+		return "/storage" + sep + "temp";
+	}
+	
+	// String tempfileName 만들기 (zip 파일)
+	public String getTempfileName() {
+		return UUID.randomUUID().toString().replace("-", "") + ".zip";
+	}
+	
 	
 }

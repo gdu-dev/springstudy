@@ -60,7 +60,10 @@ public class UploadController {
 		return uploadService.download(attachNo, userAgent);
 	}
 	
-	
+	@GetMapping("/downloadAll.do")
+	public ResponseEntity<Resource> downloadAll(@RequestParam("uploadNo") int uploadNo) {
+		return uploadService.downloadAll(uploadNo);
+	}
 	
 	
 	

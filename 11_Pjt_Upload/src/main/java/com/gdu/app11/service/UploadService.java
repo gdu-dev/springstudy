@@ -13,4 +13,5 @@ public interface UploadService {
 	public void getUploadByNo(int uploadNo, Model model);
 	public ResponseEntity<byte[]> display(int attachNo);
 	public ResponseEntity<Resource> download(int attachNo, String userAgent);
+	public ResponseEntity<Resource> downloadAll(int uploadNo);
 }
