@@ -15,12 +15,24 @@
 	$(function(){
 		frm = $('#frm');
 	})
+	function fnEditUpload(){
+		frm.prop('action', '${contextPath}/upload/editUpload.do');
+		frm.submit();
+	}
 	function fnRemoveUpload(){
 		if(confirm('게시글을 삭제하면 모든 첨부 파일이 함께 삭제됩니다. 그래도 삭제하시겠습니까?') == false){
 			return;
 		}
 		frm.prop('action', '${contextPath}/upload/removeUpload.do');
 		frm.submit();
+	}
+	let modifyResult = '${modifyResult}';
+	if(modifyResult != ''){
+		if(modifyResult == '1'){
+			alert('UPLOAD 게시글 수정 성공');
+		} else {
+			alert('UPLOAD 게시글 수정 실패');
+		}
 	}
 </script>
 </head>
@@ -36,6 +48,7 @@
 		</ul>
 		<form id="frm" method="post">
 			<input type="hidden" name="uploadNo" value="${upload.uploadNo}">
+			<input type="button" value="편집" onclick="fnEditUpload()">
 			<input type="button" value="삭제" onclick="fnRemoveUpload()">
 		</form>
 	</div>

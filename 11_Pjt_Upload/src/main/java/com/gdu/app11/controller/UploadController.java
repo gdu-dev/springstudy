@@ -38,8 +38,8 @@ public class UploadController {
 	
 	@PostMapping("/add.do")
 	public String add(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
-		int uploadResult = uploadService.addUpload(multipartRequest);
-		redirectAttributes.addFlashAttribute("uploadResult", uploadResult);
+		int addResult = uploadService.addUpload(multipartRequest);
+		redirectAttributes.addFlashAttribute("addResult", addResult);
 		return "redirect:/upload/list.do";
 	}
 	
@@ -71,11 +71,23 @@ public class UploadController {
 		return "redirect:/upload/list.do";
 	}
 	
+	@PostMapping("/editUpload.do")
+	public String editUpload(@RequestParam("uploadNo") int uploadNo, Model model) {
+		uploadService.getUploadByNo(uploadNo, model);
+		return "upload/edit";
+	}
 	
+	@PostMapping("/modify.do")
+	public String modify(MultipartHttpServletRequest multipartRequest, RedirectAttributes redirectAttributes) {
+		int modifyResult = uploadService.modifyUpload(multipartRequest);
+		redirectAttributes.addFlashAttribute("modifyResult", modifyResult);
+		return "redirect:/upload/detail.do?uploadNo=" + multipartRequest.getParameter("uploadNo");
+	}
 	
-	
-	
-	
-	
+	@GetMapping("/removeAttach.do")
+	public String removeAttach(@RequestParam("uploadNo") int uploadNo, @RequestParam("attachNo") int attachNo) {
+		uploadService.removeAttach(attachNo);
+		return "redirect:/upload/detail.do?uploadNo=" + uploadNo;
+	}
 	
 }

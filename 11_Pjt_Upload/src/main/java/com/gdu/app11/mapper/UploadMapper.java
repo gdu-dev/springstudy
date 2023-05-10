@@ -35,11 +35,10 @@ public interface UploadMapper {
 	// removeUpload
 	public int removeUpload(int uploadNo);
 	
+	// modifyUpload
+	public int modifyUpload(UploadDTO uploadDTO);
+	
+	// removeAttach
+	public int removeAttach(int attachNo);
 	
 }
-
-
-
-
-
-

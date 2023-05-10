@@ -15,4 +15,6 @@ public interface UploadService {
 	public ResponseEntity<Resource> download(int attachNo, String userAgent);
 	public ResponseEntity<Resource> downloadAll(int uploadNo);
 	public int removeUpload(int uploadNo);
+	public int modifyUpload(MultipartHttpServletRequest multipartRequest);
+	public int removeAttach(int attachNo);
 }

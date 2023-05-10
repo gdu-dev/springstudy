@@ -10,6 +10,24 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script>
+	let addResult = '${addResult}';
+	if(addResult != ''){
+		if(addResult == '1'){
+			alert('UPLOAD 게시글 등록 성공');
+		} else {
+			alert('UPLOAD 게시글 등록 실패');
+		}
+	}
+	let removeResult = '${removeResult}';
+	if(removeResult != ''){
+		if(removeResult == '1'){
+			alert('UPLOAD 게시글 삭제 성공');
+		} else {
+			alert('UPLOAD 게시글 삭제 실패');
+		}
+	}
+</script>
 </head>
 <body>
 

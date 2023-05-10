@@ -81,18 +81,18 @@
 		 WHERE UPLOAD_NO = #{uploadNo} 
 	</delete>
 	
+	<update id="modifyUpload" parameterType="UploadDTO">
+		UPDATE UPLOAD
+		   SET UPLOAD_TITLE = #{uploadTitle}
+		     , UPLOAD_CONTENT = #{uploadContent}
+		     , MODIFIED_AT = SYSTIMESTAMP
+		 WHERE UPLOAD_NO = #{uploadNo}
+	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<delete id="removeAttach" parameterType="int">
+		DELETE
+		  FROM ATTACH
+		 WHERE ATTACH_NO = #{attachNo}
+	</delete>
 	
 </mapper>
