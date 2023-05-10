@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -237,10 +237,20 @@ public class UploadServiceImpl implements UploadService {
 			e.printStackTrace();
 		}
 		
-		// 다운로드 응답 헤더 만들기
+		// 다운로드 응답 헤더 만들기 (Jsp/Servlet 코드)
+		/*
 		MultiValueMap<String, String> responseHeader = new HttpHeaders();
 		responseHeader.add("Content-Disposition", "attachment; filename=" + originName);
 		responseHeader.add("Content-Length", file.length() + "");
+		*/
+
+		// 다운로드 응답 헤더 만들기 (Spring 코드)
+		HttpHeaders responseHeader = new HttpHeaders();
+		responseHeader.setContentDisposition(ContentDisposition
+																					.attachment()
+																					.filename(originName)
+																					.build());
+		responseHeader.setContentLength(file.length());
 		
 		// 응답
 		return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
@@ -267,8 +277,8 @@ public class UploadServiceImpl implements UploadService {
 		File zfile = new File(tempPath, tempfileName);
 		
 		// zip 파일을 생성하기 위한 Java IO Stream 선언
-		BufferedInputStream bin = null;    // 각 첨부 파일을 읽어 들이는 스트림
-		ZipOutputStream zout = null;  // zip 파일을 만드는 스트림
+		BufferedInputStream bin = null;  // 각 첨부 파일을 읽어 들이는 스트림
+		ZipOutputStream zout = null;     // zip 파일을 만드는 스트림
 		
 		// 다운로드 할 첨부 파일들의 정보(경로, 원래 이름, 저장된 이름) 가져오기
 		List<AttachDTO> attachList = uploadMapper.getAttachList(uploadNo);
@@ -297,9 +307,6 @@ public class UploadServiceImpl implements UploadService {
 				bin.close();
 				zout.closeEntry();
 				
-				// bin -> zout으로 파일 복사하기 (Spring 코드)
-				// FileCopyUtils.copy(bin, zout);
-				
 				// 각 첨부 파일들의 다운로드 횟수 증가
 				uploadMapper.increaseDownloadCount(attachDTO.getAttachNo());
 				
@@ -313,11 +320,14 @@ public class UploadServiceImpl implements UploadService {
 		
 		// 다운로드 할 zip 파일의 File 객체 -> Resource 객체
 		Resource resource = new FileSystemResource(zfile);
-		
-		// 다운로드 응답 헤더 만들기
-		MultiValueMap<String, String> responseHeader = new HttpHeaders();
-		responseHeader.add("Content-Disposition", "attachment; filename=" + tempfileName);
-		responseHeader.add("Content-Length", zfile.length() + "");
+
+		// 다운로드 응답 헤더 만들기 (Spring 코드)
+		HttpHeaders responseHeader = new HttpHeaders();
+		responseHeader.setContentDisposition(ContentDisposition
+																					.attachment()
+																					.filename(tempfileName)
+																					.build());
+		responseHeader.setContentLength(zfile.length());
 		
 		// 응답
 		return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
