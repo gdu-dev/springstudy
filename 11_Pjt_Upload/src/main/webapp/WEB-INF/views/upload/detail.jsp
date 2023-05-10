@@ -11,8 +11,9 @@
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
+	var frm;
 	$(function(){
-		var frm = $('#frm');
+		frm = $('#frm');
 	})
 	function fnRemoveUpload(){
 		if(confirm('게시글을 삭제하면 모든 첨부 파일이 함께 삭제됩니다. 그래도 삭제하시겠습니까?') == false){

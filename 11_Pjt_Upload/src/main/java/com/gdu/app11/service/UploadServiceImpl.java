@@ -380,7 +380,7 @@ public class UploadServiceImpl implements UploadService {
 		// DB에서 uploadNo값을 가지는 데이터를 삭제
 		// 외래키 제약조건에 의해서(ON DELETE CASCADE) UPLOAD 테이블의 데이터가 삭제되면
 		// ATTACH 테이블의 데이터도 함께 삭제된다.
-		int removeResult = uploadMapper.removeUpdate(uploadNo);
+		int removeResult = uploadMapper.removeUpload(uploadNo);
 		
 		return removeResult;
 		
