@@ -30,13 +30,15 @@
 		<div>
 			<c:forEach items="${attachList}" var="attach">
 				<div>
-					<c:if test="${attach.hasThumbnail == 1}">
-						<img src="${contextPath}/upload/display.do?attachNo=${attach.attachNo}">
-					</c:if>
-					<c:if test="${attach.hasThumbnail == 0}">
-						<img src="${contextPath}/resources/images/attach1.png" width="50px">
-					</c:if>
-					${attach.originName}
+					<a href="${contextPath}/upload/download.do?attachNo=${attach.attachNo}">
+						<c:if test="${attach.hasThumbnail == 1}">
+							<img src="${contextPath}/upload/display.do?attachNo=${attach.attachNo}">
+						</c:if>
+						<c:if test="${attach.hasThumbnail == 0}">
+							<img src="${contextPath}/resources/images/attach1.png" width="50px">
+						</c:if>
+						${attach.originName}
+					</a>
 				</div>
 			</c:forEach>
 		</div>

@@ -1,6 +1,7 @@
 package com.gdu.app11.service;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +10,16 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -185,6 +190,63 @@ public class UploadServiceImpl implements UploadService {
 		return image;
 		
 	}
+	
+	
+	@Override
+	public ResponseEntity<Resource> download(int attachNo, String userAgent) {
+		
+		// 다운로드 할 첨부 파일의 정보(경로, 원래 이름, 저장된 이름) 가져오기
+		AttachDTO attachDTO = uploadMapper.getAttachByNo(attachNo);
+		
+		// 다운로드 할 첨부 파일의 File 객체 -> Resource 객체
+		File file = new File(attachDTO.getPath(), attachDTO.getFilesystemName());
+		Resource resource = new FileSystemResource(file);
+		
+		// 다운로드 할 첨부 파일의 존재 여부 확인(다운로드 실패를 반환)
+		if(resource.exists() == false) {
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		
+		// 다운로드 횟수 증가하기
+		uploadMapper.increaseDownloadCount(attachNo);
+		
+		
+		// 다운로드 되는 파일명(첨부 파일의 원래 이름, UserAgent(브라우저)에 따른 인코딩 세팅)
+		String originName = attachDTO.getOriginName();
+		try {
+			
+			// IE (UserAgent에 Trident가 포함되어 있다.)
+			if(userAgent.contains("Trident")) {
+				originName = URLEncoder.encode(originName, "UTF-8").replace("+", " ");
+			}
+			// Edge (UserAgent에 Edg가 포함되어 있다.)
+			else if(userAgent.contains("Edg")) {
+				originName = URLEncoder.encode(originName, "UTF-8");
+			}
+			// Other
+			else {
+				originName = new String(originName.getBytes("UTF-8"), "ISO-8859-1");
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		// 다운로드 응답 헤더 만들기
+		MultiValueMap<String, String> responseHeader = new HttpHeaders();
+		responseHeader.add("Content-Disposition", "attachment; filename=" + originName);
+		responseHeader.add("Content-Length", file.length() + "");
+		
+		// 응답
+		return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }

@@ -3,11 +3,13 @@ package com.gdu.app11.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -43,7 +45,7 @@ public class UploadController {
 	
 	@GetMapping("/detail.do")
 	public String detail(@RequestParam(value="uploadNo", required=false, defaultValue="0") int uploadNo
-			           , Model model) {
+			               , Model model) {
 		uploadService.getUploadByNo(uploadNo, model);
 		return "upload/detail";
 	}
@@ -52,6 +54,20 @@ public class UploadController {
 	public ResponseEntity<byte[]> display(@RequestParam("attachNo") int attachNo) {
 		return uploadService.display(attachNo);
 	}
+	
+	@GetMapping("/download.do")
+	public ResponseEntity<Resource> download(@RequestParam("attachNo") int attachNo, @RequestHeader("User-Agent") String userAgent) {
+		return uploadService.download(attachNo, userAgent);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
