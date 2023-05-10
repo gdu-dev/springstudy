@@ -75,6 +75,21 @@
 		 WHERE ATTACH_NO = #{attachNo}
 	</update>
 	
+	<delete id="removeUpload" parameterType="int">
+		DELETE
+		  FROM UPLOAD
+		 WHERE UPLOAD_NO = #{uploadNo} 
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

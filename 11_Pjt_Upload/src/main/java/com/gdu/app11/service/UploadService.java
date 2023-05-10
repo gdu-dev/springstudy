@@ -14,4 +14,5 @@ public interface UploadService {
 	public ResponseEntity<byte[]> display(int attachNo);
 	public ResponseEntity<Resource> download(int attachNo, String userAgent);
 	public ResponseEntity<Resource> downloadAll(int uploadNo);
+	public int removeUpload(int uploadNo);
 }

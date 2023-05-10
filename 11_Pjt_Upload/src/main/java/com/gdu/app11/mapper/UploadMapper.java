@@ -32,7 +32,14 @@ public interface UploadMapper {
 	// downloadAll
 	// public List<AttachDTO> getAttachList(int uploadNo);
 	
-	
+	// removeUpload
+	public int removeUpload(int uploadNo);
 	
 	
 }
+
+
+
+
+
+

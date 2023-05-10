@@ -65,6 +65,11 @@ public class UploadController {
 		return uploadService.downloadAll(uploadNo);
 	}
 	
+	@PostMapping("/removeUpload.do")
+	public String removeUpload(@RequestParam("uploadNo") int uploadNo, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("removeResult", uploadService.removeUpload(uploadNo));
+		return "redirect:/upload/list.do";
+	}
 	
 	
 	

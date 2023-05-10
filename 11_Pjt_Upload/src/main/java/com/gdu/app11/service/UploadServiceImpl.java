@@ -20,6 +20,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -240,12 +241,14 @@ public class UploadServiceImpl implements UploadService {
 		// 다운로드 응답 헤더 만들기 (Jsp/Servlet 코드)
 		/*
 		MultiValueMap<String, String> responseHeader = new HttpHeaders();
+		responseHeader.add("Content-Type", "application/octet-stream");
 		responseHeader.add("Content-Disposition", "attachment; filename=" + originName);
 		responseHeader.add("Content-Length", file.length() + "");
 		*/
 
 		// 다운로드 응답 헤더 만들기 (Spring 코드)
 		HttpHeaders responseHeader = new HttpHeaders();
+		responseHeader.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		responseHeader.setContentDisposition(ContentDisposition
 																					.attachment()
 																					.filename(originName)
@@ -262,6 +265,7 @@ public class UploadServiceImpl implements UploadService {
 	public ResponseEntity<Resource> downloadAll(int uploadNo) {
 		
 		// 모든 첨부 파일을 zip 파일로 압축해서 다운로드 하는 서비스
+		// com.gdu.app11.batch.RemoveTempfileScheduler에 의해서 주기적으로 zip 파일들은 삭제된다.
 		
 		// zip 파일이 저장될 경로
 		String tempPath = myFileUtil.getTempPath();
@@ -323,6 +327,7 @@ public class UploadServiceImpl implements UploadService {
 
 		// 다운로드 응답 헤더 만들기 (Spring 코드)
 		HttpHeaders responseHeader = new HttpHeaders();
+		responseHeader.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		responseHeader.setContentDisposition(ContentDisposition
 																					.attachment()
 																					.filename(tempfileName)
@@ -333,6 +338,60 @@ public class UploadServiceImpl implements UploadService {
 		return new ResponseEntity<Resource>(resource, responseHeader, HttpStatus.OK);
 		
 	}
+	
+	
+	@Override
+	public int removeUpload(int uploadNo) {
+		
+		// 삭제할 첨부 파일들의 정보
+		List<AttachDTO> attachList = uploadMapper.getAttachList(uploadNo);
+		
+		// 첨부 파일이 있으면 삭제
+		if(attachList != null && attachList.isEmpty() == false) {
+			
+			// 삭제할 첨부 파일들을 순회하면서 하나씩 삭제
+			for(AttachDTO attachDTO : attachList) {
+				
+				// 삭제할 첨부 파일의 File 객체
+				File file = new File(attachDTO.getPath(), attachDTO.getFilesystemName());
+				
+				// 첨부 파일 삭제
+				if(file.exists()) {
+					file.delete();
+				}
+				
+				// 첨부 파일이 썸네일을 가지고 있다면 "s_"로 시작하는 썸네일이 함께 존재하므로 함께 제거해야 한다.
+				if(attachDTO.getHasThumbnail() == 1) {
+					
+					// 삭제할 썸네일의 File 객체
+					File thumbnail = new File(attachDTO.getPath(), "s_" + attachDTO.getFilesystemName());
+					
+					// 썸네일 삭제
+					if(thumbnail.exists()) {
+						thumbnail.delete();
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		// DB에서 uploadNo값을 가지는 데이터를 삭제
+		// 외래키 제약조건에 의해서(ON DELETE CASCADE) UPLOAD 테이블의 데이터가 삭제되면
+		// ATTACH 테이블의 데이터도 함께 삭제된다.
+		int removeResult = uploadMapper.removeUpdate(uploadNo);
+		
+		return removeResult;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
