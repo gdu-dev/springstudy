@@ -6,87 +6,87 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app09.mapper.EmployeeListMapper">
 
-<!-- DEPARTMENTS와 EMPLOYEES의 JOIN 결과를 저장할 resultMap 만들기 -->
-<resultMap type="EmpDTO" id="EmpMap">
-	<id column="EMPLOYEE_ID" property="employeeId"/>
-	<result column="FIRST_NAME" property="firstName"/>
-	<result column="LAST_NAME" property="lastName"/>
-	<result column="EMAIL" property="email"/>
-	<result column="PHONE_NUMBER" property="phoneNumber"/>
-	<result column="HIRE_DATE" property="hireDate"/>
-	<result column="JOB_ID" property="jobId"/>
-	<result column="SALARY" property="salary"/>
-	<result column="COMMISSION_PCT" property="commissionPct"/>
-	<result column="MANAGER_ID" property="managerId"/>
-	<association javaType="DeptDTO" property="deptDTO">
-		<id column="DEPARTMENT_ID" property="departmentId"/>
-		<result column="DEPARTMENT_NAME" property="departmentName"/>
-		<result column="MANAGER_ID" property="managerId"/>
-		<result column="LOCATION_ID" property="locationId"/>
-	</association>
-</resultMap>
-
-<!--
-	#{}와 ${}의 차이
-	
-	#{} : 변수 값을 작은 따옴표(')로 묶어서 나타낸다.   - 변수 값
-	ORDER BY EMPLOYEE_ID #{order} -> ORDER BY EMPLOYEE_ID 'ASC'로 처리되기 때문에 SQL문법 오류가 발생한다.
-	
-	${} : 변수 값을 따옴표로 묶지 않고 그대로 나타낸다. - 키워드, 칼럼
-	ORDER BY EMPLOYEE_ID ${order} -> ORDER BY EMPLOYEE_ID ASC로 처리되기 때문에 정상 동작한다.
--->
-
-<select id="getEmployeeCount" resultType="int">
-	SELECT COUNT(*)
-	  FROM EMPLOYEES
-</select>
-
-<select id="getEmployeeListUsingPagination" parameterType="Map" resultMap="EmpMap">
-	SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
-	  FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${column} ${order}) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
-			  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-				ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
-	 WHERE A.RN BETWEEN #{begin} AND #{end}
-</select>
-
-<select id="getEmployeeListUsingScroll" parameterType="Map" resultMap="EmpMap">
-	SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
-	  FROM (SELECT ROW_NUMBER() OVER(ORDER BY EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
-	          FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-	            ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
-	 WHERE A.RN BETWEEN #{begin} AND #{end}
-</select>
-
-<select id="getEmployeeListUsingSearch" parameterType="Map" resultMap="EmpMap">
-	SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
-	  FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
-			  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-			    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
-			<where>
-				<if test="column != '' and query != ''">
-					${column} LIKE '%' || #{query} || '%'
-				</if>
-			</where>
-			) A
-	 WHERE A.RN BETWEEN #{begin} AND #{end}
-</select>
-
-<select id="getEmployeeSearchCount" parameterType="Map" resultType="int">
-	SELECT COUNT(E.EMPLOYEE_ID)
-	  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-	    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
-	<where>
-    	<if test="column != '' and query != ''">
-    		${column} LIKE CONCAT('%', CONCAT(#{query}, '%'))
-    	</if>
-	</where>
-</select>
-
-<select id="getAutoComplete" parameterType="Map" resultMap="EmpMap">
-	SELECT DISTINCT ${column}
-	  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
-	    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
-	 WHERE ${column} LIKE CONCAT(#{query}, '%')
-</select>
+  <!-- DEPARTMENTS와 EMPLOYEES의 JOIN 결과를 저장할 resultMap 만들기 -->
+  <resultMap type="EmpDTO" id="EmpMap">
+    <id column="EMPLOYEE_ID" property="employeeId"/>
+    <result column="FIRST_NAME" property="firstName"/>
+    <result column="LAST_NAME" property="lastName"/>
+    <result column="EMAIL" property="email"/>
+    <result column="PHONE_NUMBER" property="phoneNumber"/>
+    <result column="HIRE_DATE" property="hireDate"/>
+    <result column="JOB_ID" property="jobId"/>
+    <result column="SALARY" property="salary"/>
+    <result column="COMMISSION_PCT" property="commissionPct"/>
+    <result column="MANAGER_ID" property="managerId"/>
+    <association javaType="DeptDTO" property="deptDTO">
+    	<id column="DEPARTMENT_ID" property="departmentId"/>
+    	<result column="DEPARTMENT_NAME" property="departmentName"/>
+    	<result column="MANAGER_ID" property="managerId"/>
+    	<result column="LOCATION_ID" property="locationId"/>
+    </association>
+  </resultMap>
+  
+  <!--
+    #{}와 ${}의 차이
+    
+    #{} : 변수 값을 작은 따옴표(')로 묶어서 나타낸다.   - 변수 값
+    ORDER BY EMPLOYEE_ID #{order} -> ORDER BY EMPLOYEE_ID 'ASC'로 처리되기 때문에 SQL문법 오류가 발생한다.
+    
+    ${} : 변수 값을 따옴표로 묶지 않고 그대로 나타낸다. - 키워드, 칼럼
+    ORDER BY EMPLOYEE_ID ${order} -> ORDER BY EMPLOYEE_ID ASC로 처리되기 때문에 정상 동작한다.
+  -->
+  
+  <select id="getEmployeeCount" resultType="int">
+    SELECT COUNT(*)
+      FROM EMPLOYEES
+  </select>
+  
+  <select id="getEmployeeListUsingPagination" parameterType="Map" resultMap="EmpMap">
+    SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${column} ${order}) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+              FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+                ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  <select id="getEmployeeListUsingScroll" parameterType="Map" resultMap="EmpMap">
+    SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+              FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+                ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  <select id="getEmployeeListUsingSearch" parameterType="Map" resultMap="EmpMap">
+    SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+              FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+                ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+            <where>
+              <if test="column != '' and query != ''">
+                ${column} LIKE '%' || #{query} || '%'
+              </if>
+            </where>
+            ) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  <select id="getEmployeeSearchCount" parameterType="Map" resultType="int">
+    SELECT COUNT(E.EMPLOYEE_ID)
+      FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+        ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+    <where>
+      <if test="column != '' and query != ''">
+        ${column} LIKE CONCAT('%', CONCAT(#{query}, '%'))
+      </if>
+    </where>
+  </select>
+  
+  <select id="getAutoComplete" parameterType="Map" resultMap="EmpMap">
+    SELECT DISTINCT ${column}
+      FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+        ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+     WHERE ${column} LIKE CONCAT(#{query}, '%')
+  </select>
 
 </mapper>

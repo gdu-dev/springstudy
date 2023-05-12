@@ -6,99 +6,121 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app11.mapper.UploadMapper">
 
-	<select id="getUploadCount" resultType="int">
-		SELECT COUNT(*)
-		  FROM UPLOAD
-	</select>
+  <select id="getUploadCount" resultType="int">
+    SELECT COUNT(*)
+      FROM UPLOAD
+  </select>
 
-	<select id="getUploadList" parameterType="Map" resultType="UploadDTO">
-		SELECT B.RN
-		     , B.UPLOAD_NO
-		     , B.UPLOAD_TITLE
-		     , B.UPLOAD_CONTENT
-		     , B.CREATED_AT
-		     , B.MODIFIED_AT
-		     , B.ATTACH_COUNT
-		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY UPLOAD_NO DESC) AS RN
-		             , U.UPLOAD_NO
-		             , U.UPLOAD_TITLE
-		             , U.UPLOAD_CONTENT
-		             , U.CREATED_AT
-		             , U.MODIFIED_AT
-		             , (SELECT COUNT(*)
-		                  FROM ATTACH A
-		                 WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_COUNT
-		          FROM UPLOAD U) B
-		 WHERE B.RN BETWEEN #{begin} AND #{end}
-	</select>
+  <select id="getUploadList" parameterType="Map" resultType="UploadDTO">
+    SELECT B.RN
+         , B.UPLOAD_NO
+         , B.UPLOAD_TITLE
+         , B.UPLOAD_CONTENT
+         , B.CREATED_AT
+         , B.MODIFIED_AT
+         , B.ATTACH_COUNT
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY UPLOAD_NO DESC) AS RN
+                 , U.UPLOAD_NO
+                 , U.UPLOAD_TITLE
+                 , U.UPLOAD_CONTENT
+                 , U.CREATED_AT
+                 , U.MODIFIED_AT
+                 , (SELECT COUNT(*)
+                      FROM ATTACH A
+                     WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_COUNT
+              FROM UPLOAD U) B
+     WHERE B.RN BETWEEN #{begin} AND #{end}
+  </select>
 
-	<insert id="addUpload" parameterType="UploadDTO">
-		<!-- INSERT 수행 이전(BEFORE)에 addUpload 서비스가 전달한 UploadDTO의 uploadNo필드에 UPLOAD_SEQ.NEXTVAL값을 저장한다. -->
-		<selectKey order="BEFORE" resultType="int" keyProperty="uploadNo">
-			SELECT UPLOAD_SEQ.NEXTVAL
-			  FROM DUAL
-		</selectKey>
-		INSERT INTO UPLOAD
-			(UPLOAD_NO, UPLOAD_TITLE, UPLOAD_CONTENT, CREATED_AT, MODIFIED_AT)
-		VALUES
-			(#{uploadNo}, #{uploadTitle}, #{uploadContent}, SYSTIMESTAMP, SYSTIMESTAMP)
-	</insert>
+  <insert id="addUpload" parameterType="UploadDTO">
+    <!-- INSERT 수행 이전(BEFORE)에 addUpload 서비스가 전달한 UploadDTO의 uploadNo필드에 UPLOAD_SEQ.NEXTVAL값을 저장한다. -->
+    <selectKey order="BEFORE" resultType="int" keyProperty="uploadNo">
+      SELECT UPLOAD_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
+    INSERT INTO UPLOAD (
+        UPLOAD_NO
+      , UPLOAD_TITLE
+      , UPLOAD_CONTENT
+      , CREATED_AT
+      , MODIFIED_AT
+    ) VALUES (
+        #{uploadNo}
+      , #{uploadTitle}
+      , #{uploadContent}
+      , SYSTIMESTAMP
+      , SYSTIMESTAMP
+    )
+  </insert>
 
-	<insert id="addAttach" parameterType="AttachDTO">
-		INSERT INTO ATTACH
-			(ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO)
-		VALUES
-			(ATTACH_SEQ.NEXTVAL, #{path}, #{originName}, #{filesystemName}, 0, #{hasThumbnail}, #{uploadNo})
-	</insert>
-	
-	<select id="getUploadByNo" parameterType="int" resultType="UploadDTO">
-		SELECT UPLOAD_NO, UPLOAD_TITLE, UPLOAD_CONTENT, CREATED_AT, MODIFIED_AT
-		  FROM UPLOAD
-		 WHERE UPLOAD_NO = #{uploadNo}
-	</select>
-	
-	<select id="getAttachList" parameterType="int" resultType="AttachDTO">
-		SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
-		  FROM ATTACH
-		 WHERE UPLOAD_NO = #{uploadNo}
-	</select>
-	
-	<select id="getAttachByNo" parameterType="int" resultType="AttachDTO">
-		SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
-		  FROM ATTACH
-		 WHERE ATTACH_NO = #{attachNo}
-	</select>
-	
-	<update id="increaseDownloadCount" parameterType="int">
-		UPDATE ATTACH
-		   SET DOWNLOAD_COUNT = DOWNLOAD_COUNT + 1
-		 WHERE ATTACH_NO = #{attachNo}
-	</update>
-	
-	<delete id="removeUpload" parameterType="int">
-		DELETE
-		  FROM UPLOAD
-		 WHERE UPLOAD_NO = #{uploadNo} 
-	</delete>
-	
-	<update id="modifyUpload" parameterType="UploadDTO">
-		UPDATE UPLOAD
-		   SET UPLOAD_TITLE = #{uploadTitle}
-		     , UPLOAD_CONTENT = #{uploadContent}
-		     , MODIFIED_AT = SYSTIMESTAMP
-		 WHERE UPLOAD_NO = #{uploadNo}
-	</update>
-	
-	<delete id="removeAttach" parameterType="int">
-		DELETE
-		  FROM ATTACH
-		 WHERE ATTACH_NO = #{attachNo}
-	</delete>
-	
-	<select id="getAttachListInYesterday" resultType="AttachDTO">
-		SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
-		  FROM ATTACH
-		 WHERE PATH LIKE CONCAT('%', TO_CHAR(SYSDATE - 1, 'YYYY\\MM\\DD'))
-	</select>
-	
+  <insert id="addAttach" parameterType="AttachDTO">
+    INSERT INTO ATTACH (
+        ATTACH_NO
+      , PATH
+      , ORIGIN_NAME
+      , FILESYSTEM_NAME
+      , DOWNLOAD_COUNT
+      , HAS_THUMBNAIL
+      , UPLOAD_NO
+    ) VALUES (
+        ATTACH_SEQ.NEXTVAL
+      , #{path}
+      , #{originName}
+      , #{filesystemName}
+      , 0
+      , #{hasThumbnail}
+      , #{uploadNo}
+    )
+  </insert>
+
+  <select id="getUploadByNo" parameterType="int" resultType="UploadDTO">
+    SELECT UPLOAD_NO, UPLOAD_TITLE, UPLOAD_CONTENT, CREATED_AT, MODIFIED_AT
+      FROM UPLOAD
+     WHERE UPLOAD_NO = #{uploadNo}
+  </select>
+
+  <select id="getAttachList" parameterType="int" resultType="AttachDTO">
+    SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+      FROM ATTACH
+     WHERE UPLOAD_NO = #{uploadNo}
+  </select>
+
+  <select id="getAttachByNo" parameterType="int" resultType="AttachDTO">
+    SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+      FROM ATTACH
+     WHERE ATTACH_NO = #{attachNo}
+  </select>
+
+  <update id="increaseDownloadCount" parameterType="int">
+    UPDATE ATTACH
+       SET DOWNLOAD_COUNT = DOWNLOAD_COUNT + 1
+     WHERE ATTACH_NO = #{attachNo}
+  </update>
+
+  <delete id="removeUpload" parameterType="int">
+    DELETE
+      FROM UPLOAD
+     WHERE UPLOAD_NO = #{uploadNo}
+  </delete>
+
+  <update id="modifyUpload" parameterType="UploadDTO">
+    UPDATE UPLOAD
+       SET UPLOAD_TITLE = #{uploadTitle}
+         , UPLOAD_CONTENT = #{uploadContent}
+         , MODIFIED_AT = SYSTIMESTAMP
+     WHERE UPLOAD_NO = #{uploadNo}
+  </update>
+
+  <delete id="removeAttach" parameterType="int">
+    DELETE
+      FROM ATTACH
+     WHERE ATTACH_NO = #{attachNo}
+  </delete>
+
+  <select id="getAttachListInYesterday" resultType="AttachDTO">
+    SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+      FROM ATTACH
+     WHERE PATH LIKE CONCAT('%', TO_CHAR(SYSDATE - 1, 'YYYY\\MM\\DD'))
+  </select>
+
 </mapper>

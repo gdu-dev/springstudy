@@ -6,42 +6,53 @@
 <!-- namespace는 mybatis.mapper.board.xml 파일을 의미한다 -->
 <mapper namespace="mybatis.mapper.board">
 
-	<!--
-		parameterType : DAO에서 mapper로 받아오는 값의 타입
-		resultType    : mapper에서 DAO로 반환하는 값의 타입(insert, update, delete는 사용하지 못한다.)
-	-->
-	
-	<select id="selectBoardList" resultType="Board">
-		SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT
-		  FROM BOARD
-		 ORDER BY BOARD_NO DESC
-	</select>
-	
-	<select id="selectBoardByNo" parameterType="int" resultType="Board">
-		SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT
-		  FROM BOARD
-		 WHERE BOARD_NO = #{boardNo}
-	</select>
-	
-	<insert id="insertBoard" parameterType="Board">
-		INSERT INTO BOARD 
-			(BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT)
-		VALUES
-			(BOARD_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))
-	</insert>
-	
-	<update id="updateBoard" parameterType="Board">
-		UPDATE BOARD
-		   SET TITLE = #{title}
-		     , CONTENT = #{content}
-		     , MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
-		 WHERE BOARD_NO = #{boardNo}
-	</update>
-	
-	<delete id="deleteBoard" parameterType="int">
-		DELETE
-		  FROM BOARD
-		 WHERE BOARD_NO = #{boardNo}
-	</delete>
+  <!--
+    parameterType : DAO에서 mapper로 받아오는 값의 타입
+    resultType : mapper에서 DAO로 반환하는 값의 타입(insert, update, delete는 사용하지 못한다.)
+  -->
+
+  <select id="selectBoardList" resultType="Board">
+    SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT
+      FROM BOARD
+     ORDER BY BOARD_NO DESC
+  </select>
+
+  <select id="selectBoardByNo" parameterType="int" resultType="Board">
+    SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT
+      FROM BOARD
+     WHERE BOARD_NO = #{boardNo}
+  </select>
+
+  <insert id="insertBoard" parameterType="Board">
+    INSERT INTO BOARD(
+        BOARD_NO
+      , TITLE
+      , CONTENT
+      , WRITER
+      , CREATED_AT
+      , MODIFIED_AT
+    ) VALUES (
+        BOARD_SEQ.NEXTVAL
+      , #{title}
+      , #{content}
+      , #{writer}
+      , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+      , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+    )
+  </insert>
+
+  <update id="updateBoard" parameterType="Board">
+    UPDATE BOARD
+       SET TITLE = #{title}
+         , CONTENT = #{content}
+         , MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+     WHERE BOARD_NO = #{boardNo}
+  </update>
+
+  <delete id="deleteBoard" parameterType="int">
+    DELETE
+      FROM BOARD
+     WHERE BOARD_NO = #{boardNo}
+  </delete>
 
 </mapper>

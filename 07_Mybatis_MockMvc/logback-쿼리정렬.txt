@@ -1,0 +1,90 @@
+<<< logback 쿼리 정렬을 위한 작업 >>>
+
+  1. 조건.
+    이클립스(STS)의 들여쓰기 설정을 tab 대신 space로 변경하고
+    들여쓰기 수준을 기존 4에서 2로 수정한 상태로 아래 설정을 확인하면
+    좀 더 명확한 쿼리문의 출력이 가능하다.
+
+  2. 이클립스(STS)의 들여쓰기 설정 방법 (Window - Preferences)
+  
+    (1) 일반 텍스트
+      General > Editors > Text Editors
+        > Displayed tab width: 2
+        > Insert spaces for tabs (체크하기)
+
+    (2) Java 코드
+      Java > Code Style > Formatter
+        > New : "MyEclipse" profile 만들기
+        > "MyEclipse" 선택 후 Edit
+          > Indentation
+            > Tab policy : Spaces only
+            > Indentation size: 2
+            > Tab size: 2
+
+    (3) JavaScript 코드
+      JSON > JSON Files > Editor
+        > Indent using spaces
+        > Indentation size: 2
+
+    (4) Web 코드
+      Web
+        > CSS Files > Editor
+          > Indent using spaces
+          > Indentation size: 2
+        > HTML Files > Editor
+          > Indent using spaces
+          > Indentation size: 2
+
+  * 참고
+    기존의 코드들은 tab과 space가 섞여 있어 쿼리 정렬이 제대로 되지 않는 경우가 있다.
+    이런 경우 기존 코드를 전체 선택(Ctral + A)한 뒤 Ctrl + Shift + F를 눌러주면 기존에 입력되어 있던 모든 tab이 space로 변경된다.
+    
+  3. 코드 수정하기
+  
+    1) pom.xml에 디펜던시 추가 (Logging에 추가)
+      <!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
+      <dependency>
+        <groupId>org.bgee.log4jdbc-log4j2</groupId>
+        <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+        <version>1.16</version>
+      </dependency>
+    
+    2) src/main/java
+      com.gdu.app07.logback.MyLogbackLayout 클래스 추가
+    
+    3) src/main/resources
+    
+      (1) log4jdbc.log4j2.properties 추가
+        log4jdbc.spylogdelegator.name=net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+        log4jdbc.dump.sql.maxlinelength=0
+    
+      (2) DB 접속 정보 수정 (application.properties)
+      
+        기존
+          driverClassName=oracle.jdbc.OracleDriver
+          url=jdbc:oracle:thin:@localhost:1521:xe
+          
+        수정 (driverClassName은 완전히 바꾸고, url은 log4jdbc:을 추가함)
+          driverClassName=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+          url=jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+    
+      (3) logback.xml 수정
+      
+        <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+          <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.gdu.app07.logback.MyLogbackLayout" />
+          </encoder>
+        </appender>
+        
+        <logger name="log4jdbc"            level="INFO" />
+        <logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
+        <logger name="jdbc.sqltiming"      level="OFF" />   <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+        <logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
+        <logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
+        <logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
+        <logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->
+          --- 또는 ---
+        <logger name="log4jdbc"            level="INFO" />
+        <logger name="jdbc"                level="OFF" />
+        <logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
+        <logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->

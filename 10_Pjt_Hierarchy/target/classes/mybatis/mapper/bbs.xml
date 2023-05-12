@@ -6,47 +6,81 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app10.mapper.BbsMapper">
 
-	<select id="getBbsCount" resultType="int">
-		SELECT COUNT(*)
-		  FROM BBS
-	</select>
-	
-	<select id="getBbsList" parameterType="Map" resultType="BbsDTO">
-		SELECT A.RN, A.BBS_NO, A.WRITER, A.TITLE, A.IP, A.CREATED_AT, A.STATE, A.DEPTH, A.GROUP_NO, A.GROUP_ORDER
-		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUP_NO DESC, GROUP_ORDER ASC) AS RN, BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER
-		          FROM BBS) A
-		 WHERE A.RN BETWEEN #{begin} AND #{end}
-	</select>
-	
-	<!-- 원글 달기 -->
-	<insert id="addBbs" parameterType="BbsDTO">
-		INSERT INTO BBS
-			(BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER)
-		VALUES
-			(BBS_SEQ.NEXTVAL, #{writer}, #{title}, #{ip}, SYSDATE, 1, 0, BBS_SEQ.CURRVAL, 0)
-	</insert>
-	
-	<!-- 삭제 -->
-	<update id="removeBbs" parameterType="int">
-		UPDATE BBS
-		   SET STATE = 0
-		 WHERE BBS_NO = #{bbsNo}
-	</update>
-	
-	<!-- 기존 답글에 선행 작업(같은 GROUP_NO를 가진 게시글 중 원글의 GROUP_ORDER보다 큰 GROUP_ORDER를 가진 게시글의 GROUP_ORDER를 1씩 증가) -->
-	<update id="increaseGroupOrder" parameterType="BbsDTO">  <!-- parameterType="BbsDTO"는 원글을 의미한다. -->
-		UPDATE BBS
-		   SET GROUP_ORDER = GROUP_ORDER + 1
-		 WHERE GROUP_NO = #{groupNo}         <!-- #{groupNo}는 원글의 groupNo를 의미한다. -->
-		   AND GROUP_ORDER > #{groupOrder}   <!-- #{groupOrder}는 원글의 groupOrder를 의미한다. -->
-	</update>
+  <select id="getBbsCount" resultType="int">
+    SELECT COUNT(*)
+      FROM BBS
+  </select>
 
-	<!-- 답글 달기 -->
-	<insert id="addReply" parameterType="BbsDTO">  <!-- parameterType="BbsDTO"는 답글을 의미한다. -->
-		INSERT INTO BBS
-			(BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER)
-		VALUES
-			(BBS_SEQ.NEXTVAL, #{writer}, #{title}, #{ip}, SYSDATE, 1, #{depth}, #{groupNo}, #{groupOrder})
-	</insert>
-	
+  <select id="getBbsList" parameterType="Map" resultType="BbsDTO">
+    SELECT A.RN, A.BBS_NO, A.WRITER, A.TITLE, A.IP, A.CREATED_AT, A.STATE, A.DEPTH, A.GROUP_NO, A.GROUP_ORDER
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUP_NO DESC, GROUP_ORDER ASC) AS RN, BBS_NO, WRITER, TITLE, IP, CREATED_AT, STATE, DEPTH, GROUP_NO, GROUP_ORDER
+              FROM BBS) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+
+  <!-- 원글 달기 -->
+  <insert id="addBbs" parameterType="BbsDTO">
+    INSERT INTO BBS(
+        BBS_NO
+      , WRITER
+      , TITLE
+      , IP
+      , CREATED_AT
+      , STATE
+      , DEPTH
+      , GROUP_NO
+      , GROUP_ORDER
+    ) VALUES (
+        BBS_SEQ.NEXTVAL
+      , #{writer}
+      , #{title}
+      , #{ip}
+      , SYSDATE
+      , 1
+      , 0
+      , BBS_SEQ.CURRVAL
+      , 0
+    )
+  </insert>
+
+  <!-- 삭제 -->
+  <update id="removeBbs" parameterType="int">
+    UPDATE BBS
+       SET STATE = 0
+     WHERE BBS_NO = #{bbsNo}
+  </update>
+
+  <!-- 기존 답글에 선행 작업(같은 GROUP_NO를 가진 게시글 중 원글의 GROUP_ORDER보다 큰 GROUP_ORDER를 가진 게시글의 GROUP_ORDER를 1씩 증가) -->
+  <update id="increaseGroupOrder" parameterType="BbsDTO">  <!-- parameterType="BbsDTO"는 원글을 의미한다. -->
+    UPDATE BBS
+       SET GROUP_ORDER = GROUP_ORDER + 1
+     WHERE GROUP_NO = #{groupNo}         <!-- #{groupNo}는 원글의 groupNo를 의미한다. -->
+       AND GROUP_ORDER > #{groupOrder}   <!-- #{groupOrder}는 원글의 groupOrder를 의미한다. -->
+  </update>
+
+  <!-- 답글 달기 -->
+  <insert id="addReply" parameterType="BbsDTO">  <!-- parameterType="BbsDTO"는 답글을 의미한다. -->
+    INSERT INTO BBS(
+        BBS_NO
+      , WRITER
+      , TITLE
+      , IP
+      , CREATED_AT
+      , STATE
+      , DEPTH
+      , GROUP_NO
+      , GROUP_ORDER
+    ) VALUES (
+        BBS_SEQ.NEXTVAL
+      , #{writer}
+      , #{title}
+      , #{ip}
+      , SYSDATE
+      , 1
+      , #{depth}
+      , #{groupNo}
+      , #{groupOrder}
+    )
+  </insert>
+
 </mapper>
