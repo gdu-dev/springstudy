@@ -14,8 +14,15 @@
 <body>
 
   <div>
-  
+    
+    <a href="${contextPath}/user/agree.jsp">회원가입</a>
+    <a href="${contextPath}/user/login.jsp">로그인</a>
+    
   </div>
   
 </body>
 </html>
+
+
+
+
