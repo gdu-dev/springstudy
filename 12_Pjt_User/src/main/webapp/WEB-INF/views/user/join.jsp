@@ -23,6 +23,10 @@
     
     <form id="frmJoin" method="post" action="${contextPath}/user/join.do">
     
+      <!-- agree.jsp에서 전달된 location, event 속성 -->
+      <input type="hidden" name="location" value="${location}">
+      <input type="hidden" name="event" value="${event}">
+    
       <div>
         <label for="id">아이디*</label>
         <input type="text" name="id" id="id">

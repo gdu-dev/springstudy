@@ -60,7 +60,7 @@
   
     <h1>약관 동의하기</h1>
     
-    <form id="frmAgree" action="${contextPath}/user/join.jsp">
+    <form id="frmAgree" action="${contextPath}/user/join.form">
     
       <div>
         <input type="checkbox" id="checkAll">
