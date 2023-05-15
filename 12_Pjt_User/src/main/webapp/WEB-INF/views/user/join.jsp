@@ -21,7 +21,7 @@
     
     <hr>
     
-    <form id="frm_join" method="post" action="${contextPath}/user/join.do">
+    <form id="frmJoin" method="post" action="${contextPath}/user/join.do">
     
       <div>
         <label for="id">아이디*</label>

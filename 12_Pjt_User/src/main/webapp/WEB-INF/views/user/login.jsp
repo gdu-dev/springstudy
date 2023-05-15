@@ -34,12 +34,12 @@
       </div>
       
       <div>
-        <label for="rememberId">
-          <input type="checkbox" id="rememberId">
+        <label for="chkRememberId">
+          <input type="checkbox" id="chkRememberId">
           아이디 기억
         </label>
         <label for="autoLogin">
-          <input type="checkbox" name="autoLogin" id="autoLogin">
+          <input type="checkbox" name="chkAutoLogin" id="chkAutoLogin">
           자동 로그인
         </label>
       </div>
@@ -48,7 +48,8 @@
       
     <div>
       <a href="${contextPath}/user/findId.jsp">아이디 찾기</a> | 
-      <a href="${contextPath}/user/findPw.jsp">비밀번호 찾기</a>
+      <a href="${contextPath}/user/findPw.jsp">비밀번호 찾기</a> |
+      <a href="${contextPath}/user/agree.jsp">회원가입</a>
     </div>
   
   </div>

@@ -56,8 +56,8 @@
       </div>
       
       <div>
-        <input type="checkbox" id="promotion" name="promotion">
-        <label for="promotion">이벤트 동의(선택)</label>
+        <input type="checkbox" id="event" name="event">
+        <label for="event">이벤트 동의(선택)</label>
         <div>
           <textarea>이벤트 ...</textarea>
         </div>
