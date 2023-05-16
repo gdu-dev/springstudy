@@ -166,7 +166,7 @@
 	  // 일(월에 따른 연동)
    $('#birthdate').append('<option value="">일</option>');
     
-    $('#birthmonth').change(function(){
+    $('#birthmonth').on('change', function(){
       
       $('#birthdate').empty();
       $('#birthdate').append('<option value="">일</option>');
