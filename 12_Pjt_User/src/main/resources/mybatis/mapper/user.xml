@@ -24,7 +24,23 @@
      WHERE ID = #{id}
   </select>
 
+  <select id="selectUserByEmail" parameterType="String" resultType="UserDTO">
+    SELECT EMAIL
+      FROM USER_T
+     WHERE EMAIL = #{email}
+  </select>
+  
+  <select id="selectSleepUserByEmail" parameterType="String" resultType="SleepUserDTO">
+    SELECT EMAIL
+      FROM SLEEP_USER_T
+     WHERE EMAIL = #{email}
+  </select>
 
+  <select id="selectLeaveUserByEmail" parameterType="String" resultType="LeaveUserDTO">
+    SELECT EMAIL
+      FROM LEAVE_USER_T
+     WHERE EMAIL = #{email}
+  </select>
 
 
 

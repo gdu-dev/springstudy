@@ -42,7 +42,7 @@ public class JavaMailUtil {
       // 이메일 전송을 위한 필수 속성을 Properties 객체로 만든다.
       Properties properties = new Properties();
       properties.put("mail.smtp.host", env.getProperty("spring.mail.host"));
-      properties.put("mail.smtp.port", env.getProperty("spring.mail.post"));
+      properties.put("mail.smtp.port", env.getProperty("spring.mail.port"));
       properties.put("mail.smtp.auth", env.getProperty("spring.mail.properties.mail.smtp.auth"));
       properties.put("mail.smtp.starttls.enable", env.getProperty("spring.mail.properties.mail.smtp.starttls.enable"));
      

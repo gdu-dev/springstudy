@@ -121,12 +121,60 @@
 				  data: 'email=' + email,
 				  dataType: 'json',
 				  success: function(resData){  // resData = {"enableEmail": true} 또는 {"enableEmail": false}
-					  resolve();  // then 메소드에 정의된 function을 호출한다.
+					  if(resData.enableEmail){
+    				  resolve();  // then 메소드에 정의된 function을 호출한다.
+					  } else {
+						  reject(2);  // catch 메소드에 정의된 function을 호출한다. 인수로 2을 전달한다.
+					  }
+				  }
+				})
+			  
+		  }).then(function(){
+			  
+		    // 입력한 이메일
+		    let email = $('#email').val();
+			  
+			  // 이메일로 인증번호를 보내는 ajax
+			  $.ajax({
+				  type: 'get',
+				  url: '${contextPath}/user/sendAuthCode.do',
+				  data: 'email=' + email,
+				  dataType: 'json',
+				  success: function(resData){  // resData = {"authCode": "6T43G9"}  사용자에게 전송한 인증코드를 의미
+					  
+					  // 메일로 받은 인증코드 입력 후 인증하기 버튼을 클릭한 경우
+					  $('#btnVerifyCode').on('click', function(){
+						  
+						  verifyEmail = resData.authCode == $('#authCode').val();  // 사용자에게 전송한 인증코드 == 사용자가 입력한 인증코드값
+						  if(verifyEmail) {
+							  alert('인증되었습니다.');
+						  } else {
+							  alert('인증에 실패했습니다.');
+						  }
+						  
+					  })
+					  
 				  },
 				  error: function(jqXHR){
-					  reject(2);  // catch 메소드에 정의된 function을 호출한다. 인수로 2을 전달한다.
+					  alert('인증번호가 발송되지 않았습니다.');
+					  verifyEmail = false;
 				  }
 			  })
+			  
+		  }).catch(function(number){
+			  
+			  let msg = '';
+			  switch(number){
+			  case 1:
+				  msg = '이메일 형식이 올바르지 않습니다.';  // 정규식 실패
+				  break;
+			  case 2:
+				  msg = '이미 사용 중인 이메일입니다.';      // 이메일 중복 체크 실패
+				  break;
+			  }
+			  $('#msgEmail').text(msg);
+			  
+			  verifyEmail = false;
 			  
 		  })
 		  
@@ -140,8 +188,6 @@
 		  $.ajax({
 			  success: function(){
 				  resolve();   // 이메일 중복 체크 통과
-			  },
-			  error: function(){
 				  reject(2);   // 이메일 중복 체크 실패
 			  }
 		  })
@@ -163,6 +209,7 @@
   $(function(){
 	  fnCheckId();
 	  fnCheckPw();
+	  fnCheckEmail();
   })
 
 </script>

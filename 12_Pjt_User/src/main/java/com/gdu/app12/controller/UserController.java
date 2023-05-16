@@ -40,8 +40,17 @@ public class UserController {
     return userService.verifyId(id);
   }
   
+  @ResponseBody
+  @GetMapping(value="/verifyEmail.do", produces="application/json")
+  public Map<String, Object> verifyEmail(@RequestParam("email") String email) {
+    return userService.verifyEmail(email);
+  }
   
-  
+  @ResponseBody
+  @GetMapping(value="/sendAuthCode.do", produces="application/json")
+  public Map<String, Object> sendAuthCode(@RequestParam("email") String email) {
+    return userService.sendAuthCode(email);
+  }
   
   
   
