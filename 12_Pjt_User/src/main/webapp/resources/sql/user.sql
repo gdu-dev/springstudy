@@ -13,7 +13,7 @@ CREATE TABLE USER_T (
     PW             VARCHAR2(64 BYTE)  NOT NULL,         -- SHA-256 암호화 방식 사용
     NAME           VARCHAR2(40 BYTE),                   -- 이름
     GENDER         VARCHAR2(2 BYTE),                    -- M, F, NO
-    EMAIL          VARCHAR2(100 BYTE) NOT NULL,         -- 이메일
+    EMAIL          VARCHAR2(100 BYTE) NOT NULL UNIQUE,  -- 이메일
     MOBILE         VARCHAR2(15 BYTE),                   -- 하이픈 제외(-) 후 저장
     BIRTHYEAR      VARCHAR2(4 BYTE),                    -- 출생년도(YYYY)
     BIRTHDATE      VARCHAR2(4 BYTE),                    -- 출생월일(MMDD)
