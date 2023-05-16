@@ -6,6 +6,28 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app12.mapper.UserMapper">
 
+  <select id="selectUserById" parameterType="String" resultType="UserDTO">
+    SELECT ID
+      FROM USER_T
+     WHERE ID = #{id}
+  </select>
   
+  <select id="selectSleepUserById" parameterType="String" resultType="SleepUserDTO">
+    SELECT ID
+      FROM SLEEP_USER_T
+     WHERE ID = #{id}
+  </select>
+
+  <select id="selectLeaveUserById" parameterType="String" resultType="LeaveUserDTO">
+    SELECT ID
+      FROM LEAVE_USER_T
+     WHERE ID = #{id}
+  </select>
+
+
+
+
+
+
 
 </mapper>

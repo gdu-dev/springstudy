@@ -10,6 +10,57 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
+<script>
+
+  // 전역 변수 (각종 검사 통과 유무를 저장하는 변수)
+  var verifyId = false;
+  
+  // 함수 정의
+  
+  // 1. 아이디 검사(정규식 + 중복)
+  function fnCheckId(){
+	  
+	  $('#id').on('keyup', function(){
+		  
+		  // 입력한 아이디
+		  let id = $(this).val();
+		  
+		  // 정규식 (5~40자, 소문자+숫자+하이픈(-)+밑줄(_) 사용 가능, 첫 글자는 소문자+숫자 사용 가능)
+		  let regId = /^[a-z0-9][a-z0-9-_]{4,39}$/;
+		  
+		  // 정규식 검사
+		  verifyId = regId.test(id);
+		  if(verifyId == false){
+			  $('#msgId').text('5~40자, 소문자+숫자+하이픈(-)+밑줄(_) 사용 가능, 첫 글자는 소문자+숫자 사용 가능');
+			  return;  // 여기서 함수 실행을 종료한다. (이후에 나오는 ajax(중복 체크) 실행을 막기 위해서)
+		  }
+		  
+		  // 아이디 중복 체크 ajax
+		  $.ajax({
+			  type: 'get',
+			  url: '${contextPath}/user/verifyId.do',
+			  data: 'id=' + id,
+			  dataType: 'json',
+			  success: function(resData){  // resData = {"enableId": true} 또는 {"enableId": false}
+				  verifyId = resData.enableId;
+			    if(verifyId){
+					  $('#msgId').text('사용 가능한 아이디입니다.');
+				  } else {
+					  $('#msgId').text('이미 사용 중인 아이디입니다.');
+				  }
+			  }
+		  })
+		  
+	  })
+	  
+  }
+  
+  // 함수 호출
+  $(function(){
+	  fnCheckId();
+  })
+
+</script>
 </head>
 <body>
 

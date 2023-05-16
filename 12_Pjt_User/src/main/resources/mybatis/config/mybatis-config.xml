@@ -12,7 +12,10 @@
 
 	<!-- typeAliases -->
 	<typeAliases>
-		<typeAlias alias="UserDTO" type="com.gdu.app12.domain.UserDTO" />
+		<typeAlias alias="UserDTO"       type="com.gdu.app12.domain.UserDTO" />
+		<typeAlias alias="SleepUserDTO"  type="com.gdu.app12.domain.SleepUserDTO" />
+		<typeAlias alias="LeaveUserDTO"  type="com.gdu.app12.domain.LeaveUserDTO" />
+		<typeAlias alias="UserAccessDTO" type="com.gdu.app12.domain.UserAccessDTO" />
 	</typeAliases>
 
 </configuration>
