@@ -1,10 +1,15 @@
 package com.gdu.app12.service;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
+import com.gdu.app12.domain.UserDTO;
 import com.gdu.app12.mapper.UserMapper;
 import com.gdu.app12.util.JavaMailUtil;
 import com.gdu.app12.util.SecurityUtil;
@@ -50,6 +55,94 @@ public class UserServiceImpl implements UserService {
     
   }
   
+  @Override
+  public void join(HttpServletRequest request, HttpServletResponse response) {
+    
+    // 요청 파라미터
+    String id = request.getParameter("id");
+    String pw = request.getParameter("pw");
+    String name = request.getParameter("name");
+    String gender = request.getParameter("gender");
+    String email = request.getParameter("email");
+    String mobile = request.getParameter("mobile");
+    String birthyear = request.getParameter("birthyear");
+    String birthmonth = request.getParameter("birthmonth");
+    String birthdate = request.getParameter("birthdate");
+    String postcode = request.getParameter("postcode");
+    String roadAddress = request.getParameter("roadAddress");
+    String jibunAddress = request.getParameter("jibunAddress");
+    String detailAddress = request.getParameter("detailAddress");
+    String extraAddress = request.getParameter("extraAddress");
+    String location = request.getParameter("location");
+    String event = request.getParameter("event");
+    
+    // 비밀번호 SHA-256 암호화
+    pw = securityUtil.getSha256(pw);
+    
+    // 이름 XSS 처리
+    name = securityUtil.preventXSS(name);
+    
+    // 출생월일
+    birthdate = birthmonth + birthdate;
+    
+    // 상세주소 XSS 처리
+    detailAddress = securityUtil.preventXSS(detailAddress);
+    
+    // 참고항목 XSS 처리
+    extraAddress = securityUtil.preventXSS(extraAddress);
+    
+    // agreecode
+    int agreecode = 0;
+    if(location.isEmpty() == false && event.isEmpty() == false) {
+      agreecode = 3;
+    } else if(location.isEmpty() && event.isEmpty() == false) {
+      agreecode = 2;
+    } else if(location.isEmpty() == false && event.isEmpty()) {
+      agreecode = 1;
+    }
+    
+    // UserDTO 만들기
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(id);
+    userDTO.setPw(pw);
+    userDTO.setName(name);
+    userDTO.setGender(gender);
+    userDTO.setEmail(email);
+    userDTO.setMobile(mobile);
+    userDTO.setBirthyear(birthyear);
+    userDTO.setBirthdate(birthdate);
+    userDTO.setPostcode(postcode);
+    userDTO.setRoadAddress(roadAddress);
+    userDTO.setJibunAddress(jibunAddress);
+    userDTO.setDetailAddress(detailAddress);
+    userDTO.setExtraAddress(extraAddress);
+    userDTO.setAgreecode(agreecode);
+    
+    // 회원가입(UserDTO를 DB로 보내기)
+    int joinResult = userMapper.insertUser(userDTO);
+    
+    // 응답
+    try {
+      
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>");
+      if(joinResult == 1) {
+        out.println("alert('회원 가입되었습니다.');");
+        out.println("location.href='" + request.getContextPath() + "/index.do';");
+      } else {
+        out.println("alert('회원 가입에 실패했습니다.');");
+        out.println("history.go(-2);");
+      }
+      out.println("</script>");
+      out.flush();
+      out.close();
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+  }
   
 
 }

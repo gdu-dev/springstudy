@@ -21,6 +21,7 @@
   var verifyMobile = false;
   var verifyEmail = false;
   
+  
   // 함수 정의
   
   // 1. 아이디 검사(정규식 + 중복)
@@ -329,9 +330,9 @@
         event.preventDefault();
         return;
       } else if($('#birthyear').val() == '' || $('#birthmonth').val() == '' || $('#birthdate').val() == ''){
-          alert('생년월일을 확인하세요.');
-          event.preventDefault();
-          return;
+        alert('생년월일을 확인하세요.');
+        event.preventDefault();
+        return;
       } else if(verifyEmail == false){
         alert('가입을 위해서 이메일 인증이 필요합니다.');
         event.preventDefault();
@@ -428,7 +429,7 @@
         <input type="text" name="extraAddress" id="extraAddress" placeholder="참고항목">
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
-            //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+            // 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
             function execDaumPostcode() {
                 new daum.Postcode({
                     oncomplete: function(data) {

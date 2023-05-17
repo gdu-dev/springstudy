@@ -14,4 +14,5 @@ public interface UserMapper {
   public UserDTO selectUserByEmail(String email);
   public SleepUserDTO selectSleepUserByEmail(String email);
   public LeaveUserDTO selectLeaveUserByEmail(String email);
+  public int insertUser(UserDTO userDTO);
 }
