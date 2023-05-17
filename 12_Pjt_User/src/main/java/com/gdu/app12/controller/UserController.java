@@ -78,13 +78,15 @@ public class UserController {
   }
   
   @GetMapping("/logout.do")
-  public String logout(HttpServletRequest request, HttpServletResponse response) {
+  public String requiredLogin_logout(HttpServletRequest request, HttpServletResponse response) {
+    // 로그인이 되어 있는지 확인
     userService.logout(request, response);
     return "redirect:/";
   }
   
   @GetMapping("/leave.do")
-  public void leave(HttpServletRequest request, HttpServletResponse response) {
+  public void requiredLogin_leave(HttpServletRequest request, HttpServletResponse response) {
+    // 로그인이 되어 있는지 확인
     userService.leave(request, response);
   }
   
