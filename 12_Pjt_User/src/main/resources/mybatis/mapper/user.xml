@@ -86,10 +86,28 @@
     )
   </insert>
 
+  <select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
+    SELECT ID
+      FROM USER_T
+     WHERE ID = #{id}
+       AND PW = #{pw}
+  </select>
+  <insert id="insertUserAccess" parameterType="String">
+    INSERT INTO USER_ACCESS_T (
+        ID
+      , LAST_LOGIN_AT
+    ) VALUES (
+        #{id}
+      , SYSDATE
+    )
+  </insert>
+  <update id="updateUserAccess" parameterType="String">
+    UPDATE USER_ACCESS_T
+       SET LAST_LOGIN_AT = SYSDATE
+     WHERE ID = #{id}
+  </update>
 
-
-
-
+  
 
 
 

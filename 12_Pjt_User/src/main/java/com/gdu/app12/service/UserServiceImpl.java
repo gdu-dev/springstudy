@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -140,6 +141,69 @@ public class UserServiceImpl implements UserService {
       
     } catch (Exception e) {
       e.printStackTrace();
+    }
+    
+  }
+  
+  @Override
+  public void login(HttpServletRequest request, HttpServletResponse response) {
+    
+    // 요청 파라미터
+    String url = request.getParameter("url");  // 로그인 화면의 이전 주소(로그인 후 되돌아갈 주소)
+    String id = request.getParameter("id");
+    String pw = request.getParameter("pw");
+    
+    // 비밀번호 SHA-256 암호화
+    pw = securityUtil.getSha256(pw);
+    
+    // UserDTO 만들기
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(id);
+    userDTO.setPw(pw);
+    
+    // DB에서 UserDTO 조회하기
+    UserDTO loginUserDTO = userMapper.selectUserByUserDTO(userDTO);
+    
+    // ID, PW가 일치하는 회원이 있으면 로그인 성공
+    // 1. session에 ID 저장하기
+    // 2. 회원 접속 기록 남기기
+    // 3. 이전 페이지로 이동하기
+    if(loginUserDTO != null) {
+      
+      HttpSession session = request.getSession();
+      session.setAttribute("loginId", id);
+      
+      int updateResult = userMapper.updateUserAccess(id);
+      if(updateResult == 0) {
+        userMapper.insertUserAccess(id);
+      }
+      
+      try {
+        response.sendRedirect(url);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      
+    }
+    // ID, PW가 일치하는 회원이 없으면 로그인 실패
+    else {
+      
+      // 응답
+      try {
+        
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>");
+        out.println("alert('일치하는 회원 정보가 없습니다.');");
+        out.println("location.href='" + request.getContextPath() + "/index.do';");
+        out.println("</script>");
+        out.flush();
+        out.close();
+        
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      
     }
     
   }
