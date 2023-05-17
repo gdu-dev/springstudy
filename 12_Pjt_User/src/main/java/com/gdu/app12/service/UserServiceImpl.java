@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.gdu.app12.domain.LeaveUserDTO;
 import com.gdu.app12.domain.UserDTO;
 import com.gdu.app12.mapper.UserMapper;
 import com.gdu.app12.util.JavaMailUtil;
@@ -219,7 +221,54 @@ public class UserServiceImpl implements UserService {
     
   }
   
-  
+  @Transactional(readOnly=true)
+  @Override
+  public void leave(HttpServletRequest request, HttpServletResponse response) {
+    
+    // 탈퇴할 회원의 ID는 session에 loginId 속성으로 저장되어 있다.
+    HttpSession session = request.getSession();
+    String id = (String) session.getAttribute("loginId");
+    
+    // 탈퇴할 회원의 정보(ID, EMAIL, JOINED_AT) 가져오기
+    UserDTO userDTO = userMapper.selectUserById(id);
+    
+    // LeaveUserDTO 만들기
+    LeaveUserDTO leaveUserDTO = new LeaveUserDTO();
+    leaveUserDTO.setId(id);
+    leaveUserDTO.setEmail(userDTO.getEmail());
+    leaveUserDTO.setJoinedAt(userDTO.getJoinedAt());
+    
+    // 회원 탈퇴하기
+    int insertResult = userMapper.insertLeaveUser(leaveUserDTO);
+    int deleteResult = userMapper.deleteUser(id);
+    
+    // 응답
+    try {
+      
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>");
+      if(insertResult == 1 && deleteResult == 1) {
+        
+        // session 초기화
+        session.invalidate();
+        
+        out.println("alert('회원 탈퇴되었습니다.');");
+        out.println("location.href='" + request.getContextPath() + "/index.do';");
+        
+      } else {
+        out.println("alert('회원 탈퇴에 실패했습니다.');");
+        out.println("history.back();");
+      }
+      out.println("</script>");
+      out.flush();
+      out.close();
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+  }
 
 }
 

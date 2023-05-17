@@ -18,4 +18,12 @@ public interface UserMapper {
   public UserDTO selectUserByUserDTO(UserDTO userDTO);
   public int insertUserAccess(String id);
   public int updateUserAccess(String id);
+  public int insertLeaveUser(LeaveUserDTO leaveUserDTO);
+  public int deleteUser(String id);
+  
+  
+  
+  
+  
+  
 }

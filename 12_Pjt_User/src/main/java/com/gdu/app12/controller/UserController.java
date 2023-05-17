@@ -83,6 +83,21 @@ public class UserController {
     return "redirect:/";
   }
   
+  @GetMapping("/leave.do")
+  public void leave(HttpServletRequest request, HttpServletResponse response) {
+    userService.leave(request, response);
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

@@ -7,7 +7,7 @@
 <mapper namespace="com.gdu.app12.mapper.UserMapper">
 
   <select id="selectUserById" parameterType="String" resultType="UserDTO">
-    SELECT ID
+    SELECT ID, EMAIL, JOINED_AT
       FROM USER_T
      WHERE ID = #{id}
   </select>
@@ -107,7 +107,24 @@
      WHERE ID = #{id}
   </update>
 
-  
+  <insert id="insertLeaveUser" parameterType="LeaveUserDTO">
+    INSERT INTO LEAVE_USER_T (
+        ID
+      , EMAIL
+      , JOINED_AT
+      , LEAVED_AT
+    ) VALUES (
+        #{id}
+      , #{email}
+      , #{joinedAt}
+      , SYSDATE
+    )
+  </insert>
+  <delete id="deleteUser" parameterType="String">
+    DELETE
+      FROM USER_T
+     WHERE ID = #{id}
+  </delete>
 
 
 
