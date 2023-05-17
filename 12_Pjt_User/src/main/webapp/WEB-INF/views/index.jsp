@@ -15,10 +15,28 @@
 
   <div>
     
-    <a href="${contextPath}/user/agree.form">회원가입</a>
-    <a href="${contextPath}/user/login.form">로그인</a>
+    <!-- 로그인이 안 된 상태 -->
+    <c:if test="${sessionScope.loginId == null}">    
+      <a href="${contextPath}/user/agree.form">회원가입</a>
+      <a href="${contextPath}/user/login.form">로그인</a>
+    </c:if>
+    
+    <!-- 로그인이 된 상태 -->
+    <c:if test="${sessionScope.loginId != null}">
+      <div>
+        <a href="#">${sessionScope.loginId}</a>님 반갑습니다 ♥
+      </div>
+      <div>
+        <a href="${contextPath}/user/logout.do">로그아웃</a>
+        <a href="#">회원탈퇴</a>
+      </div>
+    </c:if>
     
   </div>
   
 </body>
 </html>
+
+
+
+

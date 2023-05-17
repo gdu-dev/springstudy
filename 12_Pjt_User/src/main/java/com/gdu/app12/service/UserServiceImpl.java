@@ -208,6 +208,18 @@ public class UserServiceImpl implements UserService {
     
   }
   
+  @Override
+  public void logout(HttpServletRequest request, HttpServletResponse response) {
+    
+    // session에 저장된 모든 정보를 지운다.
+    HttpSession session = request.getSession();
+    if(session.getAttribute("loginId") != null) {
+      session.invalidate();
+    }
+    
+  }
+  
+  
 
 }
 

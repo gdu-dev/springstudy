@@ -77,6 +77,12 @@ public class UserController {
     userService.login(request, response);
   }
   
+  @GetMapping("/logout.do")
+  public String logout(HttpServletRequest request, HttpServletResponse response) {
+    userService.logout(request, response);
+    return "redirect:/";
+  }
+  
   
   
   
