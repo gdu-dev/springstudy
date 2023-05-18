@@ -23,6 +23,23 @@
 	
 	<context:component-scan base-package="com.gdu.app12" />
 	
-	
+  <!-- interceptor가 동작할 mapping 등록(모든 인터셉터는 @Component로 Bean으로 등록한 상태) -->
+  <interceptors>
+  
+    <interceptor>
+      <mapping path="/user/logout.do" />
+      <mapping path="/user/leave.do" />
+      <beans:bean class="com.gdu.app12.intercept.LoginCheckInterceptor" />
+    </interceptor>
+    
+    <interceptor>
+      <mapping path="/user/login.form" />
+      <mapping path="/user/agree.form" />
+      <mapping path="/user/join.form" />
+      <beans:bean class="com.gdu.app12.intercept.PreventLoginInterceptor" />
+    </interceptor>
+    
+  </interceptors>  
+  
 	
 </beans:beans>

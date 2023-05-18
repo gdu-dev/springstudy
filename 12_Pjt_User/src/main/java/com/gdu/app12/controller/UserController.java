@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.app12.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/user")
 @Controller
 public class UserController {
 
   // field
-  @Autowired
-  private UserService userService;
+  private final UserService userService;
   
   @GetMapping("/agree.form")
   public String agreeForm() {
@@ -78,14 +79,14 @@ public class UserController {
   }
   
   @GetMapping("/logout.do")
-  public String requiredLogin_logout(HttpServletRequest request, HttpServletResponse response) {
+  public String logout(HttpServletRequest request, HttpServletResponse response) {
     // 로그인이 되어 있는지 확인
     userService.logout(request, response);
     return "redirect:/";
   }
   
   @GetMapping("/leave.do")
-  public void requiredLogin_leave(HttpServletRequest request, HttpServletResponse response) {
+  public void leave(HttpServletRequest request, HttpServletResponse response) {
     // 로그인이 되어 있는지 확인
     userService.leave(request, response);
   }
