@@ -126,7 +126,7 @@
      WHERE ID = #{id}
   </delete>
 
-
+  <!-- 휴면처리 1단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 휴면 테이블에 저장하기 -->
 
 
 

@@ -10,7 +10,7 @@ public class MainClass {
     
     System.out.println(securityUtil.getSha256("1111"));
     System.out.println(securityUtil.getSha256("2222"));
-    System.out.println(securityUtil.getSha256("9999"));
+    System.out.println(securityUtil.getSha256("3333"));
 
   }
 
