@@ -127,8 +127,60 @@
   </delete>
 
   <!-- 휴면처리 1단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 휴면 테이블에 저장하기 -->
+  <insert id="insertSleepUser">
+    INSERT INTO SLEEP_USER_T (
+        USER_NO
+      , ID
+      , PW
+      , NAME
+      , GENDER
+      , EMAIL
+      , MOBILE
+      , BIRTHYEAR
+      , BIRTHDATE
+      , POSTCODE
+      , ROAD_ADDRESS
+      , JIBUN_ADDRESS
+      , DETAIL_ADDRESS
+      , EXTRA_ADDRESS
+      , AGREECODE
+      , JOINED_AT
+      , PW_MODIFIED_AT
+      , SLEPT_AT
+    ) (SELECT U.USER_NO
+            , U.ID
+            , U.PW
+            , U.NAME
+            , U.GENDER
+            , U.EMAIL
+            , U.MOBILE
+            , U.BIRTHYEAR
+            , U.BIRTHDATE
+            , U.POSTCODE
+            , U.ROAD_ADDRESS
+            , U.JIBUN_ADDRESS
+            , U.DETAIL_ADDRESS
+            , U.EXTRA_ADDRESS
+            , U.AGREECODE
+            , U.JOINED_AT
+            , U.PW_MODIFIED_AT
+            , SYSDATE
+         FROM USER_T U LEFT OUTER JOIN USER_ACCESS_T UA
+           ON U.ID = UA.ID
+        WHERE MONTHS_BETWEEN(SYSDATE, UA.LAST_LOGIN_AT) >= 12  <!-- 12개월 이상 로그인 이력이 없는 회원 -->
+           OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) >= 12 AND UA.LAST_LOGIN_AT IS NULL))  <!-- 가입일이 12개월 이상 지나고, 로그인 이력이 아예 없는 회원 -->
+  </insert>
 
-
+  <!-- 휴면처리 2단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 회원 테이블에서 삭제하기 -->
+  <delete id="deleteUserForSleep">
+    DELETE
+      FROM USER_T
+     WHERE ID IN(SELECT U.ID
+                   FROM USER_T U LEFT OUTER JOIN USER_ACCESS_T UA
+                     ON U.ID = UA.ID
+                  WHERE MONTHS_BETWEEN(SYSDATE, UA.LAST_LOGIN_AT) >= 12
+                     OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) >= 12 AND UA.LAST_LOGIN_AT IS NULL))
+  </delete>
 
 
 
