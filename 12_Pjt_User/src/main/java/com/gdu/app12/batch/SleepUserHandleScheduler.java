@@ -17,7 +17,7 @@ public class SleepUserHandleScheduler {
   // 매일 새벽 1시
   @Scheduled(cron="0 0 1 1/1 * ?")
   public void execute() {
-    
+    userService.sleepUserHandle();
   }
   
 }

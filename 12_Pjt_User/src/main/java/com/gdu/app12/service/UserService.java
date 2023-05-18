@@ -14,7 +14,7 @@ public interface UserService {
   public void login(HttpServletRequest request, HttpServletResponse response);
   public void logout(HttpServletRequest request, HttpServletResponse response);
   public void leave(HttpServletRequest request, HttpServletResponse response);
-  
+  public void sleepUserHandle();
   
   
   
