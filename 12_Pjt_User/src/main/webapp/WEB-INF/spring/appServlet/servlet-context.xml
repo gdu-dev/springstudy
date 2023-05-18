@@ -39,7 +39,11 @@
       <beans:bean class="com.gdu.app12.intercept.PreventLoginInterceptor" />
     </interceptor>
     
+    <interceptor>
+      <mapping path="/user/login.do" />
+      <beans:bean class="com.gdu.app12.intercept.SleepUserCheckInterceptor" />
+    </interceptor>
+    
   </interceptors>  
-  
 	
 </beans:beans>

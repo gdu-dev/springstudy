@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,9 +92,16 @@ public class UserController {
     userService.leave(request, response);
   }
   
+  @GetMapping("/wakeup.form")
+  public String wakeup() {
+    return "user/wakeup";
+  }
   
-  
-  
+  @GetMapping("/restore.do")
+  public void restore(HttpSession session) {
+    // 복원할 회원의 아이디를 sysout으로 출력해 보시오.
+    System.out.println(session.getAttribute("sleepUserId"));
+  }
   
   
   
