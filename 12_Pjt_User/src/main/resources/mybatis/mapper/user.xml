@@ -106,7 +106,26 @@
        SET LAST_LOGIN_AT = SYSDATE
      WHERE ID = #{id}
   </update>
+  <update id="insertAutologin" parameterType="UserDTO">
+    UPDATE USER_T
+       SET AUTOLOGIN_ID = #{autologinId}
+         , AUTOLOGIN_EXPIRED_AT = #{autologinExpiredAt}
+     WHERE ID = #{id}
+  </update>
+  <update id="deleteAutologin" parameterType="String">
+    UPDATE USER_T
+       SET AUTOLOGIN_ID = NULL
+         , AUTOLOGIN_EXPIRED_AT = NULL
+     WHERE ID = #{id}
+  </update>
+  <select id="selectAutologin" parameterType="String">
+    SELECT ID
+      FROM USER_T
+     WHERE AUTOLOGIN_ID = #{autologinId}
+       AND AUTOLOGIN_EXPIRED_AT > SYSDATE
+  </select>
 
+  
   <insert id="insertLeaveUser" parameterType="LeaveUserDTO">
     INSERT INTO LEAVE_USER_T (
         ID
@@ -182,7 +201,53 @@
                      OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) >= 12 AND UA.LAST_LOGIN_AT IS NULL))
   </delete>
 
-
+  <!-- 휴면복원 1단계 : 휴면 테이블의 데이터를 회원 테이블에 저장하기 -->
+  <insert id="insertRestoreUser" parameterType="String">
+    INSERT INTO USER_T (
+        USER_NO
+      , ID
+      , PW
+      , NAME
+      , GENDER
+      , EMAIL
+      , MOBILE
+      , BIRTHYEAR
+      , BIRTHDATE
+      , POSTCODE
+      , ROAD_ADDRESS
+      , JIBUN_ADDRESS
+      , DETAIL_ADDRESS
+      , EXTRA_ADDRESS
+      , AGREECODE
+      , JOINED_AT
+      , PW_MODIFIED_AT
+    ) (SELECT USER_NO
+            , ID
+            , PW
+            , NAME
+            , GENDER
+            , EMAIL
+            , MOBILE
+            , BIRTHYEAR
+            , BIRTHDATE
+            , POSTCODE
+            , ROAD_ADDRESS
+            , JIBUN_ADDRESS
+            , DETAIL_ADDRESS
+            , EXTRA_ADDRESS
+            , AGREECODE
+            , JOINED_AT
+            , PW_MODIFIED_AT
+         FROM SLEEP_USER_T
+        WHERE ID = #{id})
+  </insert>
+  
+  <!-- 휴면복원 2단계 : 복원할 회원을 SLEEP_USER_T 테이블에서 삭제하기 -->
+  <delete id="deleteSleepUser" parameterType="String">
+    DELETE
+      FROM SLEEP_USER_T
+     WHERE ID = #{id}
+  </delete>
 
 
 

@@ -27,6 +27,7 @@ public class SleepUserCheckInterceptor implements HandlerInterceptor {
     String id = request.getParameter("id");
     
     // 해당 아이디가 휴면 테이블에 있는지 확인
+    
     SleepUserDTO sleepUserDTO = userMapper.selectSleepUserById(id);
     
     // 휴면 테이블에 정보가 있다면 휴면해제화면(/user/wakeup.form)으로 이동
