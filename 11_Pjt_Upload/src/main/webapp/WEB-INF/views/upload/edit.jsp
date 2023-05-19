@@ -11,9 +11,11 @@
 <title>Insert title here</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
+
 	function fnList(){
 		location.href = '${contextPath}/upload/list.do';
 	}
+	
 	function fnFileCheck(vThis){
 
 		// 최대 크기 10MB
@@ -40,12 +42,14 @@
 		})
 		
 	}
+	
 	function fnRemoveAttach(attachNo){
 		if(confirm('이 첨부 파일을 삭제하시겠습니까?') == false){
 			return;
 		}
 		location.href = '${contextPath}/upload/removeAttach.do?uploadNo=${upload.uploadNo}&attachNo=' + attachNo;
 	}
+	
 </script>
 </head>
 <body>

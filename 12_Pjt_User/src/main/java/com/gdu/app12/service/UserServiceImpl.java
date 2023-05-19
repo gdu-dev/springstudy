@@ -169,14 +169,14 @@ public class UserServiceImpl implements UserService {
     UserDTO loginUserDTO = userMapper.selectUserByUserDTO(userDTO);
     
     // ID, PW가 일치하는 회원이 있으면 로그인 성공
-    // 0. 자동 로그인 처리하기(autoLogin 메소드에 맡기기)
+    // 0. 자동 로그인 처리하기(autologin 메소드에 맡기기)
     // 1. session에 ID 저장하기
     // 2. 회원 접속 기록 남기기
     // 3. 이전 페이지로 이동하기
     if(loginUserDTO != null) {
       
-      // 자동 로그인 처리를 위한 autoLogin 메소드 호출하기
-      autoLogin(request, response);
+      // 자동 로그인 처리를 위한 autologin 메소드 호출하기
+      autologin(request, response);
       
       HttpSession session = request.getSession();
       session.setAttribute("loginId", id);
@@ -217,7 +217,7 @@ public class UserServiceImpl implements UserService {
   }
   
   @Override
-  public void autoLogin(HttpServletRequest request, HttpServletResponse response) {
+  public void autologin(HttpServletRequest request, HttpServletResponse response) {
     
     /*
       자동 로그인 처리하기
@@ -235,10 +235,10 @@ public class UserServiceImpl implements UserService {
     
     // 요청 파라미터
     String id = request.getParameter("id");
-    String chkAutoLogin = request.getParameter("chkAutoLogin");
+    String chkAutologin = request.getParameter("chkAutologin");
     
     // 자동 로그인을 체크한 경우
-    if(chkAutoLogin != null) {
+    if(chkAutologin != null) {
       
       // session의 id를 가져온다.
       HttpSession session = request.getSession();
@@ -256,9 +256,9 @@ public class UserServiceImpl implements UserService {
       userMapper.insertAutologin(userDTO);
       
       // session id를 쿠키에 저장하기
-      Cookie cookie = new Cookie("autoLoginId", sessionId);
+      Cookie cookie = new Cookie("autologinId", sessionId);
       cookie.setMaxAge(60 * 60 * 24 * 15);      // 초 단위로 15일 지정
-      cookie.setPath(request.getContextPath()); // 애플리케이션의 모든 URL에서 autoLoginId 쿠키를 확인할 수 있다.
+      cookie.setPath(request.getContextPath()); // 애플리케이션의 모든 URL에서 autologinId 쿠키를 확인할 수 있다.
       response.addCookie(cookie);
       
     }
@@ -268,10 +268,10 @@ public class UserServiceImpl implements UserService {
       // DB에서 AUTOLOGIN_ID 칼럼과 AUTOLOGIN_EXPIRED_AT 칼럼 정보 삭제하기
       userMapper.deleteAutologin(id);
       
-      // autoLoginId 쿠키 삭제하기
-      Cookie cookie = new Cookie("autoLoginId", "");
-      cookie.setMaxAge(0);  // 쿠키 유지시간을 0초로 설정
-      cookie.setPath(request.getContextPath());  // autoLoginId 쿠키의 path와 동일하게 설정
+      // autologinId 쿠키 삭제하기
+      Cookie cookie = new Cookie("autologinId", "");
+      cookie.setMaxAge(0);                       // 쿠키 유지시간을 0초로 설정
+      cookie.setPath(request.getContextPath());  // autologinId 쿠키의 path와 동일하게 설정
       response.addCookie(cookie);
       
     }
@@ -289,9 +289,9 @@ public class UserServiceImpl implements UserService {
     userMapper.deleteAutologin(id);
     
     // autoLoginId 쿠키 삭제하기
-    Cookie cookie = new Cookie("autoLoginId", "");
-    cookie.setMaxAge(0);  // 쿠키 유지시간을 0초로 설정
-    cookie.setPath(request.getContextPath());  // autoLoginId 쿠키의 path와 동일하게 설정
+    Cookie cookie = new Cookie("autologinId", "");
+    cookie.setMaxAge(0);                       // 쿠키 유지시간을 0초로 설정
+    cookie.setPath(request.getContextPath());  // autologinId 쿠키의 path와 동일하게 설정
     response.addCookie(cookie);
     
     // 2. session에 저장된 모든 정보를 지운다.
@@ -392,6 +392,20 @@ public class UserServiceImpl implements UserService {
     }
     
   }
+  
+  @Override
+  public boolean checkPw(String id, String pw) {
+    UserDTO userDTO = userMapper.selectUserById(id);
+    pw = securityUtil.getSha256(pw);
+    return pw.equals(userDTO.getPw());
+  }
+  
+  
+  @Override
+  public UserDTO getUserById(String id) {
+    return userMapper.selectUserById(id);
+  }
+  
   
   /*
    * @Override public Map<String, Object> findUser(UserDTO userDTO) { Map<String,

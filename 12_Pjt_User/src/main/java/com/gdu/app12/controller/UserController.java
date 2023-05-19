@@ -1,22 +1,22 @@
 package com.gdu.app12.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gdu.app12.domain.UserDTO;
 import com.gdu.app12.service.UserService;
 
 @RequestMapping("/user")
@@ -95,6 +95,27 @@ public class UserController {
   @GetMapping("/restore.do")  // 휴면 복원
   public void restore(HttpServletRequest request, HttpServletResponse response) {
     userService.restore(request, response);
+  }
+  
+  @GetMapping("/checkPw.form")  // 마이페이지 직전 비밀번호 확인 화면으로 이동
+  public String checkPwForm() {
+    return "user/checkPw";
+  }
+  
+  @ResponseBody
+  @PostMapping(value="/checkPw.do", produces="application/json")  // 사용자가 입력한 비밀번호가 맞는지 확인
+  public Map<String, Object> checkPw(@RequestParam("id") String id
+                                   , @RequestParam("pw") String pw) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("isCorrect", userService.checkPw(id, pw));
+    return map;
+  }
+  
+  @GetMapping("/mypage.do")
+  public String mypage(HttpSession session, Model model) {  // 마이페이지로 이동
+    String id = (String) session.getAttribute("loginId");
+    model.addAttribute("loginUser", userService.getUserById(id));
+    return "user/mypage";
   }
   
   @GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동

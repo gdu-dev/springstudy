@@ -88,14 +88,10 @@
       </div>
       
       <div>
-        <label for="chkRememberId">
-          <input type="checkbox" id="chkRememberId">
-          아이디 기억
-        </label>
-        <label for="autoLogin">
-          <input type="checkbox" name="chkAutoLogin" id="chkAutoLogin">
-          자동 로그인
-        </label>
+        <input type="checkbox" id="chkRememberId">
+        <label for="chkRememberId">아이디 기억</label>
+        <input type="checkbox" name="chkAutologin" id="chkAutologin">
+        <label for="chkAutologin">자동 로그인</label>
       </div>
     
     </form>

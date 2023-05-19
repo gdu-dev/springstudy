@@ -7,7 +7,25 @@
 <mapper namespace="com.gdu.app12.mapper.UserMapper">
 
   <select id="selectUserById" parameterType="String" resultType="UserDTO">
-    SELECT ID, EMAIL, JOINED_AT
+    SELECT USER_NO
+         , ID
+         , PW
+         , NAME
+         , GENDER
+         , EMAIL
+         , MOBILE
+         , BIRTHYEAR
+         , BIRTHDATE
+         , POSTCODE
+         , ROAD_ADDRESS
+         , JIBUN_ADDRESS
+         , DETAIL_ADDRESS
+         , EXTRA_ADDRESS
+         , AGREECODE
+         , JOINED_AT
+         , PW_MODIFIED_AT
+         , AUTOLOGIN_ID
+         , AUTOLOGIN_EXPIRED_AT
       FROM USER_T
      WHERE ID = #{id}
   </select>
@@ -118,7 +136,7 @@
          , AUTOLOGIN_EXPIRED_AT = NULL
      WHERE ID = #{id}
   </update>
-  <select id="selectAutologin" parameterType="String">
+  <select id="selectAutologin" parameterType="String" resultType="UserDTO">
     SELECT ID
       FROM USER_T
      WHERE AUTOLOGIN_ID = #{autologinId}
