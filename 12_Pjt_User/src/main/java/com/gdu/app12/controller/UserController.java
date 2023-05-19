@@ -65,9 +65,10 @@ public class UserController {
   }
   
   @GetMapping("/login.form")
-  public String loginForm(@RequestHeader("referer") String url, Model model) {
+  public String loginForm(HttpServletRequest request, Model model) {
     // 요청 헤더 referer : 로그인 화면으로 이동하기 직전의 주소를 저장하는 헤더 값
-    model.addAttribute("url", url);
+    String url = request.getHeader("referer");
+    model.addAttribute("url", url == null ? request.getContextPath() : url);
     return "user/login";
   }
   
