@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${contextPath}/resources/js/jquery-3.6.1.min.js"></script>
+<script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 	
 	function fnCheckPwCancel(){
