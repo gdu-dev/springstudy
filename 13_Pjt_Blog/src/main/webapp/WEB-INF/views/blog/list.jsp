@@ -12,8 +12,20 @@
 <div>
 
   <h1>블로그 목록</h1>
+  
+  <c:if test="${sessionScope.loginId ne null}">
+    <div>
+      <input type="button" value="블로그 작성하기" onclick="fnWrite()">
+    </div>
+  </c:if>
 
 </div>
+
+<script>
+  function fnWrite(){
+	  location.href = '${contextPath}/blog/write.form';
+  }
+</script>
 
 </body>
 </html>

@@ -44,15 +44,9 @@
     });
   }
   
-  // 2. 비밀번호 검사 (정규식)
   function fnCheckPw(){
-	  
 	  $('#pw').on('keyup', function(){
-		
-		  // 입력한 비밀번호
 		  let pw = $(this).val();
-		  
-		  // 길이(4~20자) 및 정규식(소문자+대문자+숫자+특수문자 사용 가능, 3개 이상 조합)
 		  let pwLength = pw.length;
 		  let validCount = /[a-z]/.test(pw)         //   소문자를 가지고 있으면 true(1), 없으면 false(0)
 				             + /[A-Z]/.test(pw)         //   대문자를 가지고 있으면 true(1), 없으면 false(0)
@@ -64,64 +58,39 @@
 		  } else {
 			  $('#msgPw').text('4~20자, 소문자+대문자+숫자+특수문자 사용 가능, 3개 이상 조합');
 		  }
-	  
 	  })
-	  
   }
   
-  // 3. 비밀번호 확인
   function fnCheckPwAgain(){
-    
     $('#rePw').on('keyup', function(){
-      
-    	// 입력된 비밀번호
     	let pw = $('#pw').val();
-    	
-      // 재입력한 비밀번호
       let rePw = $(this).val();
-      
-      // 비밀번호와 재입력한 비밀번호 검사
       verifyRePw = (rePw != '') && (rePw == pw);
       if(verifyRePw){
         $('#msgRePw').text('');
       } else {
         $('#msgRePw').text('비밀번호 입력을 확인하세요.');
       }
-      
     })
-    
   }
   
-  // 4. 이름
   function fnCheckName(){
-	  
 	  $('#name').on('keyup', function(){
 		  verifyName = $(this).val() != '';
 	  })
-	  
   }
   
-  // 5. 휴대전화
   function fnCheckMobile(){
-	  
 	  $('#mobile').on('keyup', function(){
-		  
-		  // 입력한 휴대전화
 		  let mobile = $(this).val();
-		  
-		  // 정규식
 		  let regMobile = /^010[0-9]{7,8}$/;
-		  
-		  // 정규식 검사
 		  verifyMobile = regMobile.test(mobile);
 		  if(verifyMobile){
 			  $('#msgMobile').text('');
 		  } else {
 			  $('#msgMobile').text('휴대전화 입력을 확인하세요.');			  
 		  }
-		  
 	  })
-	  
   }
   
   // 6. 년/월/일

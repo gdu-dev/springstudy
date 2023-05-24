@@ -13,4 +13,9 @@ public class BlogController {
     return "blog/list";
   }
   
+  @GetMapping("/write.form")
+  public String write() {
+    return "blog/write";
+  }
+  
 }
