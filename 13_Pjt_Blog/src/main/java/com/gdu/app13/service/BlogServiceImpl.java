@@ -1,6 +1,8 @@
 package com.gdu.app13.service;
 
+import java.io.File;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,16 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.app13.domain.BlogDTO;
 import com.gdu.app13.domain.MemberDTO;
 import com.gdu.app13.mapper.BlogMapper;
+import com.gdu.app13.util.MyFileUtil;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 public class BlogServiceImpl implements BlogService {
 
-  @Autowired
   private BlogMapper blogMapper;
+  private MyFileUtil myFileUtil;
   
   @Override
   public void loadBlogList(HttpServletRequest request, Model model) {
@@ -64,21 +72,56 @@ public class BlogServiceImpl implements BlogService {
     } catch(Exception e) {
       e.printStackTrace();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
   }
+  
+  @Override
+  public Map<String, Object> imageUpload(MultipartHttpServletRequest multipartRequest) {
+    
+    /*
+
+      var formData = new FormData();
+      formData.append('file', 첨부된파일);
+      
+      $.ajax({
+        data: formData
+      }
+      
+    */
+    
+    // formData에 저장된 file 꺼내기
+    MultipartFile multipartFile = multipartRequest.getFile("file");
+    
+    // HDD 저장할 경로
+    String summernoteImagePath = myFileUtil.getSummernoteImagePath();
+    
+    // HDD 저장할 경로 없으면 만들기
+    File dir = new File(summernoteImagePath);
+    if(dir.exists() == false) {
+      dir.mkdirs();
+    }
+    
+    // HDD 저장할 파일의 이름(UUID.확장자)
+    String filesystemName = myFileUtil.getFilesystemName(multipartFile.getOriginalFilename());
+    
+    
+    return null;
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 }

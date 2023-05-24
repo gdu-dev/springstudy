@@ -11,8 +11,16 @@
 
 <script>
 
+  // 자바스크립트 파일(*.js)에서는 ${contextPath}가 인식되지 않기 때문에
+  // ContextPath를 반환하는 별도의 자바스크립트 코드가 필요하다.
+  function getContextPath(){
+	  let begin = location.href.indexOf(location.origin) + location.origin.length;
+	  let end   = location.href.indexOf("/", begin + 1);
+	  return location.href.substring(begin, end);
+  }
+
 	function fnList() {
-		location.href = '${contextPath}/blog/list.do';
+		location.href = getContextPath() + '/blog/list.do';
 	}
 	
 	$(function(){
@@ -29,7 +37,26 @@
 				['table', ['table']],
 				['insert', ['link', 'picture', 'video']],
 				['view', ['fullscreen', 'codeview', 'help']]
-			]
+			],
+			callbacks: {
+				onImageUpload: function(files){            // summernote 편집기에 이미지를 올리면 해당 이미지의 정보는 function의 매개변수 files(배열)로 전달된다.
+					for(let i = 0; i < files.length; i++) {  // files 배열을 순회하면서 이미지를 하나씩 처리한다.
+						var formData = new FormData();         // 가상 form (주로 ajax 처리에서 사용)
+						formData.append('file', files[i]);     // 가상 form에 추가한 요소
+						$.ajax({                               // 가상 form에 저장된 이미지를 HDD에 저장하고 저장된 경로(매핑)와 이름을 받아오는 ajax
+							contentType: false,                  // ajax을 이용한 파일 첨부에서 사용
+							processData: false,                  // ajax을 이용한 파일 첨부에서 사용
+							type: 'post',
+							url: getContextPath() + '/blog/imageUpload.do',
+							data: formData,
+							dataType: 'json',
+							success: function(resData){
+								
+							}
+						})  // ajax
+					}  // for
+				}  // onImageUpload
+			}  // callbacks
 		})
 	})
 	
