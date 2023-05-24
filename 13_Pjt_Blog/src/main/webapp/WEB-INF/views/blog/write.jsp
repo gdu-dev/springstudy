@@ -50,8 +50,9 @@
 							url: getContextPath() + '/blog/imageUpload.do',
 							data: formData,
 							dataType: 'json',
-							success: function(resData){
-								
+							success: function(resData){          // resData = {"src": "/app13/imageLoad/abcdefg.jpg"}
+								$('#content').summernote('insertImage', resData.src);  // content에 <img src="/app13/imageLoad/abcdefg.jpg"> 태그가 추가된다.
+								                                                       // content에 추가된 img 태그의 src 속성 값은 servlet-context.xml의 resources 태그에 의해서 /storage/summernote/abcdefg.jpg로 처리된다.
 							}
 						})  // ajax
 					}  // for

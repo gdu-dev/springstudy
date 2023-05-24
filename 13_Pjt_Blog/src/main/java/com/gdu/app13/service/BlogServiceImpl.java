@@ -2,6 +2,7 @@ package com.gdu.app13.service;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,8 +105,19 @@ public class BlogServiceImpl implements BlogService {
     // HDD 저장할 파일의 이름(UUID.확장자)
     String filesystemName = myFileUtil.getFilesystemName(multipartFile.getOriginalFilename());
     
+    // HDD 저장
+    try {
+      File file = new File(dir, filesystemName);
+      multipartFile.transferTo(file);
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
     
-    return null;
+    // HDD에 저장된 파일의 확인을 위한 mapping 값을 반환(servlet-context.xml 참고할 것)
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("src", multipartRequest.getContextPath() + "/imageLoad/" + filesystemName);
+    
+    return map;
     
   }
   
