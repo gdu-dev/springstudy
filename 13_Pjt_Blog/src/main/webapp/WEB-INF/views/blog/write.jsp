@@ -48,9 +48,10 @@
 				<input type="text" id="title" name="title">
 			</div>
 			<div>
-				<textarea id="content" name="content"></textarea>  <!-- summernote 편집기로 바뀌는 textarea -->
+				<textarea id="content" name="content"></textarea>
 			</div>
 			<div>
+        <input type="hidden" name="memberNo" value="${sessionScope.loginNo}">
 				<button>작성완료</button>
 				<input type="button" value="목록" onclick="fnList()">
 			</div>

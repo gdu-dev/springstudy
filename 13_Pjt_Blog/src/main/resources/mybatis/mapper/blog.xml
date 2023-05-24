@@ -25,7 +25,13 @@
       , MODIFIED_AT
       , MEMBER_NO
     ) VALUES (
-        
+        BLOG_SEQ.NEXTVAL
+      , #{title}
+      , #{content}
+      , 0
+      , SYSDATE
+      , SYSDATE
+      , #{memberDTO.memberNo}
     )
   </insert>
 
