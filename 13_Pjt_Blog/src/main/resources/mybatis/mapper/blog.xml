@@ -6,13 +6,32 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app13.mapper.BlogMapper">
 
+  <resultMap type="BlogDTO" id="BlogMap">
+    <id column="BLOG_NO" property="blogNo"/>
+    <result column="TITLE" property="title"/>
+    <result column="CONTENT" property="content"/>
+    <result column="HIT" property="hit"/>
+    <result column="CREATED_AT" property="createdAt"/>
+    <result column="MODIFIED_AT" property="modifiedAt"/>
+    <association javaType="MemberDTO" property="memberDTO">
+      <id column="MEMBER_NO" property="memberNo"/>
+      <result column="ID" property="id"/>
+      <result column="PW" property="pw"/>
+      <result column="NAME" property="name"/>
+    </association>
+  </resultMap>
+
   <select id="getBlogCount" resultType="int">
     SELECT COUNT(*)
       FROM BLOG_T
   </select>
   
-  <select id="getBlogList" parameterType="Map" resultType="BlogDTO">
-    
+  <select id="getBlogList" parameterType="Map" resultMap="BlogMap">
+    SELECT A.BLOG_NO, A.TITLE, A.CONTENT, A.HIT, A.CREATED_AT, A.MODIFIED_AT, A.MEMBER_NO, A.ID
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY BLOG_NO DESC) AS RN, B.BLOG_NO, B.TITLE, B.CONTENT, B.HIT, B.CREATED_AT, B.MODIFIED_AT, B.MEMBER_NO, M.ID
+              FROM MEMBER_T M INNER JOIN BLOG_T B
+                ON M.MEMBER_NO = B.MEMBER_NO) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
   </select>
 
   <!--
