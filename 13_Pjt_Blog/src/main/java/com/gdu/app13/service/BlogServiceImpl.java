@@ -3,7 +3,9 @@ package com.gdu.app13.service;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,7 @@ import com.gdu.app13.domain.MemberDTO;
 import com.gdu.app13.domain.SummernoteImageDTO;
 import com.gdu.app13.mapper.BlogMapper;
 import com.gdu.app13.util.MyFileUtil;
+import com.gdu.app13.util.PageUtil;
 
 import lombok.AllArgsConstructor;
 
@@ -33,11 +36,28 @@ public class BlogServiceImpl implements BlogService {
 
   private BlogMapper blogMapper;
   private MyFileUtil myFileUtil;
+  private PageUtil pageUtil;
   
   @Override
   public void loadBlogList(HttpServletRequest request, Model model) {
-    // TODO Auto-generated method stub
-
+    
+    Optional<String> opt1 = Optional.ofNullable(request.getParameter("page"));
+    int page = Integer.parseInt(opt1.orElse("1"));
+    int blogCount = blogMapper.getBlogCount();
+    int recordPerPage = 10;
+    
+    pageUtil.setPageUtil(page, blogCount, recordPerPage);
+    
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("begin", pageUtil.getBegin());
+    map.put("end", pageUtil.getEnd());
+    
+    List<BlogDTO> blogList = blogMapper.getBlogList(map);
+    
+    model.addAttribute("blogList", blogList);
+    model.addAttribute("pagination", pageUtil.getPagination(request.getContextPath() + "/blog/list.do"));
+    model.addAttribute("beginNo", blogCount - (page - 1) * recordPerPage);
+    
   }
 
   @Transactional(readOnly=true)

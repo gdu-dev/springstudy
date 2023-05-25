@@ -18,6 +18,31 @@
       <input type="button" value="블로그 작성하기" onclick="fnWrite()">
     </div>
   </c:if>
+  
+  <div>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>번호</td>
+          <td>제목</td>
+          <td>조회수</td>
+          <td>작성자</td>
+          <td>작성일</td>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach items="${blogList}" var="blog" varStatus="vs">
+          <tr>
+            <td>${beginNo - vs.index}</td>
+            <td>${blog.title}</td>
+            <td>${blog.hit}</td>
+            <td>${blog.memberDTO.id}</td>
+            <td>${blog.createdAt}</td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 
