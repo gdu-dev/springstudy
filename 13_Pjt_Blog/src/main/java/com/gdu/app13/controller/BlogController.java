@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -45,6 +46,22 @@ public class BlogController {
     return blogService.imageUpload(multipartRequest);
   }
   
+  @GetMapping("/increseHit.do")
+  public String increseHit(@RequestParam(value="blogNo", required=false, defaultValue="0") int blogNo) {
+    int increaseResult = blogService.increaseHit(blogNo);
+    if(increaseResult == 1) {
+      return "redirect:/blog/detail.do?blogNo=" + blogNo;
+    } else {
+      return "redirect:/blog/list.do";
+    }
+  }
+  
+  @GetMapping("/detail.do")
+  public String detail(@RequestParam(value="blogNo", required=false, defaultValue="0") int blogNo
+                     , Model model) {
+    blogService.loadBlog(blogNo, model);
+    return "blog/detail";
+  }
   
   
   

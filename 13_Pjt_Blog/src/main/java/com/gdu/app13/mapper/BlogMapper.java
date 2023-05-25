@@ -14,4 +14,6 @@ public interface BlogMapper {
   public List<BlogDTO> getBlogList(Map<String, Object> map);
   public int addBlog(BlogDTO blogDTO);
   public int addSummernoteImage(SummernoteImageDTO summernoteImageDTO);
+  public int increseHit(int blogNo);
+  public BlogDTO getBlogByNo(int blogNo);
 }
