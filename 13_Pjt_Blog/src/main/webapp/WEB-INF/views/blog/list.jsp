@@ -21,6 +21,7 @@
   
   <div>
     <table border="1">
+      <caption style="text-align: center;">${pagination}</caption>
       <thead>
         <tr>
           <td>번호</td>
