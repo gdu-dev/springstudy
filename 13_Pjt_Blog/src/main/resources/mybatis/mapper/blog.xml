@@ -15,7 +15,16 @@
     
   </select>
 
+  <!--
+    어떤 BLOG_SEQ 값이 사용되었는지 addBlog() 서비스에 알려줘야 하기 때문에
+    <selectKey>를 사용해서 addBlog() 서비스가 전달한 BlogDTO 객체의 blogNo 필드값에
+    BLOG_SEQ가 발생시킨 값을 저장한다.
+  -->
   <insert id="addBlog" parameterType="BlogDTO">
+    <selectKey keyProperty="blogNo" resultType="int" order="BEFORE">
+      SELECT BLOG_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
     INSERT INTO BLOG_T (
         BLOG_NO
       , TITLE
@@ -25,7 +34,7 @@
       , MODIFIED_AT
       , MEMBER_NO
     ) VALUES (
-        BLOG_SEQ.NEXTVAL
+        #{blogNo}
       , #{title}
       , #{content}
       , 0
@@ -34,6 +43,24 @@
       , #{memberDTO.memberNo}
     )
   </insert>
+  
+  <insert id="addSummernoteImage" parameterType="SummernoteImageDTO">
+    INSERT INTO SUMMERNOTE_IMAGE_T (
+        FILESYSTEM_NAME
+      , BLOG_NO
+    ) VALUES (
+        #{filesystemName}
+      , #{blogNo}
+    )
+  </insert>
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 

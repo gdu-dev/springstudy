@@ -8,14 +8,20 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.app13.domain.BlogDTO;
 import com.gdu.app13.domain.MemberDTO;
+import com.gdu.app13.domain.SummernoteImageDTO;
 import com.gdu.app13.mapper.BlogMapper;
 import com.gdu.app13.util.MyFileUtil;
 
@@ -34,6 +40,7 @@ public class BlogServiceImpl implements BlogService {
 
   }
 
+  @Transactional(readOnly=true)
   @Override
   public void addBlog(HttpServletRequest request, HttpServletResponse response) {
     
@@ -41,6 +48,8 @@ public class BlogServiceImpl implements BlogService {
     String title = request.getParameter("title");
     String content = request.getParameter("content");
     int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+    
+    /*** BLOG_T ***/
     
     // DB로 보낼 BlogDTO 만들기
     MemberDTO memberDTO = new MemberDTO();
@@ -52,6 +61,22 @@ public class BlogServiceImpl implements BlogService {
     
     // DB로 BlogDTO 보내기 (삽입)
     int addResult = blogMapper.addBlog(blogDTO);
+
+    /*** SUMMERNOTE_IMAGE_T ***/
+    
+    Document document = Jsoup.parse(content);
+    Elements elements = document.getElementsByTag("img");
+    
+    if(elements != null) {
+      for(Element element : elements) {
+        String src = element.attr("src");
+        String filesystemName = src.substring(src.lastIndexOf("/") + 1);
+        SummernoteImageDTO summernoteImageDTO = new SummernoteImageDTO();
+        summernoteImageDTO.setFilesystemName(filesystemName);
+        summernoteImageDTO.setBlogNo(blogDTO.getBlogNo());
+        blogMapper.addSummernoteImage(summernoteImageDTO);
+      }
+    }
     
     // 응답
     try {
