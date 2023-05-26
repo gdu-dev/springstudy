@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.app13.mapper.CommentMapper">
+
+  <insert id="addComment" parameterType="CommentDTO">
+    INSERT INTO COMMENT_T (
+        COMMENT_NO
+      , CONTENT
+      , STATE
+      , DEPTH
+      , GROUP_NO
+      , CREATED_AT
+      , BLOG_NO
+      , MEMBER_NO
+    ) VALUES (
+        COMMENT_SEQ.NEXTVAL
+      , #{content}
+      , 1
+      , 0
+      , COMMENT_SEQ.CURRVAL
+      , SYSDATE
+      , #{blogNo}
+      , #{memberDTO.memberNo}
+    )
+  </insert>
+  
+</mapper>

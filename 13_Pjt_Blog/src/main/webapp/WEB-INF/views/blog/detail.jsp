@@ -75,9 +75,11 @@
   </script>
   
   <div>
-    <form>
+    <form id="frmAddComment">
       <input type="text" name="content" id="content" placeholder="댓글 작성해 주세요">
-      <button>작성완료</button>
+      <input type="hidden" name="blogNo" value="${blog.blogNo}">
+      <input type="hidden" name="memberNo" value="${sessionScope.loginNo}">
+      <input type="button" value="작성완료" id="btnAddComment">
     </form>
     <script>
       function fnLoginCheck(){
@@ -89,7 +91,34 @@
     		  }
     	  })
       }
+      function fnAddComment(){
+    	  $('#btnAddComment').on('click', function(){
+    		  if($('#content').val() == ''){
+    			  alert('댓글 내용을 입력하세요.');
+    			  return;
+    		  }
+    		  $.ajax({
+    			  type: 'post',
+    			  url: '${contextPath}/comment/addComment.do',
+    			  data: $('#frmAddComment').serialize(),
+    			  dataType: 'json',
+    			  success: function(resData){  // resData = {"isAdd": true}
+    				  if(resData.isAdd){
+    					  alert('댓글이 등록되었습니다.');
+    					  $('#comment').val('');
+    					  fnCommentList();  // 댓글 목록을 가져와서 화면에 만드는 함수
+    				  }
+    			  }
+    		  })
+    	  })
+      }
+      function fnCommentList(){
+    	  
+      }
+      
       fnLoginCheck();
+      fnAddComment();
+      fnCommentList();
     </script>
   </div>
   

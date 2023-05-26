@@ -86,14 +86,4 @@
      WHERE B.BLOG_NO = #{blogNo}
   </select>
   
-  
-  
-  
-  
-  
-
-
-
-
-
 </mapper>

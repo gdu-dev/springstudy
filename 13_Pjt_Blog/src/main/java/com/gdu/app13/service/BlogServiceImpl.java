@@ -176,16 +176,4 @@ public class BlogServiceImpl implements BlogService {
     model.addAttribute("blog", blogMapper.getBlogByNo(blogNo));
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
 }
