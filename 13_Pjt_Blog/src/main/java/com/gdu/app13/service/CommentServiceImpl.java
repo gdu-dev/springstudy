@@ -2,6 +2,7 @@ package com.gdu.app13.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,8 +51,35 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public Map<String, Object> getCommentList(HttpServletRequest request) {
-    // TODO Auto-generated method stub
-    return null;
+    
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    int page = Integer.parseInt(request.getParameter("page"));
+    int commentCount = commentMapper.getCommentCount(blogNo);
+    int recordPerPage = 3;
+    
+    pageUtil.setPageUtil(page, commentCount, recordPerPage);
+    
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("blogNo", blogNo);
+    map.put("begin", pageUtil.getBegin());
+    map.put("end", pageUtil.getEnd());
+    
+    Map<String, Object> result = new HashMap<String, Object>();
+    result.put("commentList", commentMapper.getCommentList(map));
+    result.put("pageUtil", pageUtil);
+    
+    return result;
+    
   }
 
 }
+
+
+
+
+
+
+
+
+
+

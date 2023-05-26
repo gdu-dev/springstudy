@@ -6,6 +6,22 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app13.mapper.CommentMapper">
 
+  <resultMap type="CommentDTO" id="CommentMap">
+    <id column="COMMENT_NO" property="commentNo" />
+    <result column="CONTENT" property="content" />
+    <result column="STATE" property="state" />
+    <result column="DEPTH" property="depth" />
+    <result column="GROUP_NO" property="groupNo" />
+    <result column="CREATED_AT" property="createdAt" />
+    <result column="BLOG_NO" property="blogNo" />
+    <association javaType="MemberDTO" property="memberDTO">
+      <id column="MEMBER_NO" property="memberNo" />
+      <result column="ID" property="id" />
+      <result column="PW" property="pw" />
+      <result column="NAME" property="name" />
+    </association>
+  </resultMap>
+
   <insert id="addComment" parameterType="CommentDTO">
     INSERT INTO COMMENT_T (
         COMMENT_NO
@@ -27,5 +43,32 @@
       , #{memberDTO.memberNo}
     )
   </insert>
+  
+  <select id="getCommentCount" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+      FROM COMMENT_T
+     WHERE BLOG_NO = #{blogNo}
+  </select>
+  
+  <select id="getCommentList" parameterType="Map" resultMap="CommentMap">
+    SELECT A.COMMENT_NO, A.CONTENT, A.STATE, A.DEPTH, A.GROUP_NO, A.CREATED_AT, A.BLOG_NO, A.MEMBER_NO, A.ID, A.NAME
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY GROUP_NO DESC, DEPTH ASC, COMMENT_NO DESC) AS RN, C.COMMENT_NO, C.CONTENT, C.STATE, C.DEPTH, C.GROUP_NO, C.CREATED_AT, C.BLOG_NO, M.MEMBER_NO, M.ID, M.NAME
+              FROM MEMBER_T M INNER JOIN COMMENT_T C
+                ON M.MEMBER_NO = C.MEMBER_NO
+             WHERE C.BLOG_NO = #{blogNo}) A
+     WHERE A.RN BETWEEN #{begin} AND #{end}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </mapper>

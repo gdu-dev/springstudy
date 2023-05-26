@@ -105,15 +105,33 @@
     			  success: function(resData){  // resData = {"isAdd": true}
     				  if(resData.isAdd){
     					  alert('댓글이 등록되었습니다.');
-    					  $('#comment').val('');
+    					  $('#content').val('');
     					  fnCommentList();  // 댓글 목록을 가져와서 화면에 만드는 함수
     				  }
     			  }
     		  })
     	  })
       }
+      
+      // 전역 변수
+      var page = 1;
+      
       function fnCommentList(){
-    	  
+    	  $.ajax({
+    		  type: 'get',
+    		  url: '${contextPath}/comment/list.do',
+    		  data: 'blogNo=${blog.blogNo}&page=' + page,
+    		  dataType: 'json',
+    		  success: function(resData){  // resData = { "commentList": [{}, {}, ...], "pageUtil": {beginPage: 1, endPage: 5, ...} }
+    			  $('#commentList').empty();
+    			  $.each(resData.commentList, function(i, comment){
+    				  var str = '<div>';
+    				  str += '<span>' + comment.memberDTO.name;
+    				  str += '<span>' + comment.content;
+    				  $('#commentList').append(str);
+    			  })
+    		  }
+    	  })
       }
       
       fnLoginCheck();
