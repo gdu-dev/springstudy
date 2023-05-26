@@ -9,6 +9,12 @@
   <jsp:param name="title" value="${blog.blogNo}번 블로그" />
 </jsp:include>
 
+<style>
+  .blind {
+    display: none;
+  }
+</style>
+
 <div>
 
   <!-- 블로그 구역 -->
@@ -126,17 +132,50 @@
     			  $('#commentList').empty();
     			  $.each(resData.commentList, function(i, comment){
     				  var str = '<div>';
-    				  str += '<span>' + comment.memberDTO.name;
-    				  str += '<span>' + comment.content;
+    				  if(comment.state == -1){
+    					  if(comment.depth == 0){    						  
+      					  str += '<span>삭제된 댓글입니다.';
+    					  } else {
+    						  str += '<span style="margin-left: 30px;">삭제된 답글입니다.';
+    					  }
+    				  } else {
+    					  if(comment.depth == 0){
+    						  str += '<span>';
+    					  } else {
+    						  str += '<span style="margin-left: 30px;>"'
+    					  }
+      				  str += comment.memberDTO.name;
+      				  str += ' - ' + comment.content;
+      				  if('${sessionScope.loginId}' != ''){
+      					  if('${sessionScope.loginId}' == comment.memberDTO.id && comment.state == 1){
+      						  str += '<input type="button" value="삭제" class="btnCommentRemove" data-comment_no="' + comment.commentNo + '">';
+      					  } else if('${sessionScope.loginId}' != comment.memberDTO.id && comment.depth == 0){
+      						  str += '<input type="button" value="답글" class="btnOpenReply">';
+      					  }
+      				  }
+      				  str += '<div class="replyArea blind">';
+      				  str += '  <form class="frmReply">';
+      				  str += '    <input type="text" name="content" placeholder="답글 작성해 주세요">';
+      				  str += '    <input type="hidden" name="blogNo" value="' + comment.blogNo + '">';
+      				  str += '    <input type="hidden" name="memberNo" value="' + comment.memberDTO.memberNo + '">';
+      				  str += '    <input type="button" value="답글작성완료" class="btnAddReply">';
+      				  str += '  </form>';
+      				  str += '</div>';
+    				  }
     				  $('#commentList').append(str);
     			  })
     		  }
     	  })
       }
-      
+      function fnToggleReplyArea(){
+    	  $(document).on('click', '.btnOpenReply', function(){
+    		  $(this).next().toggleClass('blind');
+    	  })
+      }
       fnLoginCheck();
       fnAddComment();
       fnCommentList();
+      fnToggleReplyArea();
     </script>
   </div>
   
