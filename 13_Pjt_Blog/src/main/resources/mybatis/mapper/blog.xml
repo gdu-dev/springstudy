@@ -80,7 +80,7 @@
   </update>
   
   <select id="getBlogByNo" parameterType="int" resultMap="BlogMap">
-    SELECT B.BLOG_NO, B.TITLE, B.CONTENT, B.HIT, B.CREATED_AT, B.MODIFIED_AT, B.MEMBER_NO, M.ID
+    SELECT B.BLOG_NO, B.TITLE, B.CONTENT, B.HIT, B.CREATED_AT, B.MODIFIED_AT, B.MEMBER_NO, M.ID, M.NAME
       FROM MEMBER_T M INNER JOIN BLOG_T B
         ON M.MEMBER_NO = B.MEMBER_NO
      WHERE B.BLOG_NO = #{blogNo}

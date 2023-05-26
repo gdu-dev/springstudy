@@ -95,7 +95,6 @@
   
   // 6. 년/월/일
   function fnCreateDate(){
-	  
 	  // 년도(100년 전 ~ 1년 후)
 	  let year = new Date().getFullYear();
     let strYear = '<option value="">년도</option>';
@@ -103,7 +102,7 @@
       strYear += '<option value="' + y + '">' + y + '</option>';
     }
     $('#birthyear').append(strYear);
-	  
+    $('#birthyear').val('${loginUser.birthyear}').prop('selected', true);
 	  // 월(1 ~ 12월)
     let strMonth = '<option value="">월</option>';
     for(let m = 1; m <= 12; m++){
@@ -114,38 +113,29 @@
       }
     }
     $('#birthmonth').append(strMonth);
-	  
-	  // 일(월에 따른 연동)
+    $('#birthmonth').val('${loginUser.birthdate.substring(0,2)}').prop('selected', true);
+	  // 일
+    $('#birthdate').empty();
     $('#birthdate').append('<option value="">일</option>');
-    
-    $('#birthmonth').on('change', function(){
-      
-      $('#birthdate').empty();
-      $('#birthdate').append('<option value="">일</option>');
-      let endDay = 0;
-      let strDay = '';
-      switch($(this).val()){
-      case '02':
-        endDay = 29; break;
-      case '04':
-      case '06':
-      case '09':
-      case '11':
-        endDay = 30; break;
-      default:
-        endDay = 31; break;
+    let endDay = 0;
+    let strDay = '';
+    switch($('#birthmonth').val()){
+    case '02':
+      endDay = 29; break;
+    case '04': case '06': case '09': case '11':
+      endDay = 30; break;
+    default:
+      endDay = 31; break;
+    }
+    for(let d = 1; d <= endDay; d++){
+      if(d < 10){
+        strDay += '<option value="0' + d + '">' + d + '일</option>';
+      } else {
+        strDay += '<option value="' + d + '">' + d + '일</option>';
       }
-      for(let d = 1; d <= endDay; d++){
-        if(d < 10){
-          strDay += '<option value="0' + d + '">' + d + '일</option>';
-        } else {
-          strDay += '<option value="' + d + '">' + d + '일</option>';
-        }
-      }
-      $('#birthdate').append(strDay);
-      
-    });
-	  
+    }
+    $('#birthdate').append(strDay);
+    $('#birthdate').val('${loginUser.birthdate.substring(2)}').prop('selected', true);
   }
   
   // 7. 이메일 검사 및 인증코드 전송
@@ -158,7 +148,7 @@
 		  
 		  new Promise(function(resolve, reject){
 			  
-			  // 정규식
+			  // 정규식 
 			  let regEmail = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,6}){1,2}$/;
 			  //
 			  //                  gt_min     @ naver         (.com)
@@ -310,8 +300,8 @@
           <span id="msgRePw"></span>
         </div>
         <div>
-          <button>비밀번호수정완료</button>
           <input type="button" value="비밀번호편집화면닫기" id="btnCloseEditPw">
+          <button>비밀번호수정완료</button>
         </div>
       </form>
     </div>
