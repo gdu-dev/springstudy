@@ -71,6 +71,29 @@ public class CommentServiceImpl implements CommentService {
     return result;
     
   }
+  
+  @Override
+  public Map<String, Object> addReply(HttpServletRequest request) {
+    
+    String content = request.getParameter("content");
+    int blogNo = Integer.parseInt(request.getParameter("blogNo"));
+    int groupNo = Integer.parseInt(request.getParameter("groupNo"));
+    int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+    
+    MemberDTO memberDTO = new MemberDTO();
+    memberDTO.setMemberNo(memberNo);
+    CommentDTO commentDTO = new CommentDTO();
+    commentDTO.setContent(content);
+    commentDTO.setBlogNo(blogNo);
+    commentDTO.setGroupNo(groupNo);
+    commentDTO.setMemberDTO(memberDTO);
+    
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("isAdd", commentMapper.addReply(commentDTO) == 1);
+    
+    return map;
+    
+  }
 
 }
 

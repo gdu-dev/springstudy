@@ -59,7 +59,27 @@
      WHERE A.RN BETWEEN #{begin} AND #{end}
   </select>
   
-  
+  <insert id="addReply" parameterType="CommentDTO">
+    INSERT INTO COMMENT_T (
+        COMMENT_NO
+      , CONTENT
+      , STATE
+      , DEPTH
+      , GROUP_NO
+      , CREATED_AT
+      , BLOG_NO
+      , MEMBER_NO
+    ) VALUES (
+        COMMENT_SEQ.NEXTVAL
+      , #{content}
+      , 1
+      , 1
+      , #{groupNo}
+      , SYSDATE
+      , #{blogNo}
+      , #{memberDTO.memberNo}
+    )  
+  </insert>
   
   
   
