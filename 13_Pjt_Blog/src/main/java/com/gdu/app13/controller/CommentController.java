@@ -32,7 +32,11 @@ public class CommentController {
     return commentService.getCommentList(request);
   }
   
-  
+  @PostMapping(value="/addReply.do", produces="application/json")
+  @ResponseBody
+  public Map<String, Object> addReply(HttpServletRequest request) {
+    return commentService.addReply(request);
+  }
   
   
   
