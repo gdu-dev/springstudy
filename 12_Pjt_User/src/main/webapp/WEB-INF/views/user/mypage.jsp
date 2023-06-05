@@ -37,7 +37,7 @@
       $('#editPwArea').show();
     });
     $('#btnCloseEditPwArea').on('click', function(){
-    	btnOpenEditPwArea();
+    	fnInitEditPwArea();
     	$('#btnOpenEditPwArea').show();
     	$('#editPwArea').hide();
     });
@@ -91,6 +91,18 @@
 		  })
 	  })
   }
+  
+  function fnToggleEditEmailArea(){
+	    $('#editEmailArea').hide();
+	    $('#btnOpenEditEmailArea').on('click', function(){
+	      $('#btnOpenEditEmailArea').hide();
+	      $('#editEmailArea').show();
+	    });
+	    $('#btnCloseEditEmailArea').on('click', function(){
+	      $('#btnOpenEditEmailArea').show();
+	      $('#editEmailArea').hide();
+	    });
+	  }
   
   function fnCheckName(){
 	  $('#name').on('keyup', function(){
@@ -156,28 +168,15 @@
   }
   
   function fnCheckEmail(){
-	  
 	  $('#btnGetCode').on('click', function(){
-		  
-		  // 입력한 이메일
 		  let email = $('#email').val();
-		  
 		  new Promise(function(resolve, reject){
-			  
-			  // 정규식 
 			  let regEmail = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,6}){1,2}$/;
-			  //
-			  //                  gt_min     @ naver         (.com)
-			  //                                             (.co)(.kr)
-			  
-			  // 정규식 검사
 			  verifyEmail = regEmail.test(email);
 			  if(verifyEmail == false){
-				  reject(1);  // catch 메소드에 정의된 function을 호출한다. 인수로 1을 전달한다.
+				  reject(1);
 				  return;
 			  }
-			  
-			  // 이메일 중복 체크
 			  $.ajax({
 				  type: 'get',
 				  url: '${contextPath}/user/verifyEmail.do',
@@ -191,56 +190,42 @@
 					  }
 				  }
 				})
-			  
 		  }).then(function(){
-			  
-			  // 이메일로 인증번호를 보내는 ajax
 			  $.ajax({
 				  type: 'get',
 				  url: '${contextPath}/user/sendAuthCode.do',
 				  data: 'email=' + email,
 				  dataType: 'json',
-				  success: function(resData){  // resData = {"authCode": "6T43G9"}  사용자에게 전송한 인증코드를 의미
-					  
+				  success: function(resData){
 					  alert(email + "으로 인증코드를 전송했습니다.");
-					  
-					  // 메일로 받은 인증코드 입력 후 인증하기 버튼을 클릭한 경우
 					  $('#btnVerifyCode').on('click', function(){
-						  
-						  verifyEmail = (resData.authCode == $('#authCode').val());  // 사용자에게 전송한 인증코드 == 사용자가 입력한 인증코드값
+						  verifyEmail = (resData.authCode == $('#authCode').val());
 						  if(verifyEmail) {
 							  alert('인증되었습니다.');
 						  } else {
 							  alert('인증에 실패했습니다.');
 						  }
-						  
 					  })
-					  
 				  },
 				  error: function(jqXHR){
 					  alert('인증번호가 발송되지 않았습니다.');
 					  verifyEmail = false;
 				  }
 			  })
-			  
 		  }).catch(function(number){
-			  
 			  let msg = '';
 			  switch(number){
 			  case 1:
-				  msg = '이메일 형식이 올바르지 않습니다.';  // 정규식 실패
+				  msg = '이메일 형식이 올바르지 않습니다.';
 				  break;
 			  case 2:
-				  msg = '이미 사용 중인 이메일입니다.';      // 이메일 중복 체크 실패
+				  msg = '이미 사용 중인 이메일입니다.';
 				  break;
 			  }
 			  $('#msgEmail').text(msg);
 			  verifyEmail = false;
-			  
 		  })
-		  
 	  })
-	  
   }
 	
   // 8. submit (회원가입)
@@ -287,10 +272,12 @@
 	  fnCheckPwAgain();
 	  fnModifyPw();
 	  
+	  fnToggleEditEmailArea();
+	  fnCheckEmail();
+	  
 	  fnCheckName();
 	  fnCheckMobile();
 	  fnCreateDate();
-	  fnCheckEmail();
 	  fnJoin();
   })
 
@@ -306,6 +293,9 @@
       <input type="button" value="비밀번호편집화면열기" id="btnOpenEditPwArea">
     </div>
     <div id="editPwArea">
+      <div>
+        <input type="button" value="비밀번호편집화면닫기" id="btnCloseEditPwArea">
+      </div>
       <!-- 비밀번호 -->
       <div>
         <label for="pw">새 비밀번호</label>
@@ -319,11 +309,29 @@
         <span id="msgRePw"></span>
       </div>
       <div>
-        <input type="button" value="비밀번호편집화면닫기" id="btnCloseEditPwArea">
         <input type="button" value="비밀번호수정" id="btnModifyPw">
       </div>
     </div>
     
+    <hr>
+    
+    <div>
+      <input type="button" value="이메일편집화면열기" id="btnOpenEditEmailArea">
+    </div>
+    <div id="editEmailArea">
+      <div>
+        <input type="button" value="이메일편집화면닫기" id="btnCloseEditEmailArea">
+      </div>
+      <div>
+        <label for="email">이메일*</label>
+        <input type="text" name="email" id="email" value="${loginUser.email}">
+        <input type="button" value="인증번호받기" id="btnGetCode">
+        <span id="msgEmail"></span><br>
+        <input type="text" id="authCode" placeholder="인증코드 입력">
+        <input type="button" value="인증하기" id="btnVerifyCode">
+      </div>
+    </div>
+
     <hr>
 
     <div>* 표시는 필수 입력사항입니다.</div>
@@ -433,12 +441,6 @@
       </div>
       
       <div>
-        <label for="email">이메일*</label>
-        <input type="text" name="email" id="email" value="${loginUser.email}">
-        <span id="msgEmail"></span>
-      </div>
-      
-      <div>
         <div>위치정보 동의여부</div>
         <input type="radio" name="location" id="locationOn" value="on"><label for="locationOn">동의함</label>
         <input type="radio" name="location" id="locationOff" value="off"><label for="locationOff">동의 안함</label>
@@ -462,9 +464,9 @@
       <hr>
       
       <div>
-        <button>개인정보수정완료</button>
-        <input type="button" value="취소하기" ID="btnCancel">
-        <input type="button" value="회원탈퇴" ID="btnLeave">
+        <input type="button" value="개인정보수정완료" id="btnModifyInfo">
+        <input type="button" value="취소하기" id="btnCancel">
+        <input type="button" value="회원탈퇴" id="btnLeave">
       </div>
     
     </form>
