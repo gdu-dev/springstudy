@@ -21,7 +21,7 @@
       $.ajax({
         type: 'post',
         url: '${contextPath}/user/checkPw.do',
-        data: 'id=${sessionScope.loginId}&pw=' + $('#pw').val(),
+        data: 'pw=' + $('#pw').val(),
         dataType: 'json',
         success: function(resData){
           if(resData.isCorrect){

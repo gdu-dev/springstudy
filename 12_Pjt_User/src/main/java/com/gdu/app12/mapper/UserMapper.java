@@ -27,7 +27,8 @@ public interface UserMapper {
   public int deleteUserForSleep();
   public int insertRestoreUser(String id);
   public int deleteSleepUser(String id);
-  
+  public int updateUserPassword(UserDTO userDTO);
+
   
   
   

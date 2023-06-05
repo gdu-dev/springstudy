@@ -12,7 +12,6 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
-
   // 전역 변수 (각종 검사 통과 유무를 저장하는 변수)
   var verifyPw = false;
   var verifyRePw = false;
@@ -23,7 +22,7 @@
   
   // 함수 정의
   
-  function fnEditPwInit(){
+  function fnInitEditPwArea(){
 	  $('#pw').val('');
 	  $('#rePw').val('');
 	  $('#msgPw').val('');
@@ -31,16 +30,16 @@
   }
   
   function fnToggleEditPwArea(){
-    $('#editPw').hide();
-    $('#btnOpenEditPw').on('click', function(){
-    	fnEditPwInit();
-    	$('#btnOpenEditPw').hide();
-      $('#editPw').show();
+    $('#editPwArea').hide();
+    $('#btnOpenEditPwArea').on('click', function(){
+    	fnInitEditPwArea();
+    	$('#btnOpenEditPwArea').hide();
+      $('#editPwArea').show();
     });
-    $('#btnCloseEditPw').on('click', function(){
-    	fnEditPwInit();
-    	$('#btnOpenEditPw').show();
-    	$('#editPw').hide();
+    $('#btnCloseEditPwArea').on('click', function(){
+    	btnOpenEditPwArea();
+    	$('#btnOpenEditPwArea').show();
+    	$('#editPwArea').hide();
     });
   }
   
@@ -74,6 +73,25 @@
     })
   }
   
+  function fnModifyPw(){
+	  $('#btnModifyPw').on('click', function(){
+		  $.ajax({
+			  type: 'post',
+			  url: '${contextPath}/user/modifyPw.do',
+			  data: 'pw=' + $('#pw').val(),
+			  dataType: 'json',
+			  success: function(resData){  // resData = {"pwUpdateResult": 1}
+				  if(resData.pwUpdateResult == 1){
+            alert('비밀번호가 변경되었습니다.');
+            fnToggleEditPwArea();
+          } else {
+            alert('비밀번호 변경이 실패했습니다.');
+          }
+			  }
+		  })
+	  })
+  }
+  
   function fnCheckName(){
 	  $('#name').on('keyup', function(){
 		  verifyName = $(this).val() != '';
@@ -93,7 +111,6 @@
 	  })
   }
   
-  // 6. 년/월/일
   function fnCreateDate(){
 	  // 년도(100년 전 ~ 1년 후)
 	  let year = new Date().getFullYear();
@@ -138,7 +155,6 @@
     $('#birthdate').val('${loginUser.birthdate.substring(2)}').prop('selected', true);
   }
   
-  // 7. 이메일 검사 및 인증코드 전송
   function fnCheckEmail(){
 	  
 	  $('#btnGetCode').on('click', function(){
@@ -264,9 +280,13 @@
   
   // 함수 호출
   $(function(){
+	  
+	  fnInitEditPwArea();
 	  fnToggleEditPwArea();
 	  fnCheckPw();
 	  fnCheckPwAgain();
+	  fnModifyPw();
+	  
 	  fnCheckName();
 	  fnCheckMobile();
 	  fnCreateDate();
@@ -283,27 +303,25 @@
     <h1>마이페이지</h1>
     
     <div>
-      <input type="button" value="비밀번호편집화면열기" id="btnOpenEditPw">
+      <input type="button" value="비밀번호편집화면열기" id="btnOpenEditPwArea">
     </div>
-    <div id="editPw">
-      <form id="frmPw" method="post" action="${contextPath}/user/modifyPw.do">
-        <!-- 비밀번호 -->
-        <div>
-          <label for="pw">비밀번호</label>
-          <input type="password" name="pw" id="pw">
-          <span id="msgPw"></span>
-        </div>
-        <!-- 비밀번호 재확인 -->
-        <div>
-          <label for="rePw">비밀번호 확인</label>
-          <input type="password" id="rePw">
-          <span id="msgRePw"></span>
-        </div>
-        <div>
-          <input type="button" value="비밀번호편집화면닫기" id="btnCloseEditPw">
-          <button>비밀번호수정완료</button>
-        </div>
-      </form>
+    <div id="editPwArea">
+      <!-- 비밀번호 -->
+      <div>
+        <label for="pw">새 비밀번호</label>
+        <input type="password" name="pw" id="pw">
+        <span id="msgPw"></span>
+      </div>
+      <!-- 비밀번호 재확인 -->
+      <div>
+        <label for="rePw">비밀번호 확인</label>
+        <input type="password" id="rePw">
+        <span id="msgRePw"></span>
+      </div>
+      <div>
+        <input type="button" value="비밀번호편집화면닫기" id="btnCloseEditPwArea">
+        <input type="button" value="비밀번호수정" id="btnModifyPw">
+      </div>
     </div>
     
     <hr>

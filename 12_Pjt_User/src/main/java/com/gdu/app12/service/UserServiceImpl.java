@@ -394,26 +394,96 @@ public class UserServiceImpl implements UserService {
   }
   
   @Override
-  public boolean checkPw(String id, String pw) {
+  public boolean checkPw(HttpServletRequest request) {
+    
+    // 로그인한 사용자의 ID
+    HttpSession session = request.getSession();
+    String id = (String) session.getAttribute("loginId");
+
+    // 로그인한 사용자의 정보를 가져옴(비밀번호를 확인하기 위해서)
     UserDTO userDTO = userMapper.selectUserById(id);
-    pw = securityUtil.getSha256(pw);
+    
+    // 사용자가 입력한 PW
+    String pw = securityUtil.getSha256(request.getParameter("pw"));
+    
+    // PW 비교 결과 반환
     return pw.equals(userDTO.getPw());
+    
   }
-  
   
   @Override
   public UserDTO getUserById(String id) {
     return userMapper.selectUserById(id);
   }
   
+  @Override
+  public Map<String, Object> modifyPw(HttpServletRequest request) {
+    
+    // 로그인한 사용자의 ID
+    HttpSession session = request.getSession();
+    String id = (String) session.getAttribute("loginId");
+    
+    // 사용자가 입력한 PW (이 PW로 비밀번호를 변경해야 한다.)
+    String pw = securityUtil.getSha256(request.getParameter("pw"));
+    
+    // ID와 PW를 가진 UserDTO를 생성
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(id);
+    userDTO.setPw(pw);
+    
+    // PW 수정 결과 반환
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("pwUpdateResult", userMapper.updateUserPassword(userDTO));
+    return map;
+    
+  }
   
-  /*
-   * @Override public Map<String, Object> findUser(UserDTO userDTO) { Map<String,
-   * Object> map = new HashMap<String, Object>(); map.put("findUser",
-   * userMapper.selectUserByEmail(userDTO.getEmail())); return map; }
-   */
+  @Override
+  public Map<String, Object> findId(UserDTO userDTO) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("findUser", userMapper.selectUserByEmail(userDTO.getEmail()));  // 아이디 찾기 : 입력한 이메일로 조회
+    return map;
+  }
   
+  @Override
+  public Map<String, Object> findPw(UserDTO userDTO) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("findUser", userMapper.selectUserById(userDTO.getId()));  // 비밀번호 찾기 : 입력한 아이디로 조회
+    return map;
+  }
   
+  @Override
+  public Map<String, Object> sendTempPw(UserDTO userDTO) {
+
+    // 8자리 임시비밀번호 생성
+    String tempPw = securityUtil.getRandomString(8, true, true);
+    
+    // DB로 보낼 UserDTO (아이디가 일치하는 회원의 비밀번호 업데이트)
+    userDTO.setPw(securityUtil.getSha256(tempPw));
+
+    // 임시비밀번호로 User의 DB 정보 수정
+    int pwUpdateResult = userMapper.updateUserPassword(userDTO);
+    
+    // 임시비밀번호로 User의 DB 정보가 수정되면 이메일로 알림
+    if(pwUpdateResult == 1) {
+      
+      // 메일 내용
+      String text = "";
+      text += "<div>비밀번호가 초기화되었습니다.</div>";
+      text += "<div>임시비밀번호 : <strong>" + tempPw + "</strong></div>";
+      text += "<div>임시비밀번호로 로그인 후에 반드시 비밀번호를 변경해 주세요.</div>";
+      
+      // 메일 전송
+      javaMailUtil.sendJavaMail(userDTO.getEmail(), "[앱이름]임시비밀번호발급안내", text);
+      
+    }
+    
+    // 결과 반환
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("pwUpdateResult", pwUpdateResult);
+    return map;
+    
+  }
 
 }
 

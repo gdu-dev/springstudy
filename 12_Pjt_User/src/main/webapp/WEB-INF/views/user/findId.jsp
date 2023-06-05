@@ -20,14 +20,12 @@
         url: '${contextPath}/user/findId.do',
         contentType: 'application/json',  // 보내는 데이터가 JSON이라는 의미입니다. 
         data: JSON.stringify({            // 보내는 데이터의 파라미터 이름이 없기 때문에 컨트롤러에서 parameter를 받는 request.getParameter(), @RequestParam, 커맨드 객체 모두 사용할 수 없습니다.
-          name: $('#name').val(),         // 컨트롤러에서는 @RequestBody와 객체 또는 Map을 통해서 받아야 합니다.
-          email: $('#email').val()
+        	email: $('#email').val()        // 컨트롤러에서는 @RequestBody와 객체 또는 Map을 통해서 받아야 합니다.
         }),
         dataType: 'json',
         success: function(resData) {
           if(resData.findUser != null) {
             let id = resData.findUser.id;
-            id = id.substring(0, 3) + '*****';
             moment.locale('ko-KR');
             $('#findResult').html('회원님의 아이디는 ' + id + '입니다.<br>(가입일 : ' + moment(resData.findUser.joinedAt).format("YYYY년 MM월 DD일 a h:mm:ss") + ')');
           } else {
@@ -50,10 +48,6 @@
 
     <h1>아이디 찾기</h1>
 
-    <div>
-      <label for="name">*이름</label>
-      <input type="text" name="name" id="name">
-    </div>
     <div>
       <label for="email">*이메일</label>
       <input type="text" name="email" id="email">

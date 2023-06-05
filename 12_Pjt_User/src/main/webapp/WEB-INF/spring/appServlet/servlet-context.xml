@@ -27,8 +27,10 @@
   <interceptors>
   
     <interceptor>
-      <mapping path="/user/logout.do" />
       <mapping path="/user/leave.do" />
+      <mapping path="/user/mypage.do" />
+      <mapping path="/user/checkPw.do" />
+      <mapping path="/user/modifyPw.do" />
       <beans:bean class="com.gdu.app12.intercept.LoginCheckInterceptor" />
     </interceptor>
     

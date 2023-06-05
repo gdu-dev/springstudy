@@ -12,11 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gdu.app12.domain.UserDTO;
 import com.gdu.app12.service.UserService;
 
 @RequestMapping("/user")
@@ -105,18 +106,23 @@ public class UserController {
   
   @ResponseBody
   @PostMapping(value="/checkPw.do", produces="application/json")  // 사용자가 입력한 비밀번호가 맞는지 확인
-  public Map<String, Object> checkPw(@RequestParam("id") String id
-                                   , @RequestParam("pw") String pw) {
+  public Map<String, Object> checkPw(HttpServletRequest request) {
     Map<String, Object> map = new HashMap<String, Object>();
-    map.put("isCorrect", userService.checkPw(id, pw));
+    map.put("isCorrect", userService.checkPw(request));
     return map;
   }
   
-  @GetMapping("/mypage.do")
-  public String mypage(HttpSession session, Model model) {  // 마이페이지로 이동
+  @GetMapping("/mypage.do")  // 마이페이지로 이동
+  public String mypage(HttpSession session, Model model) {
     String id = (String) session.getAttribute("loginId");
     model.addAttribute("loginUser", userService.getUserById(id));
     return "user/mypage";
+  }
+  
+  @ResponseBody
+  @PostMapping(value="/modifyPw.do", produces="application/json")  // 비밀번호 변경
+  public Map<String, Object> modifyPw(HttpServletRequest request) {
+    return userService.modifyPw(request);
   }
   
   @GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동
@@ -124,11 +130,28 @@ public class UserController {
     return "user/findId";
   }
   
-//  @ResponseBody
-//  @PostMapping(value="/findId.do", produces="application/json")  // 아이디 찾기
-//  public Map<String, Object> findId(@RequestBody UserDTO userDTO) {
-//    return userService.findUser(userDTO);
-//  }
+  @ResponseBody
+  @PostMapping(value="/findId.do", produces="application/json")  // 아이디 찾기
+  public Map<String, Object> findId(@RequestBody UserDTO userDTO) {
+    return userService.findId(userDTO);
+  }
+  
+  @GetMapping("/findPw.form")  // 비밀번호 찾기 화면으로 이동
+  public String findPwForm() {
+    return "user/findPw";
+  }
+  
+  @ResponseBody
+  @PostMapping(value="/findPw.do", produces="application/json")  // 비밀번호 찾기
+  public Map<String, Object> findPw(@RequestBody UserDTO userDTO) {
+    return userService.findPw(userDTO);
+  }
+  
+  @ResponseBody
+  @PostMapping(value="/sendTempPw.do", produces="application/json")  // 임시비밀번호 발급 및 전송
+  public Map<String, Object> sendTempPw(@RequestBody UserDTO userDTO) {
+    return userService.sendTempPw(userDTO);
+  }
   
   
   

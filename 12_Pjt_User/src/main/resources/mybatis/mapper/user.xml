@@ -43,7 +43,7 @@
   </select>
 
   <select id="selectUserByEmail" parameterType="String" resultType="UserDTO">
-    SELECT EMAIL
+    SELECT ID, EMAIL, JOINED_AT
       FROM USER_T
      WHERE EMAIL = #{email}
   </select>
@@ -267,6 +267,13 @@
      WHERE ID = #{id}
   </delete>
 
+  <!-- 비밀번호 변경 -->
+  <update id="updateUserPassword" parameterType="UserDTO">
+    UPDATE USER_T
+       SET PW = #{pw}
+         , PW_MODIFIED_AT = SYSDATE
+     WHERE ID = #{id}
+  </update>
 
 
 </mapper>

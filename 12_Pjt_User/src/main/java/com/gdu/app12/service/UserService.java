@@ -19,9 +19,12 @@ public interface UserService {
   public void leave(HttpServletRequest request, HttpServletResponse response);
   public void sleepUserHandle();
   public void restore(HttpServletRequest request, HttpServletResponse response);
-  public boolean checkPw(String id, String pw);
+  public boolean checkPw(HttpServletRequest request);
   public UserDTO getUserById(String id);
-  //public Map<String, Object> findUser(UserDTO userDTO);
+  public Map<String, Object> modifyPw(HttpServletRequest request);
+  public Map<String, Object> findId(UserDTO userDTO);
+  public Map<String, Object> findPw(UserDTO userDTO);
+  public Map<String, Object> sendTempPw(UserDTO userDTO);
   
   
   
