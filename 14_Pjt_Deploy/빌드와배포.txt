@@ -1,0 +1,41 @@
+* 빌드와 배포
+1. 빌드 : build, war를 만드는 것 (Maven Build)
+2. 배포 : deploy, war를 was에 배포하는 것 (was : Tomcat)
+
+* 빌드
+1. 프로젝트 Run - Maven Build
+2. war 이름
+        - pom.xml
+    1) artifactId : app14
+    2) packaging : war
+    3) version : 1.0.0-BUILD-SNAPSHOT
+        - app14-1.0.0-BUILD-SNAPSHOT.war
+3. war 위치
+    프로젝트\target\app14-1.0.0-BUILD-SNAPSHOT.war
+
+
+* 배포 전 선행작업
+1. 포트변경(오라클 사용 대비)
+    CATALINA_HOME\conf\server.xml 열고,
+    <Connector port="8080">를 <Connector port="9090">로 수정한다.
+
+
+* 배포
+1. CATALINA_HOME을 연다.
+2. CATALINA_HOME\webapps 디렉터리를 연다.
+3. CATALINA_HOME\webapps 디렉터리에 war 파일을 복사해 둔다.
+4. Tomcat을 구동한다.
+    1) windows : CATALINA_HOME\bin\startup.bat 파일 실행
+    2) linux   : CATALINA_HOME\bin\startup.sh  파일 실행
+5. CATALINA_HOME\webapps 디렉터리에 war 파일과 같은 이름의 디렉터리가 생긴다.
+
+
+
+
+
+
+
+
+
+
+
