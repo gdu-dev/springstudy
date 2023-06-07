@@ -110,8 +110,17 @@
     GDJ@DESKTOP-RF0MH4M MINGW64 /c/14_Pjt_Deploy (main)
     $ git push origin main
 
+4. Tomcat
+  1) CATALINA_HOME\conf\tomcat-users.xml 파일을 연다.
+  2) 아래 태그들을 추가한다.
+    <role rolename="manager-gui"/>
+    <role rolename="manager-script"/>
+    <role rolename="manager-jmx"/>
+    <role rolename="manager-status"/>
+    <user username="tomcat-manager" password="1111" roles="manager-gui,manager-script,manager-jmx,manager-status"/>
+  3) CATALINA_HOME\lib 디렉터리에 ojdbc6.jar 또는 mysql-connector-j-8.0.31.jar를 가져다둔다.
 
-4. Jenkins
+5. Jenkins
 
   1) jenkins를 다운로드한다.
     (1) 사이트 주소 https://www.jenkins.io/
@@ -121,6 +130,19 @@
 
   3) jenkins을 실행한다.
     http://localhost:9090/jenkins 주소로 접속한다.
+
+  4) 초기 비밀번호를 입력한다.
+    C:\Users\GDJ\.jenkins\secrets\initialAdminPassword 파일에 저장되어 있다.
+
+  5) Install suggested plugins를 눌러 기본 플러그인을 설치한다.
+
+  6) jenkins를 사용할 계정 정보를 입력한다.
+    (1) 계정명   : admin
+    (2) 비밀번호 : 1111
+
+  7) jenkins url : http://127.0.0.1:9090/jenkins
+
+
 
 
 
