@@ -5,20 +5,18 @@
 * 빌드
 1. 프로젝트 Run - Maven Build
 2. war 이름
-        - pom.xml
-    1) artifactId : app14
-    2) packaging : war
-    3) version : 1.0.0-BUILD-SNAPSHOT
-        - app14-1.0.0-BUILD-SNAPSHOT.war
+    - pom.xml
+      1) artifactId : app14
+      2) packaging : war
+      3) version : 1.0.0-BUILD-SNAPSHOT
+    - app14-1.0.0-BUILD-SNAPSHOT.war
 3. war 위치
     프로젝트\target\app14-1.0.0-BUILD-SNAPSHOT.war
-
 
 * 배포 전 선행작업
 1. 포트변경(오라클 사용 대비)
     CATALINA_HOME\conf\server.xml 열고,
     <Connector port="8080">를 <Connector port="9090">로 수정한다.
-
 
 * 배포
 1. CATALINA_HOME을 연다.
@@ -28,6 +26,34 @@
     1) windows : CATALINA_HOME\bin\startup.bat 파일 실행
     2) linux   : CATALINA_HOME\bin\startup.sh  파일 실행
 5. CATALINA_HOME\webapps 디렉터리에 war 파일과 같은 이름의 디렉터리가 생긴다.
+
+* 확인
+1. 웹 브라우저를 연다.
+2. 주소를 입력한다.
+    http://localhost:9090/app14-1.0.0-BUILD-SNAPSHOT
+
+-----------------------------------------------------------------------------
+
+* Maven Build 결과 war 파일 이름 바꾸기
+    - pom.xml
+      <build>
+        <finalName>${artifactId}</finalName>
+        ...
+      </build>
+
+* 배포 후 확인
+    http://localhost:9090/app14
+
+-----------------------------------------------------------------------------
+
+* 컨텍스트 패스가 없는 배포
+  1. war 파일의 이름을 ROOT.war로 바꾼다.
+  2. CATALINA_HOME\webapps 디렉터리에는 이미 ROOT 디렉터리가 있다.
+     해당 ROOT 디렉터리의 내용을 모두 지운다.
+  3. 배포하고 확인한다.
+
+
+
 
 
 
