@@ -49,8 +49,80 @@
 * 컨텍스트 패스가 없는 배포
   1. war 파일의 이름을 ROOT.war로 바꾼다.
   2. CATALINA_HOME\webapps 디렉터리에는 이미 ROOT 디렉터리가 있다.
-     해당 ROOT 디렉터리의 내용을 모두 지운다.
+     해당 ROOT 디렉터리의 내용을 모두 지운다.(또는 ROOT 디렉터리 자체를 지운다.)
   3. 배포하고 확인한다.
+     http://localhost:9090
+
+-----------------------------------------------------------------------------
+
+* 자동 빌드 및 배포 툴 jenkins 사용해 보기
+
+1. Maven
+
+  1) maven을 다운로드한다.
+
+    (1) mvnrepository.com에서 maven compiler plugin 3.8.1 버전을 지원한다. (mvnrepository 열어서 어떤 버전을 지원하는지 확인한 내용임)
+    (2) pom.xml을 수정한다.
+      <properties>
+        <maven-version>3.8.1</maven-version>
+      </properties>
+      <build>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-version}</version>
+        </plugin>
+      </build>
+    (3) https://maven.apache.org/에서 3.8.1버전을 다운로드한다.
+       다운로드주소 https://archive.apache.org/dist/maven/maven-3/3.8.1/binaries/
+       ① windows : apache-maven-3.8.1-bin.zip
+       ② linux   : apache-maven-3.8.1-bin.tar.gz
+
+  2) apache-maven-3.8.1-bin.zip 파일을 압축 풀어서 MAVEN_HOME을 등록한다.
+    (1) 경로  C:\Program Files\Maven3.8 디렉터리에 압축을 푼다. (디렉터리 경로 및 이름은 자유롭게 변경할 수 있다.)
+    (2) 환경변수를 등록한다.
+        (1) 변수 명  MAVEN_HOME
+        (2) 변수 값  C:\Program Files\Maven3.8
+
+2. 프로젝트에 build 인코딩을 추가한다.
+  1) pom.xml을 수정한다.
+    <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+3. Git
+
+  1) 원격 레파지토리를 만든다.
+  2) 프로젝트를 원격 레파지토리에 push한다.
+
+    GDJ@DESKTOP-RF0MH4M MINGW64 /c/14_Pjt_Deploy
+    $ git init
+
+    GDJ@DESKTOP-RF0MH4M MINGW64 /c/14_Pjt_Deploy (main)
+    $ git remote add origin https://github.com/gdu-dev/14_Pjt_Deploy.git
+
+    GDJ@DESKTOP-RF0MH4M MINGW64 /c/14_Pjt_Deploy (main)
+    $ git add .
+
+    GDJ@DESKTOP-RF0MH4M MINGW64 /c/14_Pjt_Deploy (main)
+    $ git commit -m 'deploy project'
+
+    GDJ@DESKTOP-RF0MH4M MINGW64 /c/14_Pjt_Deploy (main)
+    $ git push origin main
+
+
+4. Jenkins
+
+  1) jenkins를 다운로드한다.
+    (1) 사이트 주소 https://www.jenkins.io/
+    (2) Download - LTS (Stable) - Generic Java Package(.war)
+
+  2) CATALINA_HOME\webapps\jenkins.war 파일을 두고 Tomcat을 구동한다.
+
+  3) jenkins을 실행한다.
+    http://localhost:9090/jenkins 주소로 접속한다.
+
+
 
 
 
