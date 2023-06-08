@@ -27,26 +27,6 @@
       <version>1.15.4</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-    <dependency>
-      <groupId>commns-io</groupId>
-      <artifactId>cmmons-io</artifactId>
-      <version>2.8.0</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.5</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
-    <dependency>
-      <groupId>net.coobird</groupId>
-      <artifactId>thumbnailator</artifactId>
-      <version>0.4.13</version>
-    </dependency>
-
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
