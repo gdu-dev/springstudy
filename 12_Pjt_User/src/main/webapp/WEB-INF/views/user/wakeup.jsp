@@ -13,17 +13,17 @@
 <script>
 
   $(function(){
-	  
-	  // 휴면해제
-	  $('#btnWakeup').on('click', function(){
-		  location.href = '${contextPath}/user/restore.do';
-	  })
-	  
-	  // 취소
-	  $('#btnCancel').on('click', function(){
-		  location.href = '${contextPath}/index.do';
-	  })
-	  
+    
+    // 휴면해제
+    $('#btnWakeup').on('click', function(){
+      location.href = '${contextPath}/user/restore.do';
+    })
+    
+    // 취소
+    $('#btnCancel').on('click', function(){
+      location.href = '${contextPath}/index.do';
+    })
+    
   })
   
 </script>

@@ -45,7 +45,7 @@
           url: '${contextPath}/user/sendTempPw.do',
           contentType: 'application/json',
           data: JSON.stringify({
-        	  'id': $('#id').val(),
+            'id': $('#id').val(),
             'email': findUser.email
           }),
           dataType: 'json',
@@ -54,7 +54,7 @@
               alert('등록된 이메일로 임시비밀번호가 발송되었습니다.');
               location.href = '${contextPath}/index.do';
             } else {
-            	alert('임시비밀번호 발급이 실패했습니다.');
+              alert('임시비밀번호 발급이 실패했습니다.');
             }
           }
         });

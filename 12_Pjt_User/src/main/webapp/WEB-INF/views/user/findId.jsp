@@ -14,13 +14,13 @@
 <script>
 
   function fnFindId() {
-	  $('#btnFindId').on('click', function(){
-    	$.ajax({
+    $('#btnFindId').on('click', function(){
+      $.ajax({
         type: 'post',
         url: '${contextPath}/user/findId.do',
         contentType: 'application/json',  // 보내는 데이터가 JSON이라는 의미입니다. 
         data: JSON.stringify({            // 보내는 데이터의 파라미터 이름이 없기 때문에 컨트롤러에서 parameter를 받는 request.getParameter(), @RequestParam, 커맨드 객체 모두 사용할 수 없습니다.
-        	email: $('#email').val()        // 컨트롤러에서는 @RequestBody와 객체 또는 Map을 통해서 받아야 합니다.
+          email: $('#email').val()        // 컨트롤러에서는 @RequestBody와 객체 또는 Map을 통해서 받아야 합니다.
         }),
         dataType: 'json',
         success: function(resData) {
@@ -29,7 +29,7 @@
             moment.locale('ko-KR');
             $('#findResult').html('회원님의 아이디는 ' + id + '입니다.<br>(가입일 : ' + moment(resData.findUser.joinedAt).format("YYYY년 MM월 DD일 a h:mm:ss") + ')');
           } else {
-        	  $('#findResult').html('일치하는 회원이 없습니다. 입력 정보를 확인하세요.');
+            $('#findResult').html('일치하는 회원이 없습니다. 입력 정보를 확인하세요.');
           }
         }
       });
@@ -37,8 +37,8 @@
   }
 
   $(function(){
-	  fnFindId();
-	});
+    fnFindId();
+  });
 
 </script>
 </head>

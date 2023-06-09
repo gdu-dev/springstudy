@@ -23,46 +23,47 @@
   // 함수 정의
   
   function fnInitEditPwArea(){
-	  $('#pw').val('');
-	  $('#rePw').val('');
-	  $('#msgPw').val('');
-	  $('#msgRePw').val('');
+    $('#pw').val('');
+    $('#rePw').val('');
+    $('#msgPw').val('');
+    $('#msgRePw').val('');
   }
   
   function fnToggleEditPwArea(){
     $('#editPwArea').hide();
     $('#btnOpenEditPwArea').on('click', function(){
-    	fnInitEditPwArea();
-    	$('#btnOpenEditPwArea').hide();
+      fnInitEditPwArea();
+      $('#btnOpenEditPwArea').hide();
       $('#editPwArea').show();
     });
     $('#btnCloseEditPwArea').on('click', function(){
-    	fnInitEditPwArea();
-    	$('#btnOpenEditPwArea').show();
-    	$('#editPwArea').hide();
+      
+      fnInitEditPwArea();
+      $('#btnOpenEditPwArea').show();
+      $('#editPwArea').hide();
     });
   }
   
   function fnCheckPw(){
-	  $('#pw').on('keyup', function(){
-		  let pw = $(this).val();
-		  let pwLength = pw.length;
-		  let validCount = /[a-z]/.test(pw)         //   소문자를 가지고 있으면 true(1), 없으면 false(0)
-				             + /[A-Z]/.test(pw)         //   대문자를 가지고 있으면 true(1), 없으면 false(0)
-		                 + /[0-9]/.test(pw)         //     숫자를 가지고 있으면 true(1), 없으면 false(0)
-		                 + /[^a-zA-Z0-9]/.test(pw); // 특수문자를 가지고 있으면 true(1), 없으면 false(0)
-		  verifyPw = (pwLength >= 4) && (pwLength <= 20) && (validCount >= 3);
-		  if(verifyPw){
-			  $('#msgPw').text('사용 가능한 비밀번호입니다.');
-		  } else {
-			  $('#msgPw').text('4~20자, 소문자+대문자+숫자+특수문자 사용 가능, 3개 이상 조합');
-		  }
-	  })
+    $('#pw').on('keyup', function(){
+      let pw = $(this).val();
+      let pwLength = pw.length;
+      let validCount = /[a-z]/.test(pw)         //   소문자를 가지고 있으면 true(1), 없으면 false(0)
+                     + /[A-Z]/.test(pw)         //   대문자를 가지고 있으면 true(1), 없으면 false(0)
+                     + /[0-9]/.test(pw)         //     숫자를 가지고 있으면 true(1), 없으면 false(0)
+                     + /[^a-zA-Z0-9]/.test(pw); // 특수문자를 가지고 있으면 true(1), 없으면 false(0)
+      verifyPw = (pwLength >= 4) && (pwLength <= 20) && (validCount >= 3);
+      if(verifyPw){
+        $('#msgPw').text('사용 가능한 비밀번호입니다.');
+      } else {
+        $('#msgPw').text('4~20자, 소문자+대문자+숫자+특수문자 사용 가능, 3개 이상 조합');
+      }
+    })
   }
   
   function fnCheckPwAgain(){
     $('#rePw').on('keyup', function(){
-    	let pw = $('#pw').val();
+      let pw = $('#pw').val();
       let rePw = $(this).val();
       verifyRePw = (rePw != '') && (rePw == pw);
       if(verifyRePw){
@@ -74,65 +75,65 @@
   }
   
   function fnModifyPw(){
-	  $('#btnModifyPw').on('click', function(){
-		  $.ajax({
-			  type: 'post',
-			  url: '${contextPath}/user/modifyPw.do',
-			  data: 'pw=' + $('#pw').val(),
-			  dataType: 'json',
-			  success: function(resData){  // resData = {"pwUpdateResult": 1}
-				  if(resData.pwUpdateResult == 1){
+    $('#btnModifyPw').on('click', function(){
+      $.ajax({
+        type: 'post',
+        url: '${contextPath}/user/modifyPw.do',
+        data: 'pw=' + $('#pw').val(),
+        dataType: 'json',
+        success: function(resData){  // resData = {"pwUpdateResult": 1}
+          if(resData.pwUpdateResult == 1){
             alert('비밀번호가 변경되었습니다.');
             fnToggleEditPwArea();
           } else {
             alert('비밀번호 변경이 실패했습니다.');
           }
-			  }
-		  })
-	  })
+        }
+      })
+    })
   }
   
   function fnToggleEditEmailArea(){
-	    $('#editEmailArea').hide();
-	    $('#btnOpenEditEmailArea').on('click', function(){
-	      $('#btnOpenEditEmailArea').hide();
-	      $('#editEmailArea').show();
-	    });
-	    $('#btnCloseEditEmailArea').on('click', function(){
-	      $('#btnOpenEditEmailArea').show();
-	      $('#editEmailArea').hide();
-	    });
-	  }
+      $('#editEmailArea').hide();
+      $('#btnOpenEditEmailArea').on('click', function(){
+        $('#btnOpenEditEmailArea').hide();
+        $('#editEmailArea').show();
+      });
+      $('#btnCloseEditEmailArea').on('click', function(){
+        $('#btnOpenEditEmailArea').show();
+        $('#editEmailArea').hide();
+      });
+    }
   
   function fnCheckName(){
-	  $('#name').on('keyup', function(){
-		  verifyName = $(this).val() != '';
-	  })
+    $('#name').on('keyup', function(){
+      verifyName = $(this).val() != '';
+    })
   }
   
   function fnCheckMobile(){
-	  $('#mobile').on('keyup', function(){
-		  let mobile = $(this).val();
-		  let regMobile = /^010[0-9]{7,8}$/;
-		  verifyMobile = regMobile.test(mobile);
-		  if(verifyMobile){
-			  $('#msgMobile').text('');
-		  } else {
-			  $('#msgMobile').text('휴대전화 입력을 확인하세요.');			  
-		  }
-	  })
+    $('#mobile').on('keyup', function(){
+      let mobile = $(this).val();
+      let regMobile = /^010[0-9]{7,8}$/;
+      verifyMobile = regMobile.test(mobile);
+      if(verifyMobile){
+        $('#msgMobile').text('');
+      } else {
+        $('#msgMobile').text('휴대전화 입력을 확인하세요.');        
+      }
+    })
   }
   
   function fnCreateDate(){
-	  // 년도(100년 전 ~ 1년 후)
-	  let year = new Date().getFullYear();
+    // 년도(100년 전 ~ 1년 후)
+    let year = new Date().getFullYear();
     let strYear = '<option value="">년도</option>';
     for(let y = year - 100; y <= year + 1; y++){
       strYear += '<option value="' + y + '">' + y + '</option>';
     }
     $('#birthyear').append(strYear);
     $('#birthyear').val('${loginUser.birthyear}').prop('selected', true);
-	  // 월(1 ~ 12월)
+    // 월(1 ~ 12월)
     let strMonth = '<option value="">월</option>';
     for(let m = 1; m <= 12; m++){
       if(m < 10){
@@ -143,7 +144,7 @@
     }
     $('#birthmonth').append(strMonth);
     $('#birthmonth').val('${loginUser.birthdate.substring(0,2)}').prop('selected', true);
-	  // 일
+    // 일
     $('#birthdate').empty();
     $('#birthdate').append('<option value="">일</option>');
     let endDay = 0;
@@ -168,76 +169,76 @@
   }
   
   function fnCheckEmail(){
-	  $('#btnGetCode').on('click', function(){
-		  let email = $('#email').val();
-		  new Promise(function(resolve, reject){
-			  let regEmail = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,6}){1,2}$/;
-			  verifyEmail = regEmail.test(email);
-			  if(verifyEmail == false){
-				  reject(1);
-				  return;
-			  }
-			  $.ajax({
-				  type: 'get',
-				  url: '${contextPath}/user/verifyEmail.do',
-				  data: 'email=' + email,
-				  dataType: 'json',
-				  success: function(resData){  // resData = {"enableEmail": true} 또는 {"enableEmail": false}
-					  if(resData.enableEmail){
-    				  resolve();  // then 메소드에 정의된 function을 호출한다.
-					  } else {
-						  reject(2);  // catch 메소드에 정의된 function을 호출한다. 인수로 2을 전달한다.
-					  }
-				  }
-				})
-		  }).then(function(){
-			  $.ajax({
-				  type: 'get',
-				  url: '${contextPath}/user/sendAuthCode.do',
-				  data: 'email=' + email,
-				  dataType: 'json',
-				  success: function(resData){
-					  alert(email + "으로 인증코드를 전송했습니다.");
-					  $('#btnVerifyCode').on('click', function(){
-						  verifyEmail = (resData.authCode == $('#authCode').val());
-						  if(verifyEmail) {
-							  alert('인증되었습니다.');
-						  } else {
-							  alert('인증에 실패했습니다.');
-						  }
-					  })
-				  },
-				  error: function(jqXHR){
-					  alert('인증번호가 발송되지 않았습니다.');
-					  verifyEmail = false;
-				  }
-			  })
-		  }).catch(function(number){
-			  let msg = '';
-			  switch(number){
-			  case 1:
-				  msg = '이메일 형식이 올바르지 않습니다.';
-				  break;
-			  case 2:
-				  msg = '이미 사용 중인 이메일입니다.';
-				  break;
-			  }
-			  $('#msgEmail').text(msg);
-			  verifyEmail = false;
-		  })
-	  })
+    $('#btnGetCode').on('click', function(){
+      let email = $('#email').val();
+      new Promise(function(resolve, reject){
+        let regEmail = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,6}){1,2}$/;
+        verifyEmail = regEmail.test(email);
+        if(verifyEmail == false){
+          reject(1);
+          return;
+        }
+        $.ajax({
+          type: 'get',
+          url: '${contextPath}/user/verifyEmail.do',
+          data: 'email=' + email,
+          dataType: 'json',
+          success: function(resData){  // resData = {"enableEmail": true} 또는 {"enableEmail": false}
+            if(resData.enableEmail){
+              resolve();  // then 메소드에 정의된 function을 호출한다.
+            } else {
+              reject(2);  // catch 메소드에 정의된 function을 호출한다. 인수로 2을 전달한다.
+            }
+          }
+        })
+      }).then(function(){
+        $.ajax({
+          type: 'get',
+          url: '${contextPath}/user/sendAuthCode.do',
+          data: 'email=' + email,
+          dataType: 'json',
+          success: function(resData){
+            alert(email + "으로 인증코드를 전송했습니다.");
+            $('#btnVerifyCode').on('click', function(){
+              verifyEmail = (resData.authCode == $('#authCode').val());
+              if(verifyEmail) {
+                alert('인증되었습니다.');
+              } else {
+                alert('인증에 실패했습니다.');
+              }
+            })
+          },
+          error: function(jqXHR){
+            alert('인증번호가 발송되지 않았습니다.');
+            verifyEmail = false;
+          }
+        })
+      }).catch(function(number){
+        let msg = '';
+        switch(number){
+        case 1:
+          msg = '이메일 형식이 올바르지 않습니다.';
+          break;
+        case 2:
+          msg = '이미 사용 중인 이메일입니다.';
+          break;
+        }
+        $('#msgEmail').text(msg);
+        verifyEmail = false;
+      })
+    })
   }
-	
+  
   // 8. submit (회원가입)
   function fnJoin(){
 
-	  $('#frmJoin').on('submit', function(event){
-		  
-		  if(verifyId == false){
-			  alert('아이디를 확인하세요.');
-			  event.preventDefault();
-			  return;
-		  } else if(verifyPw == false || verifyRePw == false){
+    $('#frmJoin').on('submit', function(event){
+      
+      if(verifyId == false){
+        alert('아이디를 확인하세요.');
+        event.preventDefault();
+        return;
+      } else if(verifyPw == false || verifyRePw == false){
         alert('비밀번호를 확인하세요.');
         event.preventDefault();
         return;
@@ -258,27 +259,27 @@
         event.preventDefault();
         return;
       }
-		  
-	  })
-	  
+      
+    })
+    
   }
   
   // 함수 호출
   $(function(){
-	  
-	  fnInitEditPwArea();
-	  fnToggleEditPwArea();
-	  fnCheckPw();
-	  fnCheckPwAgain();
-	  fnModifyPw();
-	  
-	  fnToggleEditEmailArea();
-	  fnCheckEmail();
-	  
-	  fnCheckName();
-	  fnCheckMobile();
-	  fnCreateDate();
-	  fnJoin();
+    
+    fnInitEditPwArea();
+    fnToggleEditPwArea();
+    fnCheckPw();
+    fnCheckPwAgain();
+    fnModifyPw();
+    
+    fnToggleEditEmailArea();
+    fnCheckEmail();
+    
+    fnCheckName();
+    fnCheckMobile();
+    fnCreateDate();
+    fnJoin();
   })
 
 </script>
