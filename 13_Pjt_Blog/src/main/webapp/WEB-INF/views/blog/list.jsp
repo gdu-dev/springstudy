@@ -57,7 +57,7 @@
 
 <script>
   function fnWrite(){
-	  location.href = '${contextPath}/blog/write.form';
+    location.href = '${contextPath}/blog/write.form';
   }
 </script>
 

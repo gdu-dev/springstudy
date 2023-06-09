@@ -13,9 +13,9 @@
 </head>
 <body>
 
-	<div>
-		<a href="${contextPath}/upload/list.do">UPLOAD</a>
-	</div>
-	
+  <div>
+    <a href="${contextPath}/upload/list.do">UPLOAD</a>
+  </div>
+  
 </body>
 </html>
