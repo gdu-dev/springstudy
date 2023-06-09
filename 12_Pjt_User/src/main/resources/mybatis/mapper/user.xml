@@ -275,5 +275,12 @@
      WHERE ID = #{id}
   </update>
 
+  <!-- 이메일 변경 -->
+  <update id="updateUserEmail" parameterType="UserDTO">
+    UPDATE USER_T
+       SET EMAIL = #{email}
+     WHERE ID = #{id}
+  </update>
+
 
 </mapper>

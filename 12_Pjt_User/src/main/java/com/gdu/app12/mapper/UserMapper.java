@@ -28,6 +28,7 @@ public interface UserMapper {
   public int insertRestoreUser(String id);
   public int deleteSleepUser(String id);
   public int updateUserPassword(UserDTO userDTO);
+  public int updateUserEmail(UserDTO userDTO);
 
   
   

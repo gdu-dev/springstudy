@@ -125,6 +125,12 @@ public class UserController {
     return userService.modifyPw(request);
   }
   
+  @ResponseBody
+  @PostMapping(value="/modifyEmail.do", produces="application/json")  // 이메일 변경
+  public Map<String, Object> modifyEmail(HttpServletRequest request) {
+    return userService.modifyEmail(request);
+  }
+  
   @GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동
   public String findIdForm() {
     return "user/findId";

@@ -22,6 +22,7 @@ public interface UserService {
   public boolean checkPw(HttpServletRequest request);
   public UserDTO getUserById(String id);
   public Map<String, Object> modifyPw(HttpServletRequest request);
+  public Map<String, Object> modifyEmail(HttpServletRequest request);
   public Map<String, Object> findId(UserDTO userDTO);
   public Map<String, Object> findPw(UserDTO userDTO);
   public Map<String, Object> sendTempPw(UserDTO userDTO);

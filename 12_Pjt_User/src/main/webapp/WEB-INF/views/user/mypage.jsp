@@ -15,12 +15,9 @@
   // 전역 변수 (각종 검사 통과 유무를 저장하는 변수)
   var verifyPw = false;
   var verifyRePw = false;
-  var verifyName = false;
-  var verifyMobile = false;
   var verifyEmail = false;
-  
-  
-  // 함수 정의
+  var verifyName = true;
+  var verifyMobile = true;
   
   function fnInitEditPwArea(){
     $('#pw').val('');
@@ -37,7 +34,6 @@
       $('#editPwArea').show();
     });
     $('#btnCloseEditPwArea').on('click', function(){
-      
       fnInitEditPwArea();
       $('#btnOpenEditPwArea').show();
       $('#editPwArea').hide();
@@ -76,15 +72,21 @@
   
   function fnModifyPw(){
     $('#btnModifyPw').on('click', function(){
+      if(verifyPw == false || verifyRePw == false) {
+        alert('비밀번호를 확인하세요.');
+        return;
+      }
       $.ajax({
         type: 'post',
         url: '${contextPath}/user/modifyPw.do',
         data: 'pw=' + $('#pw').val(),
         dataType: 'json',
-        success: function(resData){  // resData = {"pwUpdateResult": 1}
-          if(resData.pwUpdateResult == 1){
+        success: function(resData){  // resData = {"updateUserPasswordResult": 1}
+          if(resData.updateUserPasswordResult == 1){
             alert('비밀번호가 변경되었습니다.');
-            fnToggleEditPwArea();
+            fnInitEditPwArea();
+            $('#btnOpenEditPwArea').show();
+            $('#editPwArea').hide();
           } else {
             alert('비밀번호 변경이 실패했습니다.');
           }
@@ -94,16 +96,103 @@
   }
   
   function fnToggleEditEmailArea(){
+    $('#editEmailArea').hide();
+    $('#btnOpenEditEmailArea').on('click', function(){
+      $('#btnOpenEditEmailArea').hide();
+      $('#editEmailArea').show();
+    });
+    $('#btnCloseEditEmailArea').on('click', function(){
+      $('#btnOpenEditEmailArea').show();
       $('#editEmailArea').hide();
-      $('#btnOpenEditEmailArea').on('click', function(){
-        $('#btnOpenEditEmailArea').hide();
-        $('#editEmailArea').show();
-      });
-      $('#btnCloseEditEmailArea').on('click', function(){
-        $('#btnOpenEditEmailArea').show();
-        $('#editEmailArea').hide();
-      });
-    }
+    });
+  }
+  
+  function fnCheckEmail(){
+    $('#btnGetCode').on('click', function(){
+      let email = $('#email').val();
+      new Promise(function(resolve, reject){
+        let regEmail = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,6}){1,2}$/;
+        verifyEmail = regEmail.test(email);
+        if(verifyEmail == false){
+          reject(1);
+          return;
+        }
+        $.ajax({
+          type: 'get',
+          url: '${contextPath}/user/verifyEmail.do',
+          data: 'email=' + email,
+          dataType: 'json',
+          success: function(resData){  // resData = {"enableEmail": true} 또는 {"enableEmail": false}
+            if(resData.enableEmail){
+              $('#msgEmail').text('');
+              resolve();  // then 메소드에 정의된 function을 호출한다.
+            } else {
+              reject(2);  // catch 메소드에 정의된 function을 호출한다. 인수로 2을 전달한다.
+            }
+          }
+        })
+      }).then(function(){
+        $.ajax({
+          type: 'get',
+          url: '${contextPath}/user/sendAuthCode.do',
+          data: 'email=' + email,
+          dataType: 'json',
+          success: function(resData){
+            alert(email + "으로 인증코드를 전송했습니다.");
+            $('#btnVerifyCode').on('click', function(){
+              verifyEmail = (resData.authCode == $('#authCode').val());
+              if(verifyEmail) {
+                alert('인증되었습니다.');
+              } else {
+                alert('인증에 실패했습니다.');
+              }
+            })
+          },
+          error: function(jqXHR){
+            alert('인증번호가 발송되지 않았습니다.');
+            verifyEmail = false;
+          }
+        })
+      }).catch(function(number){
+        let msg = '';
+        switch(number){
+        case 1:
+          msg = '이메일 형식이 올바르지 않습니다.';
+          break;
+        case 2:
+          msg = '이미 사용 중인 이메일입니다.';
+          break;
+        }
+        $('#msgEmail').text(msg);
+        verifyEmail = false;
+      })
+    })
+  }
+  
+  function fnModifyEmail(){
+    $('#btnModifyEmail').on('click', function(){
+      if(verifyEmail == false){
+        alert('이메일을 확인하세요.');
+        return;
+      }
+      $.ajax({
+        type: 'post',
+        url: '${contextPath}/user/modifyEmail.do',
+        data: 'email=' + $('#email').val(),
+        dataType: 'json',
+        success: function(resData){  // resData = {"updateUserEmailResult": 1}
+          if(resData.updateUserEmailResult == 1){
+            alert('이메일이 변경되었습니다.');
+            $('#btnOpenEditEmailArea').show();
+            $('#authCode').val('');
+            $('#editEmailArea').hide();
+          } else {
+            alert('이메일 변경이 실패했습니다.');
+          }
+        }
+      })
+    })
+  }
   
   function fnCheckName(){
     $('#name').on('keyup', function(){
@@ -168,81 +257,11 @@
     $('#birthdate').val('${loginUser.birthdate.substring(2)}').prop('selected', true);
   }
   
-  function fnCheckEmail(){
-    $('#btnGetCode').on('click', function(){
-      let email = $('#email').val();
-      new Promise(function(resolve, reject){
-        let regEmail = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,6}){1,2}$/;
-        verifyEmail = regEmail.test(email);
-        if(verifyEmail == false){
-          reject(1);
-          return;
-        }
-        $.ajax({
-          type: 'get',
-          url: '${contextPath}/user/verifyEmail.do',
-          data: 'email=' + email,
-          dataType: 'json',
-          success: function(resData){  // resData = {"enableEmail": true} 또는 {"enableEmail": false}
-            if(resData.enableEmail){
-              resolve();  // then 메소드에 정의된 function을 호출한다.
-            } else {
-              reject(2);  // catch 메소드에 정의된 function을 호출한다. 인수로 2을 전달한다.
-            }
-          }
-        })
-      }).then(function(){
-        $.ajax({
-          type: 'get',
-          url: '${contextPath}/user/sendAuthCode.do',
-          data: 'email=' + email,
-          dataType: 'json',
-          success: function(resData){
-            alert(email + "으로 인증코드를 전송했습니다.");
-            $('#btnVerifyCode').on('click', function(){
-              verifyEmail = (resData.authCode == $('#authCode').val());
-              if(verifyEmail) {
-                alert('인증되었습니다.');
-              } else {
-                alert('인증에 실패했습니다.');
-              }
-            })
-          },
-          error: function(jqXHR){
-            alert('인증번호가 발송되지 않았습니다.');
-            verifyEmail = false;
-          }
-        })
-      }).catch(function(number){
-        let msg = '';
-        switch(number){
-        case 1:
-          msg = '이메일 형식이 올바르지 않습니다.';
-          break;
-        case 2:
-          msg = '이미 사용 중인 이메일입니다.';
-          break;
-        }
-        $('#msgEmail').text(msg);
-        verifyEmail = false;
-      })
-    })
-  }
-  
-  // 8. submit (회원가입)
-  function fnJoin(){
+  function fnModifyInfo(){
 
-    $('#frmJoin').on('submit', function(event){
+    $('#frmEdit').on('submit', function(event){
       
-      if(verifyId == false){
-        alert('아이디를 확인하세요.');
-        event.preventDefault();
-        return;
-      } else if(verifyPw == false || verifyRePw == false){
-        alert('비밀번호를 확인하세요.');
-        event.preventDefault();
-        return;
-      } else if(verifyName == false){
+      if(verifyName == false){
         alert('이름을 확인하세요.');
         event.preventDefault();
         return;
@@ -252,10 +271,6 @@
         return;
       } else if($('#birthyear').val() == '' || $('#birthmonth').val() == '' || $('#birthdate').val() == ''){
         alert('생년월일을 확인하세요.');
-        event.preventDefault();
-        return;
-      } else if(verifyEmail == false){
-        alert('가입을 위해서 이메일 인증이 필요합니다.');
         event.preventDefault();
         return;
       }
@@ -275,11 +290,13 @@
     
     fnToggleEditEmailArea();
     fnCheckEmail();
+    fnModifyEmail();
     
     fnCheckName();
     fnCheckMobile();
     fnCreateDate();
-    fnJoin();
+    fnModifyInfo();
+    
   })
 
 </script>
@@ -331,12 +348,14 @@
         <input type="text" id="authCode" placeholder="인증코드 입력">
         <input type="button" value="인증하기" id="btnVerifyCode">
       </div>
+      <div>
+        <input type="button" value="이메일수정" id="btnModifyEmail">
+      </div>
     </div>
 
     <hr>
 
     <div>* 표시는 필수 입력사항입니다.</div>
-    
     
     <form id="frmEdit" method="post" action="${contextPath}/user/modifyInfo.do">
     

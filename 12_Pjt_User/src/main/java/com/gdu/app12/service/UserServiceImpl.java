@@ -433,7 +433,29 @@ public class UserServiceImpl implements UserService {
     
     // PW 수정 결과 반환
     Map<String, Object> map = new HashMap<String, Object>();
-    map.put("pwUpdateResult", userMapper.updateUserPassword(userDTO));
+    map.put("updateUserPasswordResult", userMapper.updateUserPassword(userDTO));
+    return map;
+    
+  }
+  
+  @Override
+  public Map<String, Object> modifyEmail(HttpServletRequest request) {
+    
+    // 로그인한 사용자의 ID
+    HttpSession session = request.getSession();
+    String id = (String) session.getAttribute("loginId");
+    
+    // 사용자가 입력한 Email (이 Email로 이메일을 변경해야 한다.)
+    String email = request.getParameter("email");
+    
+    // ID와 Email를 가진 UserDTO를 생성
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(id);
+    userDTO.setEmail(email);
+    
+    // Email 수정 결과 반환
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("updateUserEmailResult", userMapper.updateUserEmail(userDTO));
     return map;
     
   }
