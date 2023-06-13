@@ -173,12 +173,12 @@ public class UserController {
   }
   
   @ResponseBody
-  @PostMapping(value="/modifyInfo.do", produces="application/json")
+  @PostMapping(value="/modifyInfo.do", produces="application/json")  // 개인정보 수정
   public Map<String, Object> modifyInfo(HttpServletRequest request){
     return userService.modifyInfo(request);    
   }
   
-  @GetMapping("/naver/login.do")
+  @GetMapping("/naver/login.do")  // 네이버로그인
   public String naverLogin(HttpServletRequest request, HttpServletResponse response, Model model) {
     
     /*
@@ -220,7 +220,7 @@ public class UserController {
     
   }
   
-  @PostMapping("/naver/join.do")
+  @PostMapping("/naver/join.do")  // 네이버로그인 회원을 위한 간편가입
   public void naverJoin(HttpServletRequest request, HttpServletResponse response) {
     
     /*
