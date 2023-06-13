@@ -2,7 +2,6 @@ package com.gdu.app11.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,13 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.app11.service.UploadService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/upload")
 @Controller
 public class UploadController {
 
-	// field
-	@Autowired
-	private UploadService uploadService;
+	private final UploadService uploadService;
 	
 	@GetMapping("/list.do")
 	public String list(HttpServletRequest request, Model model) {

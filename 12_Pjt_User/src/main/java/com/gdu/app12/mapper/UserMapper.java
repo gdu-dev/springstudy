@@ -8,6 +8,7 @@ import com.gdu.app12.domain.UserDTO;
 
 @Mapper
 public interface UserMapper {
+  
   public UserDTO selectUserById(String id);
   public SleepUserDTO selectSleepUserById(String id);
   public LeaveUserDTO selectLeaveUserById(String id);
@@ -29,8 +30,8 @@ public interface UserMapper {
   public int deleteSleepUser(String id);
   public int updateUserPassword(UserDTO userDTO);
   public int updateUserEmail(UserDTO userDTO);
+  public int updateUserInfo(UserDTO userDTO);
+  public int insertNaverUser(UserDTO userDTO);
 
-  
-  
   
 }

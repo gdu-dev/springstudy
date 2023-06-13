@@ -15,15 +15,14 @@ import com.gdu.app09.domain.EmpDTO;
 import com.gdu.app09.mapper.EmployeeListMapper;
 import com.gdu.app09.util.PageUtil;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor  // field에 @Autowired 처리가 된다.
+@RequiredArgsConstructor
 @Service
 public class EmployeeListServiceImpl implements EmployeeListService {
 
-	// field
-	private EmployeeListMapper employeeListMapper;
-	private PageUtil pageUtil;
+	private final EmployeeListMapper employeeListMapper;
+	private final PageUtil pageUtil;
 	
 	@Override
 	public void getEmployeeListUsingPagination(HttpServletRequest request, Model model) {

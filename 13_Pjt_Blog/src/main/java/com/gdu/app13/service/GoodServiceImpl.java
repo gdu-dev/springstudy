@@ -6,16 +6,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gdu.app13.mapper.GoodMapper;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class GoodServiceImpl implements GoodService {
 
-	@Autowired
-	private GoodMapper goodMapper;
+	private final GoodMapper goodMapper;
 	
 	@Override
 	public Map<String, Object> getGoodCheckState(HttpServletRequest request) {

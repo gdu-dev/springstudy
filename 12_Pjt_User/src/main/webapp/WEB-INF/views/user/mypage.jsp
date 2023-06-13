@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+  .blind {
+    display: none;
+  }
+</style>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
@@ -16,8 +21,6 @@
   var verifyPw = false;
   var verifyRePw = false;
   var verifyEmail = false;
-  var verifyName = true;
-  var verifyMobile = true;
   
   function fnInitEditPwArea(){
     $('#pw').val('');
@@ -95,15 +98,25 @@
     })
   }
   
+  function fnInitEditEmailArea(){
+	  $('#btnVerifyCode').addClass("blind");
+	  $('#btnModifyEmail').addClass("blind");
+    $('#msgEmail').val('');
+    $('#authCode').val('');
+  }
+  
   function fnToggleEditEmailArea(){
     $('#editEmailArea').hide();
     $('#btnOpenEditEmailArea').on('click', function(){
+    	fnInitEditEmailArea();
       $('#btnOpenEditEmailArea').hide();
       $('#editEmailArea').show();
     });
     $('#btnCloseEditEmailArea').on('click', function(){
+    	fnInitEditEmailArea();
       $('#btnOpenEditEmailArea').show();
       $('#editEmailArea').hide();
+      
     });
   }
   
@@ -139,10 +152,12 @@
           dataType: 'json',
           success: function(resData){
             alert(email + "으로 인증코드를 전송했습니다.");
+            $('#btnVerifyCode').removeClass("blind");
             $('#btnVerifyCode').on('click', function(){
               verifyEmail = (resData.authCode == $('#authCode').val());
               if(verifyEmail) {
                 alert('인증되었습니다.');
+                $('#btnModifyEmail').removeClass('blind');
               } else {
                 alert('인증에 실패했습니다.');
               }
@@ -183,9 +198,7 @@
         success: function(resData){  // resData = {"updateUserEmailResult": 1}
           if(resData.updateUserEmailResult == 1){
             alert('이메일이 변경되었습니다.');
-            $('#btnOpenEditEmailArea').show();
-            $('#authCode').val('');
-            $('#editEmailArea').hide();
+            fnInitEditEmailArea();
           } else {
             alert('이메일 변경이 실패했습니다.');
           }
@@ -194,26 +207,7 @@
     })
   }
   
-  function fnCheckName(){
-    $('#name').on('keyup', function(){
-      verifyName = $(this).val() != '';
-    })
-  }
-  
-  function fnCheckMobile(){
-    $('#mobile').on('keyup', function(){
-      let mobile = $(this).val();
-      let regMobile = /^010[0-9]{7,8}$/;
-      verifyMobile = regMobile.test(mobile);
-      if(verifyMobile){
-        $('#msgMobile').text('');
-      } else {
-        $('#msgMobile').text('휴대전화 입력을 확인하세요.');        
-      }
-    })
-  }
-  
-  function fnCreateDate(){
+  function fnDisplayBirthday(){
     // 년도(100년 전 ~ 1년 후)
     let year = new Date().getFullYear();
     let strYear = '<option value="">년도</option>';
@@ -258,25 +252,44 @@
   }
   
   function fnModifyInfo(){
-
-    $('#frmEdit').on('submit', function(event){
+	  
+    $('#btnModifyInfo').on('click', function(){
       
-      if(verifyName == false){
+      if($('#name').val() == ''){
         alert('이름을 확인하세요.');
-        event.preventDefault();
         return;
-      } else if(verifyMobile == false){
+      } else if(/^010[0-9]{7,8}$/.test($('#mobile').val()) == false){
         alert('휴대전화번호를 확인하세요.');
-        event.preventDefault();
         return;
       } else if($('#birthyear').val() == '' || $('#birthmonth').val() == '' || $('#birthdate').val() == ''){
         alert('생년월일을 확인하세요.');
-        event.preventDefault();
         return;
       }
       
+      $.ajax({
+    	  type: 'post',
+    	  url: '${contextPath}/user/modifyInfo.do',
+    	  data: $('#frmEdit').serialize(),
+    	  dataType: 'json',
+    	  success: function(resData){  // resData = {"updateUserInfoResult": 1}
+    		  if(resData.updateUserInfoResult == 1){
+    			  alert('개인정보가 수정되었습니다.');
+    		  } else {
+    			  alert('개인정보가 수정되지 않았습니다.');    			  
+    		  }
+    	  }
+      })
+      
     })
     
+  }
+  
+  function fnLeave(){
+	  $('#btnLeave').on('click', function(){
+		  if(confirm('동일한 아이디로 재가입이 불가능합니다. 회원 탈퇴하시겠습니까?')){
+	      location.href = '${contextPath}/user/leave.do';
+	    }
+	  })
   }
   
   // 함수 호출
@@ -292,10 +305,10 @@
     fnCheckEmail();
     fnModifyEmail();
     
-    fnCheckName();
-    fnCheckMobile();
-    fnCreateDate();
+    fnDisplayBirthday();
     fnModifyInfo();
+    
+    fnLeave();
     
   })
 
@@ -346,10 +359,8 @@
         <input type="button" value="인증번호받기" id="btnGetCode">
         <span id="msgEmail"></span><br>
         <input type="text" id="authCode" placeholder="인증코드 입력">
-        <input type="button" value="인증하기" id="btnVerifyCode">
-      </div>
-      <div>
-        <input type="button" value="이메일수정" id="btnModifyEmail">
+        <input type="button" value="인증하기" id="btnVerifyCode" class="blind">
+        <input type="button" value="이메일수정" id="btnModifyEmail" class="blind">
       </div>
     </div>
 
@@ -357,9 +368,10 @@
 
     <div>* 표시는 필수 입력사항입니다.</div>
     
-    <form id="frmEdit" method="post" action="${contextPath}/user/modifyInfo.do">
+    <form id="frmEdit">
     
-      <div>아이디 ${loginUser.id}</div>
+      <input type="hidden" name="id" value="${loginUser.id}">
+    
       <div>가입일 ${loginUser.joinedAt}</div>
       
       <div>
@@ -382,7 +394,6 @@
       <div>
         <label for="mobile">휴대전화*</label>
         <input type="text" name="mobile" id="mobile" value="${loginUser.mobile}">
-        <span id="msgMobile"></span>
       </div>
     
       <div>
@@ -485,7 +496,6 @@
       
       <div>
         <input type="button" value="개인정보수정완료" id="btnModifyInfo">
-        <input type="button" value="취소하기" id="btnCancel">
         <input type="button" value="회원탈퇴" id="btnLeave">
       </div>
     

@@ -13,7 +13,7 @@
 <script>
 
 
-  // 전역 변수 (각종 검사 통과 유무를 저장하는 변수)
+  /* 전역 변수 (각종 검사 통과 유무를 저장하는 변수) */
   var verifyId = false;
   var verifyPw = false;
   var verifyRePw = false;
@@ -22,7 +22,7 @@
   var verifyEmail = false;
   
   
-  // 함수 정의
+  /* 함수 정의 */
   
   // 1. 아이디 검사(정규식 + 중복)
   function fnCheckId(){
@@ -53,7 +53,7 @@
           if(verifyId){
             $('#msgId').text('사용 가능한 아이디입니다.');
           } else {
-            $('#msgId').text('이미 사용 중인 아이디입니다.');
+            $('#msgId').text('사용할 수 없는 아이디입니다.');
           }
         }
       })
@@ -342,8 +342,15 @@
     })
     
   }
+
+  // 9. 취소하면 메인 페이지로 돌아간다.
+  function fnCancel(){
+    $('#btnCancel').on('click', function(){      
+      location.href = '${contextPath}/index.do';
+    })
+  }
   
-  // 함수 호출
+  /* 함수 호출 */
   $(function(){
     fnCheckId();
     fnCheckPw();
@@ -353,6 +360,7 @@
     fnCreateDate();
     fnCheckEmail();
     fnJoin();
+    fnCancel();
   })
 
 </script>
@@ -369,7 +377,7 @@
     
     <form id="frmJoin" method="post" action="${contextPath}/user/join.do">
     
-      <!-- agree.jsp에서 전달된 location, event 속성 -->
+      <!-- agree.jsp에서 전달된 location, event 속성("on" 또는 "off") -->
       <input type="hidden" name="location" value="${location}">
       <input type="hidden" name="event" value="${event}">
     
@@ -500,7 +508,7 @@
       
       <div>
         <button>가입하기</button>
-        <input type="button" value="취소하기">
+        <input type="button" value="취소하기" id="btnCancel">
       </div>
     
     </form>

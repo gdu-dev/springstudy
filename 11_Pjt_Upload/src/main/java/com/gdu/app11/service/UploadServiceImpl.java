@@ -35,19 +35,16 @@ import com.gdu.app11.mapper.UploadMapper;
 import com.gdu.app11.util.MyFileUtil;
 import com.gdu.app11.util.PageUtil;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 
+@RequiredArgsConstructor
 @Service
-@AllArgsConstructor  // field @Autowired 처리
 public class UploadServiceImpl implements UploadService {
 
-	
-	// field
-	private UploadMapper uploadMapper;
-	private MyFileUtil myFileUtil;
-	private PageUtil pageUtil;
-
+	private final UploadMapper uploadMapper;
+	private final MyFileUtil myFileUtil;
+	private final PageUtil pageUtil;
 	
 	@Override
 	public void getUploadList(HttpServletRequest request, Model model) {

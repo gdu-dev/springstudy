@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.app13.service.CommentService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/comment")
 @Controller
 public class CommentController {
 
-  @Autowired
-  private CommentService commentService;
+  private final CommentService commentService;
   
   @PostMapping(value="/addComment.do", produces="application/json")
   @ResponseBody

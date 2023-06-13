@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +16,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.gdu.app13.service.BlogService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/blog")
 @Controller
 public class BlogController {
 
-  @Autowired
-  private BlogService blogService;
+  private final BlogService blogService;
   
   @GetMapping("/list.do")
   public String list(HttpServletRequest request, Model model) {

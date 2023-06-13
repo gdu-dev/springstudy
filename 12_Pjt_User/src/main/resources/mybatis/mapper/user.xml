@@ -43,7 +43,25 @@
   </select>
 
   <select id="selectUserByEmail" parameterType="String" resultType="UserDTO">
-    SELECT ID, EMAIL, JOINED_AT
+    SELECT USER_NO
+         , ID
+         , PW
+         , NAME
+         , GENDER
+         , EMAIL
+         , MOBILE
+         , BIRTHYEAR
+         , BIRTHDATE
+         , POSTCODE
+         , ROAD_ADDRESS
+         , JIBUN_ADDRESS
+         , DETAIL_ADDRESS
+         , EXTRA_ADDRESS
+         , AGREECODE
+         , JOINED_AT
+         , PW_MODIFIED_AT
+         , AUTOLOGIN_ID
+         , AUTOLOGIN_EXPIRED_AT
       FROM USER_T
      WHERE EMAIL = #{email}
   </select>
@@ -105,7 +123,25 @@
   </insert>
 
   <select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
-    SELECT ID
+    SELECT USER_NO
+         , ID
+         , PW
+         , NAME
+         , GENDER
+         , EMAIL
+         , MOBILE
+         , BIRTHYEAR
+         , BIRTHDATE
+         , POSTCODE
+         , ROAD_ADDRESS
+         , JIBUN_ADDRESS
+         , DETAIL_ADDRESS
+         , EXTRA_ADDRESS
+         , AGREECODE
+         , JOINED_AT
+         , PW_MODIFIED_AT
+         , AUTOLOGIN_ID
+         , AUTOLOGIN_EXPIRED_AT
       FROM USER_T
      WHERE ID = #{id}
        AND PW = #{pw}
@@ -137,7 +173,25 @@
      WHERE ID = #{id}
   </update>
   <select id="selectAutologin" parameterType="String" resultType="UserDTO">
-    SELECT ID
+    SELECT USER_NO
+         , ID
+         , PW
+         , NAME
+         , GENDER
+         , EMAIL
+         , MOBILE
+         , BIRTHYEAR
+         , BIRTHDATE
+         , POSTCODE
+         , ROAD_ADDRESS
+         , JIBUN_ADDRESS
+         , DETAIL_ADDRESS
+         , EXTRA_ADDRESS
+         , AGREECODE
+         , JOINED_AT
+         , PW_MODIFIED_AT
+         , AUTOLOGIN_ID
+         , AUTOLOGIN_EXPIRED_AT
       FROM USER_T
      WHERE AUTOLOGIN_ID = #{autologinId}
        AND AUTOLOGIN_EXPIRED_AT > SYSDATE
@@ -282,5 +336,52 @@
      WHERE ID = #{id}
   </update>
 
+  <!-- 개인정보 변경 -->
+  <update id="updateUserInfo" parameterType="UserDTO">
+    UPDATE USER_T
+       SET NAME = #{name}
+         , GENDER = #{gender}
+         , MOBILE = #{mobile}
+         , BIRTHYEAR = #{birthyear}
+         , BIRTHDATE = #{birthdate}
+         , POSTCODE = #{postcode}
+         , ROAD_ADDRESS = #{roadAddress}
+         , JIBUN_ADDRESS = #{jibunAddress}
+         , DETAIL_ADDRESS = #{detailAddress}
+         , EXTRA_ADDRESS = #{extraAddress}
+         , AGREECODE = #{agreecode}
+     WHERE ID = #{id}
+  </update>
+
+  <!-- 네이버 회원 가입 -->
+  <insert id="insertNaverUser" parameterType="UserDTO">
+    INSERT INTO USER_T (
+        USER_NO
+      , ID
+      , PW
+      , NAME
+      , GENDER
+      , EMAIL
+      , MOBILE
+      , BIRTHYEAR
+      , BIRTHDATE
+      , AGREECODE
+      , JOINED_AT
+      , PW_MODIFIED_AT
+    ) VALUES (
+        USER_SEQ.NEXTVAL
+      , #{id}
+      , #{pw}
+      , #{name}
+      , #{gender}
+      , #{email}
+      , #{mobile}
+      , #{birthyear}
+      , #{birthdate}
+      , #{agreecode}
+      , SYSDATE
+      , SYSDATE
+    )
+  </insert>
 
 </mapper>

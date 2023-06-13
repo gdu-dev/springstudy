@@ -27,15 +27,15 @@ import com.gdu.app13.mapper.BlogMapper;
 import com.gdu.app13.util.MyFileUtil;
 import com.gdu.app13.util.PageUtil;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class BlogServiceImpl implements BlogService {
 
-  private BlogMapper blogMapper;
-  private MyFileUtil myFileUtil;
-  private PageUtil pageUtil;
+  private final BlogMapper blogMapper;
+  private final MyFileUtil myFileUtil;
+  private final PageUtil pageUtil;
   
   @Override
   public void loadBlogList(HttpServletRequest request, Model model) {

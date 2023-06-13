@@ -3,7 +3,6 @@ package com.gdu.app08.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gdu.app08.service.BoardService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
-	@Autowired
-	private BoardService boardService;
+	private final BoardService boardService;
 	
 	// getBoardList() 서비스가 반환한 List<BoardDTO>를 /WEB-INF/views/board/list.jsp로 전달한다.
 	@GetMapping("/list.do")

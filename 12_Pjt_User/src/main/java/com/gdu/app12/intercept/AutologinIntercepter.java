@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.WebUtils;
@@ -13,6 +12,9 @@ import org.springframework.web.util.WebUtils;
 import com.gdu.app12.domain.UserDTO;
 import com.gdu.app12.mapper.UserMapper;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Component
 public class AutologinIntercepter implements HandlerInterceptor {
 
@@ -20,8 +22,7 @@ public class AutologinIntercepter implements HandlerInterceptor {
   // 쿠키에 autologinId 값이 존재하는 경우에
   // 자동 로그인을 수행하는 인터셉터
   
-  @Autowired
-  private UserMapper userMapper;
+  private final UserMapper userMapper;
   
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

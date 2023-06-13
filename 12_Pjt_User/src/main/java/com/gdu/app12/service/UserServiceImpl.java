@@ -1,6 +1,14 @@
 package com.gdu.app12.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,25 +18,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gdu.app12.domain.LeaveUserDTO;
+import com.gdu.app12.domain.SleepUserDTO;
 import com.gdu.app12.domain.UserDTO;
 import com.gdu.app12.mapper.UserMapper;
 import com.gdu.app12.util.JavaMailUtil;
 import com.gdu.app12.util.SecurityUtil;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor  // field에 @Autowired 처리를 위해서
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-  // field
-  private UserMapper userMapper;
-  private JavaMailUtil javaMailUtil;
-  private SecurityUtil securityUtil;
+  private final UserMapper userMapper;
+  private final JavaMailUtil javaMailUtil;
+  private final SecurityUtil securityUtil;
   
   @Override
   public Map<String, Object> verifyId(String id) {
@@ -78,8 +87,8 @@ public class UserServiceImpl implements UserService {
     String jibunAddress = request.getParameter("jibunAddress");
     String detailAddress = request.getParameter("detailAddress");
     String extraAddress = request.getParameter("extraAddress");
-    String location = request.getParameter("location");
-    String event = request.getParameter("event");
+    String location = request.getParameter("location");  // "on" 또는 "off"
+    String event = request.getParameter("event");        // "on" 또는 "off"
     
     // 비밀번호 SHA-256 암호화
     pw = securityUtil.getSha256(pw);
@@ -98,13 +107,8 @@ public class UserServiceImpl implements UserService {
     
     // agreecode
     int agreecode = 0;
-    if(location.isEmpty() == false && event.isEmpty() == false) {
-      agreecode = 3;
-    } else if(location.isEmpty() && event.isEmpty() == false) {
-      agreecode = 2;
-    } else if(location.isEmpty() == false && event.isEmpty()) {
-      agreecode = 1;
-    }
+    if(location.equals("on")) { agreecode += 1; }
+    if(event.equals("on"))    { agreecode += 2; }
     
     // UserDTO 만들기
     UserDTO userDTO = new UserDTO();
@@ -157,6 +161,22 @@ public class UserServiceImpl implements UserService {
     String id = request.getParameter("id");
     String pw = request.getParameter("pw");
     
+    /**********************************************************************/
+    /****** 로그인 이전에 휴면계정(휴면 테이블에 정보가 있는지) 확인 ******/
+    /****** SleepUserCheckInterceptor 코드를 옮겨온 뒤 인터셉터 제거 ******/
+    /**********************************************************************/
+    SleepUserDTO sleepUserDTO = userMapper.selectSleepUserById(id);
+    if(sleepUserDTO != null) {                     // 휴면계정이라면(휴면 테이블에 정보가 있다면) 휴면복원페이지로 이동한다.
+      HttpSession session = request.getSession();  // session에 sleepUserId를 올려 놓으면 wakeup.jsp에서 휴면회원의 아이디를 확인할 수 있다.
+      session.setAttribute("sleepUserId", id);
+      try {
+        response.sendRedirect(request.getContextPath() + "/user/wakeup.form");  // 휴면복원페이지로 이동한다.
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+    /**********************************************************************/
+    
     // 비밀번호 SHA-256 암호화
     pw = securityUtil.getSha256(pw);
     
@@ -170,7 +190,7 @@ public class UserServiceImpl implements UserService {
     
     // ID, PW가 일치하는 회원이 있으면 로그인 성공
     // 0. 자동 로그인 처리하기(autologin 메소드에 맡기기)
-    // 1. session에 ID 저장하기
+    // 1. session에 id와 name 저장하기
     // 2. 회원 접속 기록 남기기
     // 3. 이전 페이지로 이동하기
     if(loginUserDTO != null) {
@@ -180,6 +200,7 @@ public class UserServiceImpl implements UserService {
       
       HttpSession session = request.getSession();
       session.setAttribute("loginId", id);
+      session.setAttribute("loginName", loginUserDTO.getName());
       
       int updateResult = userMapper.updateUserAccess(id);
       if(updateResult == 0) {
@@ -461,6 +482,64 @@ public class UserServiceImpl implements UserService {
   }
   
   @Override
+  public Map<String, Object> modifyInfo(HttpServletRequest request) {
+    
+    // 요청 파라미터
+    String id = request.getParameter("id");
+    String name = request.getParameter("name");
+    String gender = request.getParameter("gender");
+    String mobile = request.getParameter("mobile");
+    String birthyear = request.getParameter("birthyear");
+    String birthmonth = request.getParameter("birthmonth");
+    String birthdate = request.getParameter("birthdate");
+    String postcode = request.getParameter("postcode");
+    String roadAddress = request.getParameter("roadAddress");
+    String jibunAddress = request.getParameter("jibunAddress");
+    String detailAddress = request.getParameter("detailAddress");
+    String extraAddress = request.getParameter("extraAddress");
+    String location = request.getParameter("location");  // on 또는 off
+    String event = request.getParameter("event");        // on 또는 off
+    
+    // 이름 XSS 처리
+    name = securityUtil.preventXSS(name);
+    
+    // 출생월일
+    birthdate = birthmonth + birthdate;
+    
+    // 상세주소 XSS 처리
+    detailAddress = securityUtil.preventXSS(detailAddress);
+    
+    // 참고항목 XSS 처리
+    extraAddress = securityUtil.preventXSS(extraAddress);
+    
+    // agreecode
+    int agreecode = 0;
+    if(location.equals("on")) { agreecode += 1; }
+    if(event.equals("on"))    { agreecode += 2; }
+    
+    // UserDTO 만들기
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(id);
+    userDTO.setName(name);
+    userDTO.setGender(gender);
+    userDTO.setMobile(mobile);
+    userDTO.setBirthyear(birthyear);
+    userDTO.setBirthdate(birthdate);
+    userDTO.setPostcode(postcode);
+    userDTO.setRoadAddress(roadAddress);
+    userDTO.setJibunAddress(jibunAddress);
+    userDTO.setDetailAddress(detailAddress);
+    userDTO.setExtraAddress(extraAddress);
+    userDTO.setAgreecode(agreecode);
+    
+    // Info 수정 결과 반환
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("updateUserInfoResult", userMapper.updateUserInfo(userDTO));
+    return map;
+    
+  }
+  
+  @Override
   public Map<String, Object> findId(UserDTO userDTO) {
     Map<String, Object> map = new HashMap<String, Object>();
     map.put("findUser", userMapper.selectUserByEmail(userDTO.getEmail()));  // 아이디 찾기 : 입력한 이메일로 조회
@@ -506,16 +585,289 @@ public class UserServiceImpl implements UserService {
     return map;
     
   }
+  
+  
+  /******************************************************************************************/
+  /*** 네이버개발자센터 > Products > 네이버 로그인 > "네이버 로그인 API"를 이용 신청할 것 ***/
+  /*** 제공 정보 6가지 : 회원이름, 연락처 이메일 주소, 성별, 생일, 출생연도, 휴대전화번호 ***/
+  /******************************************************************************************/
+  private static final String CLIENT_ID = "본인의 ClientId";
+  private static final String CLIENT_SECRET = "본인의 ClientSecret";
+  
+  
+  @Override
+  public String getNaverLoginApiURL(HttpServletRequest request) {
+      
+    String apiURL = null;
+    
+    try {
+      
+      String redirectURI = URLEncoder.encode("http://localhost:9090" + request.getContextPath() + "/user/naver/login.do", "UTF-8");
+      SecureRandom secureRandom = new SecureRandom();
+      String state = new BigInteger(130, secureRandom).toString();
+      
+      apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+      apiURL += "&client_id=" + CLIENT_ID;
+      apiURL += "&redirect_uri=" + redirectURI;
+      apiURL += "&state=" + state;
+      
+      HttpSession session = request.getSession();
+      session.setAttribute("state", state);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    return apiURL;
+    
+  }
+  
+  @Override
+  public String getNaverLoginToken(HttpServletRequest request) {
+    
+    // access_token 받기
+    
+    String code = request.getParameter("code");
+    String state = request.getParameter("state");
+    
+    String redirectURI = null;
+    try {
+      redirectURI = URLEncoder.encode("http://localhost:9090" + request.getContextPath(), "UTF-8");
+    } catch(UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+    
+    StringBuffer res = new StringBuffer();  // StringBuffer는 StringBuilder와 동일한 역할을 수행한다.
+    try {
+      
+      String apiURL;
+      apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+      apiURL += "client_id=" + CLIENT_ID;
+      apiURL += "&client_secret=" + CLIENT_SECRET;
+      apiURL += "&redirect_uri=" + redirectURI;
+      apiURL += "&code=" + code;
+      apiURL += "&state=" + state;
+      
+      URL url = new URL(apiURL);
+      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+      con.setRequestMethod("GET");
+      int responseCode = con.getResponseCode();
+      BufferedReader br;
+      if(responseCode == 200) {
+        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+      } else {
+        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+      }
+      String inputLine;
+      while ((inputLine = br.readLine()) != null) {
+        res.append(inputLine);
+      }
+      br.close();
+      con.disconnect();
+      
+      /*
+        res.toString() 출력 예시
+        
+        {
+          "access_token":"AAAANipjD0VEPFITQ50DR__AgNpF2hTecVHIe9v-_uoyK5eP1mfdYX57bM3VTF_x4cWgz0v2fQlZsOOjl9uS0j8CLI4",
+          "refresh_token":"2P9T9LTrnjaBf8XwF87a2UNUL4isfvk3QyLF8U1MDmju5ViiSXNSxii80ii8kvZWDiiYSiptFFYsuwqWl6C8n59NwoAEU6MmipfIis2htYMnZUlutzvRexh0PIZzzqqK3HlGYttJ",
+          "token_type":"bearer",
+          "expires_in":"3600"
+        }
+      */
+    
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+      
+    JSONObject obj = new JSONObject(res.toString());
+    String accessToken = obj.getString("access_token");
+    return accessToken;
+    
+  }
+  
+  @Override
+  public UserDTO getNaverLoginProfile(String accessToken) {
+    
+    // accessToken을 이용해서 회원정보(profile) 받기
+    String header = "Bearer " + accessToken;
+    
+    StringBuffer sb = new StringBuffer();
+    
+    try {
+      
+      String apiURL = "https://openapi.naver.com/v1/nid/me";
+      URL url = new URL(apiURL);
+      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+      con.setRequestMethod("GET");
+      con.setRequestProperty("Authorization", header);
+      int responseCode = con.getResponseCode();
+      BufferedReader br;
+      if(responseCode == 200) {
+        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+      } else {
+        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+      }
+      String inputLine;
+      while ((inputLine = br.readLine()) != null) {
+        sb.append(inputLine);
+      }
+      br.close();
+      con.disconnect();
+      
+      /*
+        sb.toString()
+        
+        {
+          "resultcode": "00",
+          "message": "success",
+          "response": {
+            "id":"asdfghjklqwertyuiopzxcvbnmadfafrgbgfg",
+            "gender":"M",
+            "email":"hahaha@naver.com",
+            "mobile":"010-1111-1111",
+            "mobile_e164":"+821011111111",
+            "name":"\ubbfc\uacbd\ud0dc",
+            "birthday":"10-10",
+            "birthyear":"1990"
+          }
+        }
+      */
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    // 받아온 profile을 UserDTO로 만들어서 반환
+    UserDTO userDTO = null;
+    try {
+      
+      JSONObject profile = new JSONObject(sb.toString()).getJSONObject("response");
+      String id = profile.getString("id");
+      String name = profile.getString("name");
+      String gender = profile.getString("gender");
+      String email = profile.getString("email");
+      String mobile = profile.getString("mobile").replaceAll("-", "");
+      String birthyear = profile.getString("birthyear");
+      String birthday = profile.getString("birthday").replace("-", "");
+      
+      userDTO = new UserDTO();
+      userDTO.setId(id);
+      userDTO.setName(name);
+      userDTO.setGender(gender);
+      userDTO.setEmail(email);
+      userDTO.setMobile(mobile);
+      userDTO.setBirthyear(birthyear);
+      userDTO.setBirthdate(birthday);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+      
+    return userDTO;
+    
+  }
+  
+  @Transactional
+  @Override
+  public void naverLogin(HttpServletRequest request, HttpServletResponse response, UserDTO naverUserDTO) {
+    
+    /**********************************************************************/
+    /****** 로그인 이전에 휴면계정(휴면 테이블에 정보가 있는지) 확인 ******/
+    /****** SleepUserCheckInterceptor 코드를 옮겨온 뒤 인터셉터 제거 ******/
+    /**********************************************************************/
+    String id = naverUserDTO.getId();
+    SleepUserDTO sleepUserDTO = userMapper.selectSleepUserById(id);
+    if(sleepUserDTO != null) {                     // 휴면계정이라면(휴면 테이블에 정보가 있다면) 휴면복원페이지로 이동한다.
+      HttpSession session = request.getSession();  // session에 sleepUserId를 올려 놓으면 wakeup.jsp에서 휴면회원의 아이디를 확인할 수 있다.
+      session.setAttribute("sleepUserId", id);
+      try {
+        response.sendRedirect(request.getContextPath() + "/user/wakeup.form");  // 휴면복원페이지로 이동한다.
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+    /**********************************************************************/
+    
+    // 로그인 처리
+    HttpSession session = request.getSession();
+    String loginName = naverUserDTO.getName();
+    session.setAttribute("loginId", id);
+    session.setAttribute("loginName", loginName);
+    
+    // 로그인 기록 남기기
+    int updateResult = userMapper.updateUserAccess(id);
+    if(updateResult == 0) {
+      userMapper.insertUserAccess(id);
+    }
+    
+  }
+  
+  @Override
+  public void naverJoin(HttpServletRequest request, HttpServletResponse response) {
+    
+    // 파라미터
+    String id = request.getParameter("id");
+    String name = request.getParameter("name");
+    String gender = request.getParameter("gender");
+    String mobile = request.getParameter("mobile");
+    String birthyear = request.getParameter("birthyear");
+    String birthmonth = request.getParameter("birthmonth");
+    String birthdate = request.getParameter("birthdate");
+    String email = request.getParameter("email");
+    String location = request.getParameter("location");
+    String event = request.getParameter("event");
+    
+    // 출생월일 4자리
+    birthdate = birthmonth + birthdate;
+    
+    // 비밀번호 SHA-256 암호화
+    String pw = securityUtil.getSha256(birthyear + birthdate);  // // 생년월일을 초기비번 8자리로 제공하기로 한다.
+    
+    // 이름 XSS 처리
+    name = securityUtil.preventXSS(name);
+    
+    // agreecode
+    int agreecode = 0;
+    if(location != null) { agreecode += 1; }
+    if(event != null)    { agreecode += 2; }
+    
+    // UserDTO 만들기
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(id);
+    userDTO.setPw(pw);
+    userDTO.setName(name);
+    userDTO.setGender(gender);
+    userDTO.setEmail(email);
+    userDTO.setMobile(mobile);
+    userDTO.setBirthyear(birthyear);
+    userDTO.setBirthdate(birthdate);
+    userDTO.setAgreecode(agreecode);
+        
+    // 회원가입처리
+    int naverJoinResult = userMapper.insertNaverUser(userDTO);
+    
+    // 응답
+    try {
+      
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script>");
+      if(naverJoinResult == 1) {
+        out.println("alert('네이버 간편가입이 완료되었습니다. 초기 비밀번호는 생년월일 8자리 숫자(예시: 20201217) 입니다.');");
+        out.println("location.href='" + request.getContextPath() + "/index.do';");
+      } else {
+        out.println("alert('네이버 간편가입이 실패했습니다.');");
+        out.println("history.go(-2);");
+      }
+      out.println("</script>");
+      out.flush();
+      out.close();
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+  }
 
 }
-
-
-
-
-
-
-
-
-
-
-

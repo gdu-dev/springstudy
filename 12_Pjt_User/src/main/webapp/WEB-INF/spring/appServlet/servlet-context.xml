@@ -42,11 +42,6 @@
     </interceptor>
     
     <interceptor>
-      <mapping path="/user/login.do" />
-      <beans:bean class="com.gdu.app12.intercept.SleepUserCheckInterceptor" />
-    </interceptor>
-    
-    <interceptor>
       <mapping path="/**" />
       <beans:bean class="com.gdu.app12.intercept.AutologinIntercepter" />
     </interceptor>

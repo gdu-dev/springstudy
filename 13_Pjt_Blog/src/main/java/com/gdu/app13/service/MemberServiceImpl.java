@@ -6,17 +6,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gdu.app13.domain.MemberDTO;
 import com.gdu.app13.mapper.MemberMapper;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
 
-  @Autowired
-  private MemberMapper memberMapper;
+  private final MemberMapper memberMapper;
   
   @Override
   public void login(HttpServletRequest request) {

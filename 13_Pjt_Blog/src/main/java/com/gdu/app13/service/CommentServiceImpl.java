@@ -2,7 +2,6 @@ package com.gdu.app13.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,14 +12,14 @@ import com.gdu.app13.domain.MemberDTO;
 import com.gdu.app13.mapper.CommentMapper;
 import com.gdu.app13.util.PageUtil;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CommentServiceImpl implements CommentService {
 
-  private CommentMapper commentMapper;
-  private PageUtil pageUtil;
+  private final CommentMapper commentMapper;
+  private final PageUtil pageUtil;
   
   @Override
   public Map<String, Object> addComment(HttpServletRequest request) {

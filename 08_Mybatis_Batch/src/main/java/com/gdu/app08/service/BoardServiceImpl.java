@@ -8,17 +8,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gdu.app08.domain.BoardDTO;
 import com.gdu.app08.mapper.BoardMapper;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class BoardServiceImpl implements BoardService {
 
-	@Autowired
-	private BoardMapper boardMapper;
+	private final BoardMapper boardMapper;
 	
 	@Override
 	public List<BoardDTO> getBoardList() {

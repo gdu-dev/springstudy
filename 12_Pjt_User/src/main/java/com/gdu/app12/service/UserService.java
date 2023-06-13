@@ -23,12 +23,15 @@ public interface UserService {
   public UserDTO getUserById(String id);
   public Map<String, Object> modifyPw(HttpServletRequest request);
   public Map<String, Object> modifyEmail(HttpServletRequest request);
+  public Map<String, Object> modifyInfo(HttpServletRequest request);
   public Map<String, Object> findId(UserDTO userDTO);
   public Map<String, Object> findPw(UserDTO userDTO);
   public Map<String, Object> sendTempPw(UserDTO userDTO);
   
-  
-  
-  
+  public String getNaverLoginApiURL(HttpServletRequest request);
+  public String getNaverLoginToken(HttpServletRequest request);
+  public UserDTO getNaverLoginProfile(String access_token);
+  public void naverLogin(HttpServletRequest request, HttpServletResponse response, UserDTO naverUser);
+  public void naverJoin(HttpServletRequest request, HttpServletResponse response);
   
 }

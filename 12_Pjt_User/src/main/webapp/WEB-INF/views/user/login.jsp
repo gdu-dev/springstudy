@@ -101,6 +101,13 @@
       <a href="${contextPath}/user/findPw.form">비밀번호 찾기</a> |
       <a href="${contextPath}/user/agree.form">회원가입</a>
     </div>
+    
+    <hr>
+    
+    <!-- 네이버로그인 링크(로그인버튼 이미지는 https://developers.naver.com/docs/login/bi/bi.md에서 다운로드 받으세요.) -->
+    <div>
+      <a href="${apiURL}"><img height="50" src="${contextPath}/resources/images/2021_Login_with_naver_guidelines_Kr/btnG_아이콘원형.png"/></a>
+    </div>
   
   </div>
   

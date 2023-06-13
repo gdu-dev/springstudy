@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +11,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.app13.service.GoodService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/good")
 @Controller
 public class GoodController {
 
-	@Autowired
-	private GoodService goodService;
+	private final GoodService goodService;
 	
 	@ResponseBody
 	@GetMapping(value="/getGoodCheckState.do", produces="application/json")

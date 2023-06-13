@@ -15,15 +15,14 @@ import com.gdu.app10.domain.BbsDTO;
 import com.gdu.app10.mapper.BbsMapper;
 import com.gdu.app10.util.PageUtil;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class BbsServiceImpl implements BbsService {
 
-	// field
-	private BbsMapper bbsMapper;
-	private PageUtil pageUtil;
+	private final BbsMapper bbsMapper;
+	private final PageUtil pageUtil;
 	
 	@Override
 	public void loadBbsList(HttpServletRequest request, Model model) {

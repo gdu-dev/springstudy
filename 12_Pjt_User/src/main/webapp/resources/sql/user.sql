@@ -9,7 +9,7 @@ DROP TABLE USER_T;
 -- 회원
 CREATE TABLE USER_T (
     USER_NO        NUMBER             NOT NULL,         -- PK
-    ID             VARCHAR2(40 BYTE)  NOT NULL UNIQUE,  -- ID 정규식에 반영
+    ID             VARCHAR2(50 BYTE)  NOT NULL UNIQUE,  -- ID 정규식에 반영
     PW             VARCHAR2(64 BYTE)  NOT NULL,         -- SHA-256 암호화 방식 사용
     NAME           VARCHAR2(40 BYTE),                   -- 이름
     GENDER         VARCHAR2(2 BYTE),                    -- M, F, NO
@@ -36,7 +36,7 @@ ALTER TABLE USER_T
 
 -- 회원 접속 기록(회원마다 마지막 로그인 날짜 1개만 기록)
 CREATE TABLE USER_ACCESS_T (
-    ID            VARCHAR2(40 BYTE) NOT NULL UNIQUE,    -- 로그인한 사용자 ID
+    ID            VARCHAR2(50 BYTE) NOT NULL UNIQUE,    -- 로그인한 사용자 ID
     LAST_LOGIN_AT DATE                                  -- 마지막 로그인 날짜
 );
 
@@ -49,7 +49,7 @@ ALTER TABLE USER_ACCESS_T
 -- 탈퇴 (탈퇴한 아이디로 재가입이 불가능)
 DROP TABLE LEAVE_USER_T;
 CREATE TABLE LEAVE_USER_T (
-    ID        VARCHAR2(40 BYTE)  NOT NULL UNIQUE,
+    ID        VARCHAR2(50 BYTE)  NOT NULL UNIQUE,
     EMAIL     VARCHAR2(100 BYTE) NOT NULL UNIQUE,
     JOINED_AT DATE,  -- 가입일
     LEAVED_AT DATE   -- 탈퇴일
@@ -60,7 +60,7 @@ CREATE TABLE LEAVE_USER_T (
 DROP TABLE SLEEP_USER_T;
 CREATE TABLE SLEEP_USER_T (
     USER_NO        NUMBER             NOT NULL,
-    ID             VARCHAR2(40 BYTE)  NOT NULL UNIQUE,  -- ID 정규식에 반영
+    ID             VARCHAR2(50 BYTE)  NOT NULL UNIQUE,  -- ID 정규식에 반영
     PW             VARCHAR2(64 BYTE)  NOT NULL,         -- SHA-256 암호화 방식 사용
     NAME           VARCHAR2(40 BYTE),                   -- 이름
     GENDER         VARCHAR2(2 BYTE),                    -- M, F, NO

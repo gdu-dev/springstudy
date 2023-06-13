@@ -2,7 +2,6 @@ package com.gdu.app10.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +11,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.app10.service.BbsService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/bbs")
 @Controller
 public class BbsController {
 
-	@Autowired
-	private BbsService bbsService;
+	private final BbsService bbsService;
 	
 	@GetMapping("/list.do")
 	public String list(HttpServletRequest request, Model model) {
