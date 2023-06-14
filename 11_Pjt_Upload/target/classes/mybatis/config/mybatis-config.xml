@@ -5,15 +5,15 @@
 
 <configuration>
 
-	<!-- settings -->
-	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true" />
-	</settings>
-
-	<!-- typeAliases -->
-	<typeAliases>
-		<typeAlias alias="AttachDTO" type="com.gdu.app11.domain.AttachDTO" />
-		<typeAlias alias="UploadDTO" type="com.gdu.app11.domain.UploadDTO" />
-	</typeAliases>
+  <!-- settings -->
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+  </settings>
+  
+  <!-- typeAliases -->
+  <typeAliases>
+    <typeAlias alias="AttachDTO" type="com.gdu.app11.domain.AttachDTO" />
+    <typeAlias alias="UploadDTO" type="com.gdu.app11.domain.UploadDTO" />
+  </typeAliases>
 
 </configuration>

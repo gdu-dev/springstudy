@@ -120,7 +120,7 @@
   <select id="getAttachListInYesterday" resultType="AttachDTO">
     SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
       FROM ATTACH
-     WHERE PATH LIKE CONCAT('%', TO_CHAR(SYSDATE - 1, 'YYYY\\MM\\DD'))
+     WHERE PATH LIKE CONCAT('%', TO_CHAR(SYSDATE - 1, 'YYYY/MM/DD'))
   </select>
 
 </mapper>

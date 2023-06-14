@@ -8,13 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface UploadService {
-	public void getUploadList(HttpServletRequest request, Model model);
-	public int addUpload(MultipartHttpServletRequest multipartRequest);
-	public void getUploadByNo(int uploadNo, Model model);
-	public ResponseEntity<byte[]> display(int attachNo);
-	public ResponseEntity<Resource> download(int attachNo, String userAgent);
-	public ResponseEntity<Resource> downloadAll(int uploadNo);
-	public int removeUpload(int uploadNo);
-	public int modifyUpload(MultipartHttpServletRequest multipartRequest);
-	public int removeAttach(int attachNo);
+  public void loadUploadList(HttpServletRequest request, Model model);
+  public int addUpload(MultipartHttpServletRequest multipartRequest);
+  public void loadUploadByNo(int uploadNo, Model model);
+  public ResponseEntity<byte[]> display(int attachNo);
+  public ResponseEntity<Resource> download(int attachNo, String userAgent);
+  public ResponseEntity<Resource> downloadAll(int uploadNo);
+  public int removeUpload(int uploadNo);
+  public int removeUpload_Stream_Lambda(int uploadNo);
+  public int modifyUpload(MultipartHttpServletRequest multipartRequest);
+  public int removeAttach(int attachNo);
 }

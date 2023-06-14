@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttachDTO {
-	private int attachNo;
-	private String path;
-	private String originName;
-	private String filesystemName;
-	private int downloadCount;
-	private int hasThumbnail;
-	private int uploadNo;
+  private int attachNo;
+  private String path;
+  private String originName;
+  private String filesystemName;
+  private int downloadCount;
+  private int hasThumbnail;
+  private int uploadNo;
 }
