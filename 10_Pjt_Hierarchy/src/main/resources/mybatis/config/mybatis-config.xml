@@ -5,14 +5,14 @@
 
 <configuration>
 
-	<!-- settings -->
-	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true" />
-	</settings>
+  <!-- settings -->
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+  </settings>
 
-	<!-- typeAliases -->
-	<typeAliases>
-		<typeAlias alias="BbsDTO" type="com.gdu.app10.domain.BbsDTO" />
-	</typeAliases>
+  <!-- typeAliases -->
+  <typeAliases>
+    <typeAlias alias="BbsDTO" type="com.gdu.app10.domain.BbsDTO" />
+  </typeAliases>
 
 </configuration>

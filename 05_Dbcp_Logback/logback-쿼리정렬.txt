@@ -26,14 +26,14 @@ log4jdbc.dump.sql.maxlinelength=0
 
 3) logback.xml 수정
 <logger name="log4jdbc"            level="INFO" />
-<logger name="jdbc.sqlonly"        level="OFF" />   <!-- SQL 출력 -->
-<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+<logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
 <logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
+<logger name="jdbc.sqltiming"      level="OFF" />   <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
 <logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
 <logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
 <logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->
   또는
 <logger name="log4jdbc"            level="INFO" />
 <logger name="jdbc"                level="OFF" />
-<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+<logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
 <logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->

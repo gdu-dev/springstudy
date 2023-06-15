@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeptDTO {
-	private int departmentId;
-	private String departmentName;
-	private int managerId;
-	private int locationId;
+  private int departmentId;
+  private String departmentName;
+  private int managerId;
+  private int locationId;
 }

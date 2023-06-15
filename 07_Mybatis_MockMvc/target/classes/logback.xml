@@ -2,15 +2,15 @@
 
 <configuration scan="true" scanPeriod="30 seconds">
 
-	<!-- Console 화면에 로그를 찍는 console Appender -->
+  <!-- Console 화면에 로그를 찍는 console Appender -->
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
       <layout class="com.gdu.app07.logback.MyLogbackLayout" />
     </encoder>
   </appender>
-	
-	<!-- Application Loggers : com.gdu 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
-	<logger name="com.gdu"             level="DEBUG" />
+  
+  <!-- Application Loggers : com.gdu 패키지는 DEBUG 수준의 로그 레벨을 가진다. -->
+  <logger name="com.gdu"             level="DEBUG" />
 
   <!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
   <logger name="org.springframework" level="INFO" />
@@ -22,9 +22,9 @@
   <logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
   <logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
 
-	<!-- Root Logger -->
-	<root>
-		<appender-ref ref="console" />
-	</root>
-	
+  <!-- Root Logger -->
+  <root>
+    <appender-ref ref="console" />
+  </root>
+  
 </configuration>

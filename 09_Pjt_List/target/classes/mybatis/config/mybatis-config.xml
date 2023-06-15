@@ -5,15 +5,15 @@
 
 <configuration>
 
-	<!-- settings -->
-	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true" />
-	</settings>
+  <!-- settings -->
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+  </settings>
 
-	<!-- typeAliases -->
-	<typeAliases>
-		<typeAlias alias="DeptDTO" type="com.gdu.app09.domain.DeptDTO" />
-		<typeAlias alias="EmpDTO" type="com.gdu.app09.domain.EmpDTO" />
-	</typeAliases>
+  <!-- typeAliases -->
+  <typeAliases>
+    <typeAlias alias="DeptDTO" type="com.gdu.app09.domain.DeptDTO" />
+    <typeAlias alias="EmpDTO" type="com.gdu.app09.domain.EmpDTO" />
+  </typeAliases>
 
 </configuration>

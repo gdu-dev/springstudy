@@ -21,7 +21,7 @@
 	}
 	function fnRemove(){
 		if(confirm('삭제할까요?')){
-			location.href = '${contextPath}/board/remove.do?board_no=${b.board_no}';
+			location.href = '${contextPath}/board/remove.do?board_no=${board.board_no}';
 		}
 	}
 	function fnList(){
@@ -54,12 +54,12 @@
 <body>
 
 	<div id="detail_screen">
-		<h1>${b.board_no}번 게시글 상세보기</h1>
-		<div>제목 : ${b.title}</div>
-		<div>작성자 : ${b.writer}</div>
-		<div>작성일 : ${b.created_at}</div>
-		<div>수정일 : ${b.modified_at}</div>
-		<div>${b.content}</div>
+		<h1>${board.board_no}번 게시글 상세보기</h1>
+		<div>제목 : ${board.title}</div>
+		<div>작성자 : ${board.writer}</div>
+		<div>작성일 : ${board.created_at}</div>
+		<div>수정일 : ${board.modified_at}</div>
+		<div>${board.content}</div>
 		<div>
 			<input type="button" value="편집" onclick="fnEdit()">
 			<input type="button" value="삭제" onclick="fnRemove()">
@@ -73,14 +73,14 @@
 		<form method="post" action="${contextPath}/board/modify.do">
 			<div>
 				<label for="title">제목</label>
-				<input type="text" id="title" name="title" value="${b.title}">
+				<input type="text" id="title" name="title" value="${board.title}">
 			</div>
 			<div>
 				<div><label for="content">내용</label></div>
-				<textarea id="content" name="content">${b.content}</textarea>  <!-- summernote 편집기로 바뀌는 textarea -->
+				<textarea id="content" name="content">${board.content}</textarea>  <!-- summernote 편집기로 바뀌는 textarea -->
 			</div>
 			<div>
-				<input type="hidden" name="board_no" value="${b.board_no}">
+				<input type="hidden" name="board_no" value="${board.board_no}">
 				<button>수정완료</button>
 				<input type="button" value="목록" onclick="fnList()">
 			</div>

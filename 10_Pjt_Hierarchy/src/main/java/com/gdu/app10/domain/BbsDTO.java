@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BbsDTO {
-	private int bbsNo;
-	private String writer;
-	private String title;
-	private String ip;
-	private Date createdAt;
-	private int state;
-	private int depth;
-	private int groupNo;
-	private int groupOrder;
+  private int bbsNo;
+  private String writer;
+  private String title;
+  private String ip;
+  private Date createdAt;
+  private int state;
+  private int depth;
+  private int groupNo;
+  private int groupOrder;
 }

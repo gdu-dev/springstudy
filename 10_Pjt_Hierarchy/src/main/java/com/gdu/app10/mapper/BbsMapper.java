@@ -9,10 +9,10 @@ import com.gdu.app10.domain.BbsDTO;
 
 @Mapper
 public interface BbsMapper {
-	public int getBbsCount();
-	public List<BbsDTO> getBbsList(Map<String, Object> map);
-	public int addBbs(BbsDTO bbsDTO);
-	public int removeBbs(int bbsNo);
-	public int increaseGroupOrder(BbsDTO bbsDTO);
-	public int addReply(BbsDTO replyDTO);
+  public int getBbsCount();
+  public List<BbsDTO> getBbsList(Map<String, Object> map);
+  public int addBbs(BbsDTO bbsDTO);
+  public int removeBbs(int bbsNo);
+  public int increaseGroupOrder(BbsDTO bbsDTO);
+  public int addReply(BbsDTO replyDTO);
 }

@@ -35,9 +35,9 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- root/log 디렉터리에 로그 파일(/log/2023-01-01.0.log)을 만든다. -->
 			<fileNamePattern>/log/app05.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<!-- 5kb씩 로그 파일을 분할한다. -->
+			<!-- 1mb씩 로그 파일을 분할한다. -->
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>5kb</maxFileSize>
+				<maxFileSize>1mb</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 			<!-- 로그 파일을 저장할 때 총 30일 분량의 기록을 총 3gb로 제한한다. -->
 			<maxHistory>30</maxHistory>
@@ -56,9 +56,9 @@
 	<!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
 	<logger name="org.springframework" level="INFO" />
 	<logger name="log4jdbc"            level="INFO" />
-	<logger name="jdbc.sqlonly"        level="OFF" />   <!-- SQL 출력 -->
-	<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+	<logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
 	<logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
+	<logger name="jdbc.sqltiming"      level="OFF" />   <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
 	<logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
 	<logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
 	<logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->

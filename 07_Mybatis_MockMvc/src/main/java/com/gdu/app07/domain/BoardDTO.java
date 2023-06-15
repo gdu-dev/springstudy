@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardDTO {
-	private int boardNo;
-	private String title;
-	private String content;
-	private String writer;
-	private String createdAt;
-	private String modifiedAt;
+  private int boardNo;
+  private String title;
+  private String content;
+  private String writer;
+  private String createdAt;
+  private String modifiedAt;
 }

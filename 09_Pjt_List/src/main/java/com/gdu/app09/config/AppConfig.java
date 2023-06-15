@@ -1,4 +1,4 @@
-package com.gdu.app10.config;
+package com.gdu.app09.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-@MapperScan(basePackages={"com.gdu.app10.mapper"})           // @Mapper가 존재하는 패키지를 작성한다.
-@PropertySource(value={"classpath:application.properties"})  // application.properties 파일의 속성을 읽어 오자!
-@EnableTransactionManagement                                 // 트랜잭션 처리를 허용한다.
+@MapperScan(basePackages={"com.gdu.app09.mapper"})           // @Mapper 위치 명시
+@PropertySource(value={"classpath:application.properties"})  // application.properties 파일 읽기
+@EnableTransactionManagement                                 // 트랜잭션 허용
 @Configuration
-public class DBConfig {
+public class AppConfig {
 
 	@Autowired
 	private Environment env;

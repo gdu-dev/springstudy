@@ -40,7 +40,7 @@ public class SecurityUtil {
     byte[] b = messageDigest.digest();  // 암호화된 32바이트 크기의 byte 배열 b가 생성된다.
     StringBuilder sb = new StringBuilder();
     for(int i = 0; i < b.length; i++) {
-      sb.append( String.format("%2X", b[i]) );  // %X : 16진수를 의미, %2X : 2자리의 16진수를 의미
+      sb.append( String.format("%02x", b[i]) );  // %X : 16진수를 의미, %02x : 2자리의 16진수를 의미
     }
     return sb.toString();
   }

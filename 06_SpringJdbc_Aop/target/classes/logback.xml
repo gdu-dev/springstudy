@@ -17,9 +17,9 @@
 	<!-- 3rdparty Loggers : 외부 라이브러리는 INFO 수준의 로그 레벨을 가진다. -->
 	<logger name="org.springframework" level="INFO" />
 	<logger name="log4jdbc"            level="INFO" />
-	<logger name="jdbc.sqlonly"        level="OFF" />   <!-- SQL 출력 -->
-	<logger name="jdbc.sqltiming"      level="INFO" />  <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
+	<logger name="jdbc.sqlonly"        level="INFO" />  <!-- SQL 출력 -->
 	<logger name="jdbc.resultsettable" level="INFO" />  <!-- SELECT 결과를 테이블로 출력 -->
+	<logger name="jdbc.sqltiming"      level="OFF" />   <!-- SQL과 SQL 실행에 걸린 시간 출력 -->
 	<logger name="jdbc.audit"          level="OFF" />   <!-- ResultSet을 제외한 모든 JDBC 호출 정보 출력 -->
 	<logger name="jdbc.resultset"      level="OFF" />   <!-- ResultSet을 포함한 모든 JDBC 호출 정보 출력 -->
 	<logger name="jdbc.connection"     level="OFF" />   <!-- Connection 연결/종료 정보 출력 -->
