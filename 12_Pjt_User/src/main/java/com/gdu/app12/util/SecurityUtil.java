@@ -29,7 +29,7 @@ public class SecurityUtil {
     5. 32바이트 -> 16진수로 변환하면 64글자가 생성된다. (DB 칼럼의 크기를 VARCHAR2(64 BYTE)로 설정한다.)
     6. java.security 패키지를 이용한다.
   */
-  public String getSha256(String str) {
+  public static String getSha256(String str) {
     MessageDigest messageDigest = null;
     try {
       messageDigest = MessageDigest.getInstance("SHA-256");
