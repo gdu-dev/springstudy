@@ -9,5 +9,35 @@
   <bean class="com.gdu.prj01.xml01.Calculator"
         id="calculator"
         scope="singleton" />
+  
+  <!--
+    Computer computer1 = new Computer();
+    computer1.setModel("gram");
+    computer1.setPrice(200);
+    computer1.setCalculator(new Calculator());
+  -->
+  <bean class="com.gdu.prj01.xml01.Computer"
+        id="computer1"
+        scope="singleton">
+    <property name="model" value="gram" />
+    <property name="price" value="200" />
+    <property name="calculator" ref="calculator" />      
+  </bean>
+  
+  <!--
+    Computer computer2 = new Computer("macbook", 300, new Calculator());
+  -->
+  <bean class="com.gdu.prj01.xml01.Computer"
+        id="computer2"
+        scope="singleton">
+    <constructor-arg value="macbook" />
+    <constructor-arg value="300" />
+    <constructor-arg ref="calculator" />
+  </bean>
+  
+  
+  
+  
+  
 
 </beans>
