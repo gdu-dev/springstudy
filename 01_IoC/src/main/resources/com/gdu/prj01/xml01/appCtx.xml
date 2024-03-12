@@ -34,10 +34,5 @@
     <constructor-arg value="300" />
     <constructor-arg ref="calculator" />
   </bean>
-  
-  
-  
-  
-  
 
 </beans>
