@@ -81,11 +81,11 @@ local.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
-*.war
+# *.jar
+# *.war
 *.nar
 *.ear
-*.zip
+# *.zip
 *.tar.gz
 *.rar
 
