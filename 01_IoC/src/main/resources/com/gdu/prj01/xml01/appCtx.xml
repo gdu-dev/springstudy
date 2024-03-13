@@ -19,7 +19,9 @@
   <bean class="com.gdu.prj01.xml01.Computer"
         id="computer1"
         scope="singleton">
-    <property name="model" value="gram" />
+    <property name="model">
+      <value>gram</value>
+    </property>
     <property name="price" value="200" />
     <property name="calculator" ref="calculator" />      
   </bean>
