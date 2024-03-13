@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+  <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+  
+  <!-- Enables the Spring MVC @Controller programming model -->
+  <annotation-driven />
+
+  <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+  <!--
+    <resources> 태그
+    1. 정적 자원(image, css, js 등)을 관리하는 태그이다.
+    2. 속성
+      1) mapping  : 주소가 /contextPath/resources/** 인 주소
+      2) location : mapping 과 연결할 실제 디렉터리 이름
+  -->
+  <resources mapping="/resources/**" location="/resources/" />
+  <resources mapping="/assets/**" location="/assets/" />
+
+  <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+  <!--
+    InternalResourceViewResolver 클래스
+    1. 컨트롤러가 응답하는 jsp 의 경로를 결정한다.
+    2. 필드
+      1) prefix : 컨트롤러가 응답하는 jsp 경로 앞에 추가한다.
+      2) suffix : 컨트롤러가 응답하는 jsp 경로 뒤에 추가한다.
+    3. 예시
+      1) 컨트롤러가 응답한 jsp 경로 : board/list
+      2) 뷰리졸버가 응답한 jsp 경로 : /WEB-INF/views/board/list.jsp
+  -->
+  <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <beans:property name="prefix" value="/WEB-INF/views/" />
+    <beans:property name="suffix" value=".jsp" />
+  </beans:bean>
+  
+  <!-- 컴포넌트를 찾는 기본 패키지 위치 -->
+  <context:component-scan base-package="com.gdu.prj02" />
+ 
+</beans:beans>
