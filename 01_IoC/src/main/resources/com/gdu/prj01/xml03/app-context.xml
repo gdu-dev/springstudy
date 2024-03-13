@@ -11,5 +11,23 @@
     <property name="user" value="GD"/>
     <property name="password" value="1111"/>
   </bean>
+  
+  <bean class="com.gdu.prj01.xml03.MyDao"
+        id="myDao"
+        scope="singleton">
+    <property name="myConnection" ref="myConnection"/>
+  </bean>
+  
+  <bean class="com.gdu.prj01.xml03.MyService"
+        id="myService"
+        scope="singleton">
+    <property name="myDao" ref="myDao"/>
+  </bean>
+  
+  <bean class="com.gdu.prj01.xml03.MyController"
+        id="myController"
+        scope="singleton">
+    <property name="myService" ref="myService"/>
+  </bean>
 
 </beans>
