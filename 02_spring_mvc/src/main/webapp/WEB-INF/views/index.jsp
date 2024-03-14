@@ -22,6 +22,11 @@
     <a href="${contextPath}/article/detail3.do?article_no=10">article 상세3</a>
   </div>
   
+  <%-- MyController4 --%>
+  <div>
+    <a href="${contextPath}/blog/list.do">블로그 목록</a>
+  </div>
+  
 
 </body>
 </html>
