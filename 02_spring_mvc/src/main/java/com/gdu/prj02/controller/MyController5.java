@@ -1,5 +1,10 @@
 package com.gdu.prj02.controller;
 
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,6 +43,31 @@ public class MyController5 {
   @GetMapping("/faq/list.do")
   public String list() {
     return "faq/list";
+  }
+  
+  @GetMapping("/faq/modify.do")
+  public void modify(HttpServletRequest request, HttpServletResponse response) {
+    
+    // modify 결과
+    int modifyResult = Math.random() < 0.5 ? 1 : 0;
+    
+    // 응답 만들기
+    response.setContentType("text/html; charset=UTF-8");
+    try {      
+      PrintWriter out = response.getWriter();
+      out.println("<script>");
+      if(modifyResult == 1) {
+        out.println("alert('수정되었습니다.');");
+        out.println("location.href='" + request.getContextPath() + "/faq/list.do';");
+      } else {
+        out.println("alert('실패했습니다.');");
+        out.println("history.back();");
+      }
+      out.println("</script>");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
   }
   
 }

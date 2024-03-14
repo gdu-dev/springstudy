@@ -30,8 +30,19 @@
   <%-- MyController5 --%>
   <div>
     <a href="${contextPath}/faq/add.do">faq 등록</a>
+    <a href="${contextPath}/faq/modify.do">faq 수정</a>
   </div>
   
+  <%-- MyController6 --%>
+  <div>
+    <c:if test="${sessionScope.user == null}">    
+      <a href="${contextPath}/user/login1.do">로그인1</a>
+    </c:if>
+    <c:if test="${sessionScope.user != null}">
+      <span>${sessionScope.user.userEmail}님 반갑습니다</span>
+      <a href="${contextPath}/user/logout1.do">로그아웃1</a>
+    </c:if>
+  </div>
 
 </body>
 </html>
