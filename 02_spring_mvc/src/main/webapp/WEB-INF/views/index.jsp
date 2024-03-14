@@ -10,6 +10,9 @@
 </head>
 <body>
 
+  <%-- 정적 자원 확인 --%>
+  <img src="${contextPath}/resources/image/404.jpg" width="200px">
+
   <%-- MyController2 --%>
   <div>
     <a href="${contextPath}/board/list.do">board 목록</a>
