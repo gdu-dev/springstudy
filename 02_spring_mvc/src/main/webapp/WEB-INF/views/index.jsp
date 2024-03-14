@@ -27,6 +27,11 @@
     <a href="${contextPath}/blog/list.do">블로그 목록</a>
   </div>
   
+  <%-- MyController5 --%>
+  <div>
+    <a href="${contextPath}/faq/add.do">faq 등록</a>
+  </div>
+  
 
 </body>
 </html>
