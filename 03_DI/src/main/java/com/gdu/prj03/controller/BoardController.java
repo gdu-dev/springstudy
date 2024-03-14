@@ -1,14 +1,17 @@
 package com.gdu.prj03.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.gdu.prj03.service.BoardService;
 
+import lombok.RequiredArgsConstructor;
+
 //        @Controller  @Service  @Repository 
 // view - controller - service - dao
+
+@RequiredArgsConstructor
 
 @Controller  // Controller 에서 사용하는 @Component
 public class BoardController {
@@ -43,10 +46,23 @@ public class BoardController {
   //   this.boardService = boardService;
   // }
   
+
+  // 3. setter 주입
+  //   1) 메소드의 매개변수로 주입된다.
+  //   2) @Autowired 를 생략할 수 없다.
+  //   3) 사실 메소드명은 상관이 없다.
+  // private BoardService boardService;
+  // @Autowired
+  // public void setBoardService(BoardService boardService) {
+  //   this.boardService = boardService;
+  // }
+
+  // 앞으로 사용할 한 가지 방식
+  // final 필드 + 생성자 주입(lombok의 @RequiredArgsConstructor를 이용해서 매개변수의 null 체크를 수행함)
   
+  private final BoardService boardService;
   
-  
-  
+
   @GetMapping("/board/list.do")
   public String list(Model model) {
     model.addAttribute("boardList", boardService.getBoardList());
