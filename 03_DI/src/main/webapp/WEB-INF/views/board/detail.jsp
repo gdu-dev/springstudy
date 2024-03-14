@@ -10,6 +10,12 @@
 </head>
 <body>
 
+  <div>${board.boardNo}</div>
+  <div>${board.title}</div>
+  <div>${board.contents}</div>
+  
+  <hr>  
+
   <a href="${contextPath}/board/list.do">게시판 바로가기</a>
 
 </body>

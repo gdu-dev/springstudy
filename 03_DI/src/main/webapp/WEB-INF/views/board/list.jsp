@@ -10,7 +10,14 @@
 </head>
 <body>
 
-  <a href="${contextPath}/board/list.do">게시판 바로가기</a>
+  <h1>게시판</h1>
+  
+  <c:forEach items="${boardList}" var="board">
+    <div>${board.boardNo}</div>
+    <div><a href="${contextPath}/board/detail.do?boardNo=${board.boardNo}">${board.title}</a></div>
+    <div>${board.contents}</div>
+    <hr>
+  </c:forEach>
 
 </body>
 </html>

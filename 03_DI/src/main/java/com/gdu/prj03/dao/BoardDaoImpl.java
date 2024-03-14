@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.gdu.prj03.dto.BoardDto;
 
+//        @Controller  @Service  @Repository 
+// view - controller - service - dao
+
 // @Component
 // Spring Container(IoC Container)에 bean 을 생성해 둔다.
 // Component Scan 에 의해서 찾을 수 있다. (servlet-context.xml)
