@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gdu.prj02.dto.BlogDto;
 
@@ -30,4 +33,36 @@ public class MyController4 {
     
   }
   
+  @RequestMapping("/blog/detail.do")
+  public String detail(@RequestParam(value="blogNo"
+                                   , required=false
+                                   , defaultValue="0") int blogNo, Model model) {
+    
+    // DB 에서 가져온 데이터
+    BlogDto blog = BlogDto.builder()
+                        .blogNo(blogNo)
+                        .title("제목" + blogNo)
+                      .build();
+    
+    // JSP 로 전달할 데이터
+    model.addAttribute("blog", blog);
+    
+    // blog/detail.jsp 로 forward
+    return "blog/detail";
+    
+  }
+  
+  // @RequestMapping(value="/blog/add.do", method=RequestMethod.POST)
+  public String add(BlogDto blog) {  // 커맨드 객체의 Model 저장 방식 : 클래스 타입을 camelCase 로 변경해서 저장한다. (BlogDto -> blogDto 로 변경해서 저장)
+    
+    // blog/addResult.jsp 로 forward
+    return "blog/addResult";
+    
+  }
+  
+  @RequestMapping(value="/blog/add.do", method=RequestMethod.POST)
+  public String add2(@ModelAttribute("blog") BlogDto blog) {  // @ModelAttribute : 커맨드 객체가 Model 에 저장되는 이름을 지정할 때 사용한다.
+    return "blog/addResult";
+  }
+
 }
