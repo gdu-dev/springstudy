@@ -12,12 +12,34 @@
 <body>
 
   <div>
-    <button type="button" id="btn-list">목록갱신</button>
+    <button type="button" onclick="fnBoardList()">목록갱신</button>
   </div>
 
   <hr>
   
   <div id="board-list"></div>
+
+  <script>
+
+    const fnBoardList = ()=>{
+    	
+      const options = {
+        method: 'GET',
+        cache: 'no-cache'
+      }
+      
+      // const myPromise = fetch('${contextPath}/ajax3/list.do', options);
+      // myPromise.then()
+      
+      fetch('${contextPath}/ajax3/list.do', options)
+        .then(response=>response.json())
+        .then(resData=>{
+        	console.log(resData);
+        })
+      
+    }
+  
+  </script>
 
 </body>
 </html>
