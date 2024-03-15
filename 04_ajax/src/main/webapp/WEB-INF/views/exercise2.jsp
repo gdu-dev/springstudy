@@ -40,24 +40,43 @@
   <script>
   
     const fnBoardList = ()=>{
-    	$.ajax({
-    		/* 요청 */
-    		type: 'GET',
-    		url: '${contextPath}/ajax2/list.do',
-    		/* 응답 */
-    		dataType: 'json'
-    	}).done((resData)=>{
-    		const boardList = $('#board-list');
-    		boardList.empty();
-    		let result = '<div class="board-wrap">';
-    		$.each(resData, (i, board)=>{
-    			result += '<div class="board" data-board-no="' + board.boardNo + '"><div>' + board.boardNo + '</div><div>' + board.title + '</div><div>' + board.contents + '</div></div>';
-    		})
-    		result += '</div>';
-    		boardList.append(result);
-    	})
+      $.ajax({
+        /* 요청 */
+        type: 'GET',
+        url: '${contextPath}/ajax2/list.do',
+        /* 응답 */
+        dataType: 'json'
+      }).done((resData)=>{
+        const boardList = $('#board-list');
+        boardList.empty();
+        let result = '<div class="board-wrap">';
+        $.each(resData, (i, board)=>{
+          result += '<div class="board" data-board-no="' + board.boardNo + '"><div>' + board.boardNo + '</div><div>' + board.title + '</div><div>' + board.contents + '</div></div>';
+        })
+        result += '</div>';
+        boardList.append(result);
+      })
     }
   
+  </script>
+  
+  <script>
+    
+    $(document).on('click', '.board', (evt)=>{
+      const boardNo = evt.currentTarget.dataset.boardNo;  // $(evt.currentTarget).data('boardNo')
+      $.ajax({
+        /* 요청 */
+        type: 'GET',
+        url: '${contextPath}/ajax2/detail.do',
+        data: 'boardNo=' + boardNo,
+        /* 응답 */
+        dataType: 'json'
+      }).done((resData)=>{
+        alert(resData.boardNo + ', ' + resData.title + ', ' + resData.contents);
+        // 모달창
+      })
+    })
+      
   </script>
 
 </body>

@@ -27,7 +27,10 @@ public class BoardController2 {
   }
   
   
-  
+  @GetMapping(value="/detail.do", produces=MediaType.APPLICATION_JSON_VALUE)
+  public BoardDto detail(BoardDto board) {
+    return boardService.getBoardByNo(board.getBoardNo());
+  }
   
   
 }
