@@ -30,7 +30,11 @@
     			/* 응답 */
     			dataType: 'json',
     			success: (resData)=>{
-    				console.log(resData);
+    				const boardList = $('#board-list');
+    				boardList.empty();
+    				$.each(resData, (i, board)=>{
+    					boardList.append('<div class="board"><div>' + board.boardNo + '</div><div>' + board.title + '</div><div>' + board.contents + '</div></div>');
+    				})
     			}
     		})
     	})
