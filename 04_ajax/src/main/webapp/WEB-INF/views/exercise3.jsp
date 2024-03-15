@@ -34,9 +34,37 @@
       fetch('${contextPath}/ajax3/list.do', options)
         .then(response=>response.json())
         .then(resData=>{
-        	console.log(resData);
+        	const boardList = document.getElementById('board-list');
+        	boardList.innerHTML = '';
+        	let result = '<div class="board-wrap">';
+        	resData.forEach(board=>{
+        		result += '<div class="board" data-board-no="' + board.boardNo + '"><div>' + board.boardNo + '</div><div>' + board.title + '</div><div>' + board.contents + '</div></div>';
+        	})
+        	result += '</div>';
+        	boardList.innerHTML = result;
+        	fnBoardDetail();
         })
-      
+        
+    }
+  
+  </script>
+
+  <script>
+  
+    const fnBoardDetail = ()=>{
+    	
+    	const boardList = document.getElementsByClassName('board');
+    	for(let i = 0; i < boardList.length; i++) {
+    		boardList[i].addEventListener('click', (evt)=>{
+    			const boardNo = evt.currentTarget.dataset.boardNo;
+    			fetch('${contextPath}/ajax3/detail.do?boardNo=' + boardNo, {method: 'GET', cache: 'no-cache'})
+    			  .then(response=>response.json())
+    			  .then(resData=>{
+    				  console.log(resData);
+    			  })
+    		})
+    	}
+    	
     }
   
   </script>
