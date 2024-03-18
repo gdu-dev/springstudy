@@ -3,14 +3,12 @@ package com.gdu.prj05.dao;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.gdu.prj05.dto.ContactDto;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Repository
 public class ContactDaoImpl implements ContactDao {
 
   private final SqlSessionTemplate sqlSessionTemplate;

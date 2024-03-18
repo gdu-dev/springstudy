@@ -34,4 +34,10 @@
     <constructor-arg ref="sqlSessionFactoryBean"/>
   </bean>
   
+  <bean class="com.gdu.prj05.dao.ContactDaoImpl"
+        id="contactDao"
+        scope="singleton">
+    <constructor-arg ref="sqlSessionTemplate"/>
+  </bean>
+  
 </beans>

@@ -20,7 +20,7 @@ import com.gdu.prj05.dto.ContactDto;
  *  2) @Bean       classes=AppConfig.class
  *  3) @Component  locations="file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
  */
-@ContextConfiguration(locations="file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
+@ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 
 public class ContactUnitTest {
   
