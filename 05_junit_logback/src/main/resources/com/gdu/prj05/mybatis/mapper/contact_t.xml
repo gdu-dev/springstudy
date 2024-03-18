@@ -2,7 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gdu.prj.dao.board_t">
+
+<mapper namespace="com.gdu.prj05.mybatis.mapper.contact_t">
 
   <!--
     parameterType
@@ -36,58 +37,28 @@
       3) resultType="double"
   -->
 
-  <insert id="insertBoard"
-          parameterType="com.gdu.prj.dto.BoardDto">
-    INSERT INTO BOARD_T (
-        BOARD_NO
-      , TITLE
-      , CONTENTS
-      , MODIFIED_AT
+  <insert id="registerContact"
+          parameterType="com.gdu.prj05.dto.ContactDto">
+    INSERT INTO CONTACT_T (
+        CONTACT_NO
+      , NAME
+      , MOBILE
+      , EMAIL
+      , ADDRESS
       , CREATED_AT
     ) VALUES (
-        BOARD_SEQ.NEXTVAL
-      , #{title}
-      , #{contents}
-      , CURRENT_DATE
-      , CURRENT_DATE
+        CONTACT_SEQ.NEXTVAL
+      , #{name}
+      , #{mobile}
+      , #{email}
+      , #{address}
+      , TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD HH24:MI:SS')
     )
   </insert>
 
-  <update id="updateBoard"
-          parameterType="com.gdu.prj.dto.BoardDto">
-    UPDATE BOARD_T
-       SET TITLE = #{title}
-         , CONTENTS = #{contents}
-         , MODIFIED_AT = CURRENT_DATE
-     WHERE BOARD_NO = #{board_no}
-  </update>
-  
-  <delete id="deleteBoard">
-    DELETE
-      FROM BOARD_T
-     WHERE BOARD_NO = #{board_no}
-  </delete>
-  
-  <select id="selectBoardList"
-          parameterType="Map"
-          resultType="com.gdu.prj.dto.BoardDto">
-    SELECT RN, BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT
-      FROM (SELECT ROW_NUMBER() OVER(ORDER BY BOARD_NO ${sort}) AS RN, BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT
-              FROM BOARD_T)
-     WHERE RN BETWEEN #{begin} AND #{end}
-  </select>
-  
-  <select id="getBoardCount"
-          resultType="int">
-    SELECT COUNT(*)
-      FROM BOARD_T
-  </select>
-  
-  <select id="selectBoardByNo"
-          resultType="com.gdu.prj.dto.BoardDto">
-    SELECT BOARD_NO, TITLE, CONTENTS, MODIFIED_AT, CREATED_AT
-      FROM BOARD_T
-     WHERE BOARD_NO = #{board_no}
-  </select>
+
+
+
+
 
 </mapper>

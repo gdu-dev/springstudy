@@ -3,20 +3,24 @@ package com.gdu.prj05.dao;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.gdu.prj05.dto.ContactDto;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Repository
 public class ContactDaoImpl implements ContactDao {
 
   private final SqlSessionTemplate sqlSessionTemplate;
+
+  public final static String NS = "com.gdu.prj05.mybatis.mapper.contact_t."; 
   
   @Override
   public int registerContact(ContactDto contact) {
-    // TODO Auto-generated method stub
-    return 0;
+    int insertCount = sqlSessionTemplate.insert(NS + "registerContact", contact);
+    return insertCount;
   }
 
   @Override
