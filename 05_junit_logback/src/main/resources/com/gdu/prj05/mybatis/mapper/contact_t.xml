@@ -56,7 +56,21 @@
     )
   </insert>
 
+  <update id="modifyContact"
+          parameterType="com.gdu.prj05.dto.ContactDto">
+    UPDATE CONTACT_T
+       SET NAME = #{name}
+         , MOBILE = #{mobile}
+         , EMAIL = #{email}
+         , ADDRESS = #{address}
+     WHERE CONTACT_NO = #{contactNo}
+  </update>
 
+  <delete id="removeContact">
+    DELETE
+      FROM CONTACT_T
+     WHERE CONTACT_NO = #{contactNo}
+  </delete>
 
 
 

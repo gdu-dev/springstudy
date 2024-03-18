@@ -102,13 +102,6 @@
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
       <version>${org.aspectj-version}</version>
-    </dependency>  
-    
-    <!-- Logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${org.slf4j-version}</version>
     </dependency>
 
     <!-- @Inject -->

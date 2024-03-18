@@ -25,14 +25,14 @@ public class ContactDaoImpl implements ContactDao {
 
   @Override
   public int modifyContact(ContactDto contact) {
-    // TODO Auto-generated method stub
-    return 0;
+    int updateCount = sqlSessionTemplate.update(NS + "modifyContact", contact);
+    return updateCount;
   }
 
   @Override
   public int removeContact(int contactNo) {
-    // TODO Auto-generated method stub
-    return 0;
+    int deleteCount = sqlSessionTemplate.delete(NS + "removeContact", contactNo);
+    return deleteCount;
   }
 
   @Override
