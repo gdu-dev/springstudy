@@ -24,8 +24,8 @@
         id="sqlSessionFactoryBean"
         scope="singleton">
     <property name="dataSource" ref="hikariDataSource"/>
-    <property name="configLocation" value="com/gdu/prj05/mybatis/config/mybatis-config.xml"/>
-    <property name="mapperLocations" value="com/gdu/prj05/mybatis/mapper/*.xml"/>
+    <property name="configLocation"  value="classpath:com/gdu/prj05/mybatis/config/mybatis-config.xml"/>
+    <property name="mapperLocations" value="classpath:com/gdu/prj05/mybatis/mapper/*.xml"/>
   </bean>
   
   <bean class="org.mybatis.spring.SqlSessionTemplate"
@@ -33,13 +33,5 @@
         scope="singleton">
     <constructor-arg ref="sqlSessionFactoryBean"/>
   </bean>
-  
-  
-  
-  
-  
-  
-  
-  
   
 </beans>
