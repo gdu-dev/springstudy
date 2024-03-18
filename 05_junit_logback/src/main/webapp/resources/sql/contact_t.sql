@@ -11,6 +11,3 @@ CREATE TABLE CONTACT_T (
 
 DROP SEQUENCE CONTACT_SEQ;
 CREATE SEQUENCE CONTACT_SEQ NOCACHE;
-
-insert into contact_t values(contact_seq.nextval, 'name', 'mobile', 'email', 'address', to_char(current_date, 'yyyy-mm-dd hh24:mi:ss'));
-commit;
