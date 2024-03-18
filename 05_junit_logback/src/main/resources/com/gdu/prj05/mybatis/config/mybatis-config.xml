@@ -2,11 +2,17 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <configuration>
 
   <!-- settings -->
   <settings>
     <setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
+  
+  <!-- typeAliases -->
+  <typeAliases>
+    <typeAlias alias="ContactDto" type="com.gdu.prj05.dto.ContactDto"/>
+  </typeAliases>
   
 </configuration>

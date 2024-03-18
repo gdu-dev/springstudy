@@ -37,14 +37,14 @@ public class ContactDaoImpl implements ContactDao {
 
   @Override
   public List<ContactDto> getContactList() {
-    // TODO Auto-generated method stub
-    return null;
+    List<ContactDto> contactList = sqlSessionTemplate.selectList(NS + "getContactList");
+    return contactList;
   }
 
   @Override
   public ContactDto getContactByNo(int contactNo) {
-    // TODO Auto-generated method stub
-    return null;
+    ContactDto contact = sqlSessionTemplate.selectOne(NS + "getContactByNo", contactNo);
+    return contact;
   }
 
 }

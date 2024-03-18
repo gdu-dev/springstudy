@@ -38,7 +38,7 @@
   -->
 
   <insert id="registerContact"
-          parameterType="com.gdu.prj05.dto.ContactDto">
+          parameterType="ContactDto">
     INSERT INTO CONTACT_T (
         CONTACT_NO
       , NAME
@@ -57,7 +57,7 @@
   </insert>
 
   <update id="modifyContact"
-          parameterType="com.gdu.prj05.dto.ContactDto">
+          parameterType="ContactDto">
     UPDATE CONTACT_T
        SET NAME = #{name}
          , MOBILE = #{mobile}
@@ -71,8 +71,19 @@
       FROM CONTACT_T
      WHERE CONTACT_NO = #{contactNo}
   </delete>
+  
+  <select id="getContactList"
+          resultType="ContactDto">
+    SELECT CONTACT_NO, NAME, MOBILE, EMAIL, ADDRESS, CREATED_AT
+      FROM CONTACT_T
+     ORDER BY CONTACT_NO DESC
+  </select>
 
-
-
+  <select id="getContactByNo"
+          resultType="ContactDto">
+    SELECT CONTACT_NO, NAME, MOBILE, EMAIL, ADDRESS, CREATED_AT
+      FROM CONTACT_T
+     WHERE CONTACT_NO = #{contactNo}
+  </select>
 
 </mapper>
