@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class ContactUnitTest {
   
   private final ContactDao contactDao;
-  
+
   @Test
   public void 등록테스트() {
     
