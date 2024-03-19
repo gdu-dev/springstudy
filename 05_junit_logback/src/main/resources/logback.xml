@@ -5,8 +5,8 @@
   
   <!-- Console view 에 로그를 찍는 Appender -->
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="custom.logback.layout.MyLogbackLayout"/>
     </encoder>
   </appender>
   
@@ -15,8 +15,8 @@
     <file>/logs/prj05.log</file>
     <append>true</append>
     <immediateFlush>true</immediateFlush>
-    <encoder>
-      <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="custom.logback.layout.MyLogbackLayout"/>
     </encoder>
   </appender>
   
@@ -28,8 +28,8 @@
       <totalSizeCap>100GB</totalSizeCap>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
-    <encoder>
-      <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="custom.logback.layout.MyLogbackLayout"/>
     </encoder>
   </appender>
 	
@@ -38,8 +38,15 @@
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework" level="info"/>
-  <logger name="com.zaxxer.hikari" level="info"/>
-  <logger name="org.mybatis.spring" level="info"/>
+  <logger name="com.zaxxer.hikari"   level="info"/>
+  <logger name="org.mybatis.spring"  level="info"/>
+  <logger name="jdbc.sqltiming"      level="info"/>   <!-- 쿼리문 + 실행시간 -->
+  <logger name="jdbc.sqlonly"        level="off"/>    <!-- 쿼리문 -->
+  <logger name="jdbc.connection"     level="off"/>    <!-- Connection 호출 정보 -->
+  <logger name="jdbc.audit"          level="off"/>    <!-- JDBC 호출 정보 -->
+  <logger name="jdbc.resultset"      level="off"/>    <!-- ResultSet 호출 정보 -->
+  <logger name="jdbc.resultsettable" level="off"/>    <!-- ResultSet 호출 결과 테이블 -->
+  <logger name="log4jdbc.debug"      level="off"/>    <!-- log4jdbc 라이브러리 동작 -->
 
 	<!-- Root Logger -->
 	<root>
