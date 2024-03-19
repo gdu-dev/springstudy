@@ -9,21 +9,30 @@
       <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
     </encoder>
   </appender>
+  
+  <!-- File 에 로그를 찍는 Appender -->
+  <appender name="file" class="ch.qos.logback.core.FileAppender">
+    <file>/logs/prj05.log</file>
+    <append>true</append>
+    <immediateFlush>true</immediateFlush>
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
+    </encoder>
+  </appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.gdu.prj05">
-		<level value="info" />
-	</logger>
+	<logger name="com.gdu.prj05" level="info"/>
 	
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework">
-		<level value="info" />
-	</logger>
+	<logger name="org.springframework" level="info"/>
+  <logger name="com.zaxxer.hikari" level="info"/>
+  <logger name="org.mybatis.spring" level="info"/>
 
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />
+		<appender-ref ref="file" />
 	</root>
 
 </configuration>

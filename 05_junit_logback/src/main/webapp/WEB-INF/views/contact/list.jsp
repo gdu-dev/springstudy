@@ -11,7 +11,52 @@
 </head>
 <body>
 
-${empty requestScope.contactList}
+  <div>
+    <a href="${contextPath}/contact/write.do">작성화면열기</a>
+  </div>
+  
+  <hr>
+  
+  <div>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>순번</td>
+          <td>이름</td>
+          <td>연락처</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach items="${contactList}" var="contact" varStatus="vs">
+          <tr>
+            <td>${vs.count}</td>
+            <td>${contact.name}</td>
+            <td>${contact.mobile}</td>
+            <td>
+              <button type="button" class="btn-detail" data-contact-no="${contact.contactNo}">상세</button>
+              <button type="button" class="btn-remove">삭제</button>
+            </td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
+  </div>
+  <script>
+  
+    $('.btn-detail').on('click', (evt)=>{
+    	const contactNo = evt.target.dataset.contactNo;
+    	location.href = '${contextPath}/contact/detail.do?contact-no=' + contactNo;
+    })
+  
+  
+  
+  
+  
+  
+  
+  
+  </script>
 
 </body>
 </html>
