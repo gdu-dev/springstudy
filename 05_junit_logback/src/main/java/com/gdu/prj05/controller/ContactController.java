@@ -3,8 +3,8 @@ package com.gdu.prj05.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +27,7 @@ public class ContactController {
   private final ContactService contactService;
   
   // @Slf4j
+  // org.slf4j.Logger / org.slf4j.LoggerFactory
   // private static final Logger log = LoggerFactory.getLogger(ContactController.class);  // ContactController 가 동작할 때 로그를 찍는 log
   
   @GetMapping(value="/list.do")
