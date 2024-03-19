@@ -19,6 +19,19 @@
       <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
     </encoder>
   </appender>
+  
+  <!-- 매일 새로운 파일을 만드는 Appender -->
+  <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>/logs/prj05-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <totalSizeCap>100GB</totalSizeCap>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS, Asia/Seoul}]%-5level:%logger-%msg%n</pattern>
+    </encoder>
+  </appender>
 	
 	<!-- Application Loggers -->
 	<logger name="com.gdu.prj05" level="info"/>
@@ -33,6 +46,7 @@
 		<priority value="warn" />
 		<appender-ref ref="console" />
     <appender-ref ref="file" />
+    <appender-ref ref="rolling" />
 	</root>
 
 </configuration>
