@@ -45,11 +45,19 @@ public class ContactController {
     contactService.registerContact(request, response);
   }
   
+  @GetMapping(value="/remove.do")
+  public void remove1(HttpServletRequest request, HttpServletResponse response) {
+    contactService.removeContact(request, response);
+  }
   
+  @PostMapping(value="/remove.do")
+  public void remove2(HttpServletRequest request, HttpServletResponse response) {
+    contactService.removeContact(request, response);
+  }
   
-  
-  
-  
-  
+  @PostMapping(value="/modify.do")
+  public void modify(HttpServletRequest request, HttpServletResponse response) {
+    contactService.modifyContact(request, response);
+  }
   
 }

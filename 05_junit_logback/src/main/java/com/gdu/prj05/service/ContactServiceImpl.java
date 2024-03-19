@@ -81,7 +81,7 @@ public class ContactServiceImpl implements ContactService {
       out.println("<script>");
       if(updateCount == 1) {
         out.println("alert('연락처가 수정되었습니다.')");
-        out.println("location.href='" + request.getContextPath() + "/contact/detail.do?contactNo=" + contactNo + "'");  // redirect 를 의미하는 코드
+        out.println("location.href='" + request.getContextPath() + "/contact/detail.do?contact-no=" + contactNo + "'");  // redirect 를 의미하는 코드
       } else {
         out.println("alert('연락처가 수정되지 않았습니다.')");
         out.println("history.back()");

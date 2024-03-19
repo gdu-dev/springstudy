@@ -16,7 +16,7 @@
           method="POST">
       <div>
         <label for="contact-no">번호</label>
-        <input type="text" id="contact-no" name="contactNo" value="${contact.contactNo}" readonly>
+        <input type="text" id="contact-no" name="contact-no" value="${contact.contactNo}" readonly>
       </div>
       <div>
         <label for="name">이름</label>
@@ -43,6 +43,27 @@
   </div>
   
   <script>
+  
+    const frmDetail = document.getElementById('frm-detail');
+    const btnModify = document.getElementById('btn-modify');
+    const btnRemove = document.getElementById('btn-remove');
+    const btnList = document.getElementById('btn-list');
+    
+    btnModify.addEventListener('click', (evt)=>{
+    	$(frmDetail).attr('action', '${contextPath}/contact/modify.do');
+    	$(frmDetail).submit();
+    })
+    
+    btnRemove.addEventListener('click', (evt)=>{
+    	if(confirm('연락처를 삭제할까요?')){
+    		$(frmDetail).attr('action', '${contextPath}/contact/remove.do');
+    		$(frmDetail).submit();		
+    	}
+    })
+    
+    btnList.addEventListener('click', (evt)=>{
+    	location.href = '${contextPath}/contact/list.do';
+    })
   
   </script>
 
