@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.prj06.mybatis.mapper.contact_t">
+
+  <!--
+    parameterType
+    1. 쿼리문으로 전달되는 파라미터의 타입을 명시한다.
+    2. 작성 예시
+      1) parameterType="com.gdu.prj.dto.BoardDto"
+      2) parameterType="Map"
+      3) parameterType="String" - 변수를 하나만 전달하는 경우 생략할 수 있다.
+      4) parameterType="int"    - 변수를 하나만 전달하는 경우 생략할 수 있다.
+      5) parameterType="double" - 변수를 하나만 전달하는 경우 생략할 수 있다.
+  -->
+  
+  <!--
+    parameter 작성 방법
+    1. #{}
+      1) PreparedStatement 를 이용하여 ? 에 값을 저장하는 JDBC 방식으로 처리한다.
+      2) 변수 값을 처리할 때 사용한다.
+      2) 객체나 Map 에 저장된 프로퍼티(필드, Key)를 입력한다.
+    2. ${}
+      1) 문자열 대체는 전달된 값을 따옴표나 이스케이프 없이 그대로 사용한다.
+      2) SQL 구문의 메타데이터(테이블 이름, 칼럼 이름, SQL 자체)를 처리할 때 사용한다.
+  -->
+
+  <!--
+    resultType
+    1. SELECT 문의 반환 값의 타입을 명시한다.
+    2. INSERT / UPDATE / DELETE 는 resultType 속성을 작성하지 않는다. (resultType="int" 로 미리 정의되어 있다.)
+    3. 작성 예시
+      1) resultType="com.gdu.prj.dto.BoardDto"
+      2) resultType="int"
+      3) resultType="double"
+  -->
+
+  <insert id="registerContact"
+          parameterType="ContactDto">
+    INSERT INTO CONTACT_T (
+        CONTACT_NO
+      , NAME
+      , MOBILE
+      , EMAIL
+      , ADDRESS
+      , CREATED_AT
+    ) VALUES (
+        CONTACT_SEQ.NEXTVAL
+      , #{name}
+      , #{mobile}
+      , #{email}
+      , #{address}
+      , TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD HH24:MI:SS')
+    )
+  </insert>
+
+  <update id="modifyContact"
+          parameterType="ContactDto">
+    UPDATE CONTACT_T
+       SET NAME = #{name}
+         , MOBILE = #{mobile}
+         , EMAIL = #{email}
+         , ADDRESS = #{address}
+     WHERE CONTACT_NO = #{contactNo}
+  </update>
+
+  <delete id="removeContact">
+    DELETE
+      FROM CONTACT_T
+     WHERE CONTACT_NO = #{contactNo}
+  </delete>
+  
+  <select id="getContactList"
+          resultType="ContactDto">
+    SELECT CONTACT_NO, NAME, MOBILE, EMAIL, ADDRESS, CREATED_AT
+      FROM CONTACT_T
+     ORDER BY CONTACT_NO DESC
+  </select>
+
+  <select id="getContactByNo"
+          resultType="ContactDto">
+    SELECT CONTACT_NO, NAME, MOBILE, EMAIL, ADDRESS, CREATED_AT
+      FROM CONTACT_T
+     WHERE CONTACT_NO = #{contactNo}
+  </select>
+
+</mapper>
