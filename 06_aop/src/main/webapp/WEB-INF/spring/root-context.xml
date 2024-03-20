@@ -44,10 +44,31 @@
     <constructor-arg ref="sqlSessionTemplate"/>
   </bean>
 
+  <!-- 트랜잭션 관리자 등록 -->
+  <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+        id="dataSourceTransactionManager"
+        scope="singleton">
+    <property name="dataSource" ref="hikariDataSource"/>
+  </bean>
   
+  <!-- 트랜잭션 Advice 등록 -->
+  <tx:advice transaction-manager="dataSourceTransactionManager"
+             id="txAdvice">
+    <tx:attributes>
+      <tx:method name="*"/>
+      <tx:method name="get*" read-only="true"/>
+    </tx:attributes>
+  </tx:advice>
   
+  <!-- Aspect 설정 -->
+  <aop:config>
+    <aop:pointcut expression="execution (* com.gdu.prj06.service.*Impl.*(..))"
+                  id="txPointCut"/>
+    <aop:advisor advice-ref="txAdvice"
+                 pointcut-ref="txPointCut"/>
+  </aop:config>
   
-  
-  
+  <!-- AspectJ 허용 (@EnableAspectJAutoProxy) -->
+  <aop:aspectj-autoproxy/>
   
 </beans>
