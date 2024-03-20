@@ -1,13 +1,17 @@
 package com.gdu.prj06.aspect;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Aspect
-@Component
 public class MyAroundAspect {
 
   // PointCut : 언제 동작하는가?
@@ -23,9 +27,15 @@ public class MyAroundAspect {
    */
 
   @Around("setPointCut()")
-  public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
+  public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     
-    return null;
+    log.info("{}", "-".repeat(80));                                                      // 동작 이전 (@Before 이전)
+    
+    Object obj = proceedingJoinPoint.proceed();                                          // 동작 시점
+    
+    log.info("{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));  // 동작 이후 (@After 이전)
+    
+    return obj;
     
   }
   
