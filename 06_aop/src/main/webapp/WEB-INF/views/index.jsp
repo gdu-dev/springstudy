@@ -12,6 +12,10 @@
 <body>
 
   <a href="${contextPath}/contact/list.do">게시판</a>
+  
+  <hr>
+  
+  <a href="${contextPath}/contact/tx/test.do">트랜잭션테스트</a>
 
 </body>
 </html>

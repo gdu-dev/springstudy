@@ -13,4 +13,5 @@ public interface ContactService {
   void removeContact(HttpServletRequest request, HttpServletResponse response);
   List<ContactDto> getContactList();
   ContactDto getContactByNo(int contactNo);
+  void txTest();
 }
