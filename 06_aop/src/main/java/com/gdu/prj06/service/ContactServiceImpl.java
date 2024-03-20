@@ -6,15 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Service;
-
 import com.gdu.prj06.dao.ContactDao;
 import com.gdu.prj06.dto.ContactDto;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Service
 public class ContactServiceImpl implements ContactService {
 
   private final ContactDao contactDao;

@@ -43,6 +43,12 @@
         scope="singleton">
     <constructor-arg ref="sqlSessionTemplate"/>
   </bean>
+  
+  <bean class="com.gdu.prj06.service.ContactServiceImpl"
+        id="contactService"
+        scope="singleton">
+    <constructor-arg ref="contactDao" />
+  </bean>
 
   <!-- 트랜잭션 관리자 등록 -->
   <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
