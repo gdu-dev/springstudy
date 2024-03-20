@@ -14,7 +14,7 @@
   3) @Around : PointCut 동작 이전/이후
 
 4. Advice 동작 순서
-  @Around -> @Before -> PointCut -> @Around -> @After
+  @Around -> @Before -> PointCut -> @After -> @Around
 
 5. PointCut 을 결정하는 표현식 작성 방법
   1) 형식

@@ -1,6 +1,8 @@
 package com.gdu.prj06.aspect;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,6 +39,18 @@ public class MyBeforeAspect {
     HttpServletRequest request = servletRequestAttributes.getRequest();
     
     Map<String, String[]> params = request.getParameterMap();
+    
+    String str = "";
+    if(params.isEmpty()) {
+      str += "No Parameter";
+    } else {
+      for(Entry<String, String[]> entry : params.entrySet()) {
+        str += entry.getKey() + ":" + Arrays.toString(entry.getValue()) + " ";
+      }
+    }
+    
+    log.info("{} | {}", request.getMethod(), request.getRequestURI());
+    log.info("{}", str);
     
   }
 

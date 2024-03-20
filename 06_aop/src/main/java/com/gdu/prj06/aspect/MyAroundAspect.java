@@ -1,8 +1,5 @@
 package com.gdu.prj06.aspect;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,11 +26,11 @@ public class MyAroundAspect {
   @Around("setPointCut()")
   public Object myAroundAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     
-    log.info("{}", "-".repeat(80));                                                      // 동작 이전 (@Before 이전)
+    log.info("{}", "-".repeat(80));                // 동작 이전 (@Before 이전)
     
-    Object obj = proceedingJoinPoint.proceed();                                          // 동작 시점
+    Object obj = proceedingJoinPoint.proceed();    // 동작 시점
     
-    log.info("{}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));  // 동작 이후 (@After 이전)
+    log.info("{}\n", "-".repeat(80));              // 동작 이후 (@After 이후)
     
     return obj;
     
