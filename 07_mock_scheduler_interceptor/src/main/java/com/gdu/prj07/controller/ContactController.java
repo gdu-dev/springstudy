@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.prj07.service.ContactService;
 
@@ -44,10 +43,8 @@ public class ContactController {
   }
   
   @PostMapping(value="/register.do")
-  public void register(HttpServletRequest request
-                     , HttpServletResponse response
-                     , RedirectAttributes redirectAttributes) {
-    contactService.registerContact(request, response, redirectAttributes);
+  public void register(HttpServletRequest request, HttpServletResponse response) {
+    contactService.registerContact(request, response);
   }
   
   @GetMapping(value="/remove.do")

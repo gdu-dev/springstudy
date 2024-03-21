@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 // 로그
 @Slf4j
 
-
+// @ContextConfiguration + @WebApplicationContext
 @SpringJUnitWebConfig(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class ContactMockTest {
 
@@ -62,7 +62,11 @@ public class ContactMockTest {
                                        .param("address", "테스트주소"))
                             .andReturn();
     
+    // RedirectAttributes 에 flash attribute 를 등록하고 redirect 한 경우
     log.info(mvcResult.getFlashMap().toString());
+    
+    // HttpServletResponse 를 이용해 직접 redirect 코드를 작성한 경우
+    log.info(mvcResult.getResponse().getContentAsString());
     
   }
 
