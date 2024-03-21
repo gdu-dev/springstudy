@@ -34,12 +34,19 @@
   <beans:bean class="com.gdu.prj07.interceptor.ContactInterceptor"
               id="contactInterceptor"
               scope="singleton"/>
+  <beans:bean class="com.gdu.prj07.interceptor.LoginCheckInterceptor"
+              id="loginCheckInterceptor"
+              scope="singleton"/>
   
   <!-- mapping 에 따른 인터셉터 등록 -->
   <interceptors>
     <interceptor>
       <mapping path="/contact/detail.do"/>
       <beans:ref bean="contactInterceptor"/>
+    </interceptor>
+    <interceptor>
+      <mapping path="/contact/write.do"/>
+      <beans:ref bean="loginCheckInterceptor"/> 
     </interceptor>
   </interceptors>
   
