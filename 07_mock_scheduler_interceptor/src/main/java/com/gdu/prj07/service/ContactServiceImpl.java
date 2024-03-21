@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.gdu.prj07.dao.ContactDao;
 import com.gdu.prj07.dto.ContactDto;
 
@@ -17,7 +19,7 @@ public class ContactServiceImpl implements ContactService {
   private final ContactDao contactDao;
   
   @Override
-  public void registerContact(HttpServletRequest request, HttpServletResponse response) {
+  public void registerContact(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
     
     // 등록(성공->목록보기, 실패->뒤로가기)
     
@@ -31,6 +33,7 @@ public class ContactServiceImpl implements ContactService {
     
     // 등록
     int insertCount = contactDao.registerContact(contact);
+    redirectAttributes.addFlashAttribute("insertCount", insertCount);
     
     // 등록 결과에 따른 응답
     response.setContentType("text/html; charset=UTF-8");
