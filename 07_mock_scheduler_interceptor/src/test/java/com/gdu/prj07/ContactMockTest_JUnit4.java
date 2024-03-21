@@ -1,12 +1,12 @@
 package com.gdu.prj07;
 
-import static org.junit.Assert.assertNotNull;
+// import static org.junit.Assert.assertNotNull;
 
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+// import org.junit.Before;
+// import org.junit.FixMethodOrder;
+// import org.junit.Test;
+// import org.junit.runner.RunWith;
+// import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,17 +19,17 @@ import org.springframework.web.context.WebApplicationContext;
 import lombok.extern.slf4j.Slf4j;
 
 // JUnit4
-@RunWith(SpringJUnit4ClassRunner.class)
+// @RunWith(SpringJUnit4ClassRunner.class)
 
 // 테스트 수행 순서 (메소드 이름 순)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+// @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 // 로그
 @Slf4j
 
 // @ContextConfiguration + @WebApplicationContext
 @SpringJUnitWebConfig(locations={"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class ContactMockTest {
+public class ContactMockTest_JUnit4 {
 
   @Autowired
   private WebApplicationContext webApplicationContext;
@@ -38,19 +38,19 @@ public class ContactMockTest {
   private MockMvc mockMvc;
   
   // MockMvc 객체 생성 (테스트 수행 이전에 생성한다.)
-  @Before
+  // @Before
   public void setUp() {
     mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
               .build();
   }
   
-  @Test
+  // @Test
   public void 테스트01_MockMvc생성확인() {
-    assertNotNull(mockMvc);
+    // assertNotNull(mockMvc);
   }
   
-  @Test
+  // @Test
   public void 테스트02_삽입() throws Exception {
     
     MvcResult mvcResult = mockMvc
@@ -70,5 +70,17 @@ public class ContactMockTest {
     
   }
 
+  // @Test
+  public void 테스트03_상세조회() throws Exception {
+    
+    MvcResult mvcResult = mockMvc
+                            .perform(MockMvcRequestBuilders
+                                        .get("/contact/detail.do")
+                                        .param("contact-no", "1"))
+                            .andReturn();
+    
+    log.info(mvcResult.getModelAndView().getModelMap().toString());
+    
+  }
   
 }
