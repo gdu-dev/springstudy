@@ -1,0 +1,29 @@
+1. Aspect Oriented Programming (AOP) 용어
+  1) JoinPoint : Aspect 를 적용시킬 수 있는 메소드 전체
+  2) PointCut  : Aspect 를 적용시킨 메소드
+  3) Advice    : Aspect 동작 자체
+
+2. AOP 용어 예시
+  1) JoinPoint : ServiceImpl 의 모든 메소드 (삽입, 수정, 삭제, 목록, 상세)
+  2) PointCut  : 트랜잭션이 필요한 메소드   (삽입, 수정, 삭제)
+  3) Advice    : 트랜잭션
+
+3. Advice 동작 시점 3가지
+  1) @Before : PointCut 동작 이전
+  2) @After  : PointCut 동작 이후
+  3) @Around : PointCut 동작 이전/이후
+
+4. Advice 동작 순서
+  @Around -> @Before -> PointCut -> @After -> @Around
+
+5. PointCut 을 결정하는 표현식 작성 방법
+  1) 형식
+    execution (반환타입 패키지.클래스.메소드(매개변수))
+  2) 상세 형식
+    (1) 반환타입
+      - *     : 모든 반환타입
+      - void  : void 반환타입
+      - !void : void 가 아닌 반환타입
+    (2) 매개변수
+      - *     : 1개의 모든 매개변수
+      - ..    : 모든 매개변수
