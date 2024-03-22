@@ -118,9 +118,9 @@
       $.ajax({
     	  type: 'POST',
     	  url: '${contextPath}/upload2.do',
-    	  contentType: false,
-    	  processData: false,
-    	  data: formData,
+    	  contentType: false,  // content-type header를 생성하지 않도록 설정
+    	  data: formData,      // FormData 객체를 서버로 전달
+    	  processData: false,  // 전달되는 데이터가 객체인 경우 객체를 {property: value} 형식의 문자열로 자동으로 변환해서 전달하는데 이를 방지하는 옵션
     	  dataType: 'json'
       }).done(resData=>{
         if(resData.success === 1){
