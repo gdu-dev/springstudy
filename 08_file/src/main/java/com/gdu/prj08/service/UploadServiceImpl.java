@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.gdu.prj08.dao.FileDao;
+import com.gdu.prj08.dto.FileDto;
+import com.gdu.prj08.dto.HistoryDto;
 import com.gdu.prj08.utils.MyFileUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -17,10 +20,24 @@ import lombok.RequiredArgsConstructor;
 public class UploadServiceImpl implements UploadService {
 
   private final MyFileUtils myFileUtils;
+  private final FileDao fileDao;
   
   @Override
   public int upload1(MultipartHttpServletRequest multipartRequest) {
+
+    // 작성자와 IP
+    String writer = multipartRequest.getParameter("writer");
+    String ip = multipartRequest.getRemoteAddr();
+
+    // HistoryDto 생성
+    HistoryDto history = HistoryDto.builder()
+                              .writer(writer)
+                              .ip(ip)
+                            .build();
     
+    // HistoryDto -> HISTORY_T 삽입
+    fileDao.insertHistory(history);
+
     // 첨부 파일 목록
     List<MultipartFile> files = multipartRequest.getFiles("files");
     
@@ -54,6 +71,17 @@ public class UploadServiceImpl implements UploadService {
         } catch (Exception e) {
           e.printStackTrace();
         }
+        
+        // FileDto 생성
+        FileDto fileDto = FileDto.builder()
+                              .uploadPath(uploadPath)
+                              .originalFilename(originalFilename)
+                              .filesystemName(filesystemName)
+                              .historyNo(history.getHistoryNo())
+                            .build();
+        
+        // FileDto -> FILE_T
+        fileDao.insertFile(fileDto);
         
       }
       

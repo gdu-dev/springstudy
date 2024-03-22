@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdu.prj08.mybatis.mapper.file_t">
+
+  <insert id="insertHistory"
+          parameterType="HistoryDto">
+    <selectKey keyProperty="historyNo" resultType="int" order="BEFORE">
+      SELECT HISTORY_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
+    INSERT INTO HISTORY_T (
+        HISTORY_NO
+      , WRITER
+      , IP
+    ) VALUES (
+        #{historyNo}
+      , #{writer}
+      , #{ip}
+    )
+  </insert>
+  
+  <insert id="insertFile"
+          parameterType="FileDto">
+    INSERT INTO FILE_T(
+        FILE_NO
+      , UPLOAD_PATH
+      , ORIGINAL_FILENAME
+      , FILESYSTEM_NAME
+      , HISTORY_NO
+    ) VALUES (
+        FILE_SEQ.NEXTVAL
+      , #{uploadPath}
+      , #{originalFilename}
+      , #{filesystemName}
+      , #{historyNo}
+    )
+  </insert>
+  
+</mapper>

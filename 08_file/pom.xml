@@ -17,12 +17,24 @@
   </properties>
   
   <dependencies>
-<!-- https://mvnrepository.com/artifact/ch.qos.logback.contrib/logback-json-classic -->
-<dependency>
-    <groupId>ch.qos.logback.contrib</groupId>
-    <artifactId>logback-json-classic</artifactId>
-    <version>0.1.5</version>
-</dependency>
+
+
+    <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
+    <!--
+      jackson-databind / jackson-core / jackson-annotations >= 2.12.0
+      logback-core >= 1.3.0
+      logback-classic >= 1.3.0
+      slf4j-api >= 2.0
+    -->
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>7.4</version>
+      <!-- Use runtime scope if the project does not have any compile-time usage of logstash-logback-encoder,
+         such as usage of StructuredArguments/Markers or implementations such as
+         JsonProvider, AppenderListener, JsonFactoryDecorator, JsonGeneratorDecorator, etc
+      <scope>runtime</scope> -->
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
     <dependency>
@@ -101,6 +113,9 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.3.14</version>
+      <!-- Use runtime scope if the project does not have any compile-time usage of logback,
+           such as implementations of Appender, Encoder, Layout, TurboFilter, etc
+      <scope>runtime</scope> -->
     </dependency>
   
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->

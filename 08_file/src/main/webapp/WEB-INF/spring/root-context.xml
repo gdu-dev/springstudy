@@ -15,4 +15,39 @@
     <property name="maxUploadSize" value="104857600"/>
   </bean>
   
+  <bean class="com.zaxxer.hikari.HikariConfig"
+        id="hikariConfig"
+        scope="singleton">
+    <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+    <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"/>
+    <property name="username" value="GD"/>
+    <property name="password" value="1111"/>
+  </bean>
+  
+  <bean class="com.zaxxer.hikari.HikariDataSource"
+        id="hikariDataSource"
+        scope="singleton">
+    <constructor-arg ref="hikariConfig"/>
+  </bean>
+  
+  <bean class="org.mybatis.spring.SqlSessionFactoryBean"
+        id="sqlSessionFactoryBean"
+        scope="singleton">
+    <property name="dataSource" ref="hikariDataSource"/>
+    <property name="configLocation"  value="classpath:com/gdu/prj08/mybatis/config/mybatis-config.xml"/>
+    <property name="mapperLocations" value="classpath:com/gdu/prj08/mybatis/mapper/*.xml"/>
+  </bean>
+  
+  <bean class="org.mybatis.spring.SqlSessionTemplate"
+        id="sqlSessionTemplate"
+        scope="singleton">
+    <constructor-arg ref="sqlSessionFactoryBean"/>
+  </bean>
+  
+  <bean class="com.gdu.prj08.dao.FileDaoImpl"
+        id="fileDao"
+        scope="singleton">
+    <constructor-arg ref="sqlSessionTemplate"/>
+  </bean>  
+  
 </beans>
