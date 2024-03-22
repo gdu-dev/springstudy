@@ -37,7 +37,7 @@
   </appender>
   
   <!-- Application Loggers -->
-  <logger name="com.gdu" level="info"/>
+  <logger name="com.gdu" level="trace"/>
   
   <!-- 3rdparty Loggers -->
   <logger name="org.springframework" level="info"/>

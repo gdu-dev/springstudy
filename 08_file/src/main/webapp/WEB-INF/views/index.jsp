@@ -34,6 +34,16 @@
   
   <div>
   
+    <div>
+      <input type="file" id="input-files" class="files" multiple>
+    </div>
+    <div>
+      <input type="text" id="input-writer" placeholder="작성자">
+    </div>
+    <div>
+      <button type="button" id="btn-upload">전송</button>
+    </div>
+  
   </div>
   
   <script type="text/javascript">
@@ -76,8 +86,54 @@
     	}
     }
     
+    const fnAsyncUpload = ()=>{
+    	const inputFiles = document.getElementById('input-files');
+    	const inputWriter = document.getElementById('input-writer');
+    	let formData = new FormData();
+    	for(let i = 0; i < inputFiles.files.length; i++){
+    		formData.append('files', inputFiles.files[i]);
+    	}
+    	formData.append('writer', inputWriter);
+    	fetch('${contextPath}/upload2.do', {
+    		method: 'POST',
+    		body: formData
+    	}).then(response=>response.json())
+    	  .then(resData=>{  /* resData = {"success": 1} 또는 {"success": 0} */
+    		  if(resData.success === 1){
+    			  alert('저장되었습니다.');
+    		  } else {
+    			  alert('저장실패했습니다.');
+    		  }
+    	  })
+    }
+    
+    const fnAsyncUpload2 = ()=>{
+      const inputFiles = document.getElementById('input-files');
+      const inputWriter = document.getElementById('input-writer');
+      let formData = new FormData();
+      for(let i = 0; i < inputFiles.files.length; i++){
+        formData.append('files', inputFiles.files[i]);
+      }
+      formData.append('writer', inputWriter);
+      $.ajax({
+    	  type: 'POST',
+    	  url: '${contextPath}/upload2.do',
+    	  contentType: false,
+    	  processData: false,
+    	  data: formData,
+    	  dataType: 'json'
+      }).done(resData=>{
+        if(resData.success === 1){
+          alert('저장되었습니다.');
+        } else {
+          alert('저장실패했습니다.');
+        }
+      })
+    }
+    
     fnFileCheck();
     fnAfterInsertCheck();
+    document.getElementById('btn-upload').addEventListener('click', fnAsyncUpload2);
   
   </script>
   
