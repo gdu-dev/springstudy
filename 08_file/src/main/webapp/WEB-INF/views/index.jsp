@@ -42,6 +42,7 @@
     		let totalSize = 0;
     		const files = evt.target.files;
     		const fileList = document.getElementById('file-list');
+    		fileList.innerHTML = '';
     		for(let i = 0; i < files.length; i++){
     			if(files[i].size > limitPerSize){
     				alert('각 첨부 파일의 최대 크기는 10MB입니다.');
@@ -61,7 +62,19 @@
     	})
     }
     
+    const fnAfterInsertCheck = ()=>{
+    	const insertCount = '${insertCount}';
+    	if(insertCount !== ''){
+    		if(insertCount === '1'){
+    			alert('저장되었습니다.');
+    		} else {
+    			alert('저장실패했습니다.');
+    		}
+    	}
+    }
+    
     fnFileCheck();
+    fnAfterInsertCheck();
   
   </script>
   
