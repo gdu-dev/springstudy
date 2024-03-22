@@ -19,6 +19,9 @@
         <input type="file" name="files" class="files" accept="image/*" multiple>
       </div>
       <div>
+        <input type="text" name="writer" placeholder="작성자">
+      </div>
+      <div>
         <button type="submit">전송</button>
       </div>
     </form>
