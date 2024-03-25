@@ -40,4 +40,15 @@
     <constructor-arg ref="sqlSessionTemplate"/>
   </bean>
   
+  <bean class="com.gdu.prj09.utils.MyPageUtils"
+        id="myPageUtils"
+        scope="singleton"/>
+  
+  <bean class="com.gdu.prj09.service.MemberServiceImpl"
+        id="memberService"
+        scope="singleton">
+    <constructor-arg ref="memberDao"/>
+    <constructor-arg ref="myPageUtils"/>
+  </bean>
+  
 </beans>
