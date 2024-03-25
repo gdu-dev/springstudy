@@ -41,19 +41,16 @@
           new daum.Postcode({
             oncomplete: function(data) {
               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
               // 각 주소의 노출 규칙에 따라 주소를 조합한다.
               // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
               var addr = ''; // 주소 변수
               var extraAddr = ''; // 참고항목 변수
-
               // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
               if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                 addr = data.roadAddress;
               } else { // 사용자가 지번 주소를 선택했을 경우(J)
                 addr = data.jibunAddress;
               }
-
               // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
               if(data.userSelectedType === 'R'){
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -71,11 +68,9 @@
                 }
                 // 조합된 참고항목을 해당 필드에 넣는다.
                 document.getElementById('extraAddress').value = extraAddr;
-              
               } else {
                 document.getElementById('extraAddress').value = '';
               }
-
               // 우편번호와 주소 정보를 해당 필드에 넣는다.
               document.getElementById('zonecode').value = data.zonecode;
               document.getElementById('address').value = addr;
@@ -86,8 +81,96 @@
         }
       </script>
     </div>
+    <div>
+      <button id="btn-init">초기화</button>
+      <button id="btn-register">등록</button>
+      <button id="btn-modify">수정</button>
+      <button id="btn-remove">삭제</button>      
+    </div>
+    
+    <hr>
+    
+    <div>
+      <table border="1">
+        <thead>
+          <tr>
+            <td>선택</td>
+            <td>이메일</td>
+            <td>이름</td>
+            <td>성별</td>
+            <td>버튼</td>
+          </tr>
+        </thead>
+        <tbody id="members"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5" id="paging"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
     
   </div>
   
+  <script>
+  
+    // jQuery 객체 선언
+    var email = $('#email');
+    var name = $('#name');
+    var gender = $(':radio[name=gender]');
+    var zonecode = $('#zonecode');
+    var address = $('#address');
+    var detailAddress = $('#detailAddress');
+    var extraAddress = $('#extraAddress');
+    var btnInit = $('#btn-init');
+    var btnRegister = $('#btn-register');
+    var btnModify = $('#btn-modify');
+    var btnRemove = $('#btn-remove');
+  
+    // 함수 표현식 (함수 만들기)
+    const fnInit = ()=>{
+    	console.log(email);
+    	console.log(name);
+    	email.val('');
+    	name.val('');
+    	$('#none').prop('checked', true);
+    	zonecode.val('');
+    	address.val('');
+    	detailAddress.val('');
+    	extraAddress.val('');
+    }
+
+    const fnRegisterMember = ()=>{
+    	$.ajax({
+    		// 요청
+    		type: 'POST',
+    		url: '/members',
+    		contentType: 'application/json',  // 보내는 데이터의 타입
+    		data: JSON.stringify({            // 보내는 데이터 (문자열 형식의 JSON 데이터)
+    			email: email.val(),
+    			name: name.val(),
+    			gender: $(':radio:checked').val(),
+    			zonecode: zonecode.val(),
+    			address: address.val(),
+    			detailAddress: detailAddress.val(),
+    			extraAddress: extraAddress.val()
+    		}),
+    		// 응답
+    		dataType: 'json'  // 받는 데이터 타입
+    	}).done(resData=>{
+    		console.log(resData);
+    	}).fail(jqXHR=>{
+    		console.log(jqXHR);
+    	})
+    }
+    
+    
+    // 함수 호출 및 이벤트
+    fnInit();
+    btnInit.on('click', fnInit);
+    btnRegister.on('click', fnRegisterMember);
+  
+  </script>
+
 </body>
 </html>
