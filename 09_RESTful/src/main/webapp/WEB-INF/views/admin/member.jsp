@@ -158,7 +158,7 @@
     	}).done(resData=>{  // resData = {"insertCount": 1}
     		console.log(resData);
     	}).fail(jqXHR=>{
-    		console.log(jqXHR);
+    		alert(jqXHR.responseText);
     	})
     }
     
