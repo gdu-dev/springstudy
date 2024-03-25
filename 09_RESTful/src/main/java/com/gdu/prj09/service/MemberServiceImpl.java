@@ -33,7 +33,14 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public ResponseEntity<Map<String, Object>> registerMember(MemberDto member, HttpServletResponse response) {
+  public ResponseEntity<Map<String, Object>> registerMember(Map<String, Object> map
+                                                          , HttpServletResponse response) {
+    
+    MemberDto member = MemberDto.builder()
+                           .email((String)map.get("email"))
+                           .name((String)map.get("name"))
+                           .gender((String)map.get("gender"))
+                         .build();
     
     int insertCount = memberDao.insertMember(member);
     

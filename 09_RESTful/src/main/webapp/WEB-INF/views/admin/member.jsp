@@ -116,7 +116,7 @@
   
     // jQuery 객체 선언
     var email = $('#email');
-    var name = $('#name');
+    var mName = $('#name');
     var gender = $(':radio[name=gender]');
     var zonecode = $('#zonecode');
     var address = $('#address');
@@ -129,10 +129,8 @@
   
     // 함수 표현식 (함수 만들기)
     const fnInit = ()=>{
-    	console.log(email);
-    	console.log(name);
     	email.val('');
-    	name.val('');
+    	mName.val('');
     	$('#none').prop('checked', true);
     	zonecode.val('');
     	address.val('');
@@ -144,20 +142,20 @@
     	$.ajax({
     		// 요청
     		type: 'POST',
-    		url: '/members',
+    		url: '${contextPath}/members',
     		contentType: 'application/json',  // 보내는 데이터의 타입
     		data: JSON.stringify({            // 보내는 데이터 (문자열 형식의 JSON 데이터)
-    			email: email.val(),
-    			name: name.val(),
-    			gender: $(':radio:checked').val(),
-    			zonecode: zonecode.val(),
-    			address: address.val(),
-    			detailAddress: detailAddress.val(),
-    			extraAddress: extraAddress.val()
+    			'email': email.val(),
+    			'name': mName.val(),
+    			'gender': $(':radio:checked').val(),
+    			'zonecode': zonecode.val(),
+    			'address': address.val(),
+    			'detailAddress': detailAddress.val(),
+    			'extraAddress': extraAddress.val()
     		}),
     		// 응답
     		dataType: 'json'  // 받는 데이터 타입
-    	}).done(resData=>{
+    	}).done(resData=>{  // resData = {"insertCount": 1}
     		console.log(resData);
     	}).fail(jqXHR=>{
     		console.log(jqXHR);

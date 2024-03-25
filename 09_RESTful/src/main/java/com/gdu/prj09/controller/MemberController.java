@@ -2,6 +2,8 @@ package com.gdu.prj09.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.gdu.prj09.dto.AddressDto;
 import com.gdu.prj09.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,9 +49,9 @@ public class MemberController {
   }
   
   @PostMapping(value="/members", produces="application/json")
-  public ResponseEntity<Map<String, Object>> registerMember(@RequestBody Map<String, Object> map) {
-    System.out.println(map);
-    return new ResponseEntity<Map<String,Object>>(HttpStatus.OK);
+  public ResponseEntity<Map<String, Object>> registerMember(@RequestBody Map<String, Object> map
+                                                          , HttpServletResponse response) {
+    return memberService.registerMember(map, response);
   }
   
   
