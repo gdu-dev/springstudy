@@ -1,6 +1,7 @@
 package com.gdu.prj09.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.gdu.prj09.service.MemberService;
 
@@ -31,5 +32,19 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
   private final MemberService memberService;
+  
+  @GetMapping("/admin/member.do")
+  public void adminMember() {
+    // 반환타입이 void 인 경우 주소를 JSP 경로로 인식한다.
+    // /admin/member.do =====> /WEB-INF/views/admin/member.jsp
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.gdu.prj09.dao.MemberDao;
@@ -33,8 +34,13 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public ResponseEntity<Map<String, Object>> registerMember(MemberDto member, HttpServletResponse response) {
-    // TODO Auto-generated method stub
-    return null;
+    
+    int insertCount = memberDao.insertMember(member);
+    
+    return new ResponseEntity<Map<String,Object>>(
+                  Map.of("insertCount", insertCount),
+                  HttpStatus.OK);
+    
   }
 
   @Override
