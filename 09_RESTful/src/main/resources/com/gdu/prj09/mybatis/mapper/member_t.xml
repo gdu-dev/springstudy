@@ -7,16 +7,39 @@
 
   <insert id="insertMember"
           parameterType="MemberDto">
+    <selectKey keyProperty="memberNo" order="BEFORE" resultType="int">
+      SELECT MEMBER_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
     INSERT INTO MEMBER_T (
         MEMBER_NO
       , EMAIL
       , NAME
       , GENDER
     ) VALUES (
-        MEMBER_SEQ.NEXTVAL
+        #{memberNo}
       , #{email}
       , #{name}
       , #{gender}
+    )
+  </insert>
+  
+  <insert id="insertAddress"
+          parameterType="AddressDto">
+    INSERT INTO ADDRESS_T (
+        ADDRESS_NO
+      , ZONECODE
+      , ADDRESS
+      , DETAIL_ADDRESS
+      , EXTRA_ADDRESS
+      , MEMBER_NO
+    ) VALUES (
+        ADDRESS_SEQ.NEXTVAL
+      , #{zonecode}
+      , #{address}
+      , #{detailAddress}
+      , #{extraAddress}
+      , #{member.memberNo}
     )
   </insert>
   

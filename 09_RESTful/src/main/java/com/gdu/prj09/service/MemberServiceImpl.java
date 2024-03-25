@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.gdu.prj09.dao.MemberDao;
+import com.gdu.prj09.dto.AddressDto;
 import com.gdu.prj09.dto.MemberDto;
 import com.gdu.prj09.utils.MyPageUtils;
 
@@ -44,12 +45,22 @@ public class MemberServiceImpl implements MemberService {
     try {
       
       MemberDto member = MemberDto.builder()
-          .email((String)map.get("email"))
-          .name((String)map.get("name"))
-          .gender((String)map.get("gender"))
-          .build();
+                          .email((String)map.get("email"))
+                          .name((String)map.get("name"))
+                          .gender((String)map.get("gender"))
+                         .build();
       
       int insertCount = memberDao.insertMember(member);
+      
+      AddressDto address = AddressDto.builder()
+                            .zonecode((String)map.get("zonecode"))
+                            .address((String)map.get("address"))
+                            .detailAddress((String)map.get("detailAddress"))
+                            .extraAddress((String)map.get("extraAddress"))
+                            .member(member)
+                           .build();
+                                
+      insertCount += memberDao.insertAddress(address);
       
       result = new ResponseEntity<Map<String,Object>>(
                       Map.of("insertCount", insertCount),

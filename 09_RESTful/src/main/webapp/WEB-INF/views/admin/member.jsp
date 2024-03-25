@@ -155,8 +155,11 @@
     		}),
     		// 응답
     		dataType: 'json'  // 받는 데이터 타입
-    	}).done(resData=>{  // resData = {"insertCount": 1}
-    		console.log(resData);
+    	}).done(resData=>{  // resData = {"insertCount": 2}
+    		if(resData.insertCount === 2){
+    			alert('정상적으로 등록되었습니다.');
+    			fnInit();
+    		}
     	}).fail(jqXHR=>{
     		alert(jqXHR.responseText);
     	})

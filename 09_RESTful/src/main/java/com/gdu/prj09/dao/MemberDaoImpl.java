@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.gdu.prj09.dto.AddressDto;
 import com.gdu.prj09.dto.MemberDto;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class MemberDaoImpl implements MemberDao {
     return sqlSessionTemplate.insert(NS + "insertMember", member);
   }
 
+  @Override
+  public int insertAddress(AddressDto address) {
+    return sqlSessionTemplate.insert(NS + "insertAddress", address);
+  }
+  
   @Override
   public int updateMember(MemberDto member) {
     // TODO Auto-generated method stub
