@@ -1,6 +1,7 @@
 package com.gdu.prj09.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -44,7 +45,7 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
-  public List<MemberDto> getMemberList() {
+  public List<MemberDto> getMemberList(Map<String, Object> map) {
     // TODO Auto-generated method stub
     return null;
   }
