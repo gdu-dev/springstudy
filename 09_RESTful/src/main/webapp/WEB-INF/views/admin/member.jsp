@@ -167,7 +167,12 @@ const fnMemberList = ()=>{
     }
   })
 }
-    
+
+const fnPaging = (p)=>{
+	page = p;
+	fnMemberList();
+}
+
 // 함수 호출 및 이벤트
 fnMemberList();
   
