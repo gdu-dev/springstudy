@@ -1,5 +1,8 @@
 package com.gdu.prj09.utils;
 
+import lombok.Data;
+
+@Data
 public class MyPageUtils {
 
   private int total;

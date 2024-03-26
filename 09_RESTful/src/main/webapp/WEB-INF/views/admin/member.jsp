@@ -112,12 +112,12 @@
     
   </div>
   
+  <script src="${contextPath}/resources/js/member.js"></script>
   <script>
   
     // jQuery 객체 선언
     var email = $('#email');
     var mName = $('#name');
-    var gender = $(':radio[name=gender]');
     var zonecode = $('#zonecode');
     var address = $('#address');
     var detailAddress = $('#detailAddress');

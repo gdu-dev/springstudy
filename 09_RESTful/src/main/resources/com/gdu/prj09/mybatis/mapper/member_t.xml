@@ -5,6 +5,20 @@
 
 <mapper namespace="com.gdu.prj09.mybatis.mapper.member_t">
 
+  <resultMap type="AddressDto" id="AddressMap">
+    <id     column="ADDRESS_NO"     property="addressNo"/>
+    <result column="ZONECODE"       property="zonecode"/>
+    <result column="ADDRESS"        property="address"/>
+    <result column="DETAIL_ADDRESS" property="detailAddress"/>
+    <result column="EXTRA_ADDRESS"  property="extraAddress"/>
+    <association javaType="MemberDto" property="member">
+      <id     column="MEMBER_NO" property="memberNo"/>
+      <result column="EMAIL"     property="email"/>
+      <result column="NAME"      property="name"/>
+      <result column="GENDER"    property="gender"/>
+    </association>
+  </resultMap>
+
   <insert id="insertMember"
           parameterType="MemberDto">
     <selectKey keyProperty="memberNo" order="BEFORE" resultType="int">
@@ -51,7 +65,7 @@
   
   <select id="getMemberList"
           parameterType="Map"
-          resultType="MemberDto">
+          resultMap="AddressMap">
     SELECT MEMBER_NO, EMAIL, NAME, GENDER, ADDRESS_NO, ZONECODE, ADDRESS, DETAIL_ADDRESS, EXTRA_ADDRESS
       FROM (SELECT ROW_NUMBER() OVER(ORDER BY M.MEMBER_NO DESC) AS RN
                  , M.MEMBER_NO, M.EMAIL, M.NAME, M.GENDER
