@@ -1,7 +1,6 @@
 package com.gdu.prj09.service;
 
 import java.io.PrintWriter;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import com.gdu.prj09.dto.AddressDto;
 import com.gdu.prj09.dto.MemberDto;
 import com.gdu.prj09.utils.MyPageUtils;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
