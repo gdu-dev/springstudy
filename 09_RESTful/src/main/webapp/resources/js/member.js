@@ -2,6 +2,10 @@
  * 
  */
 
+// 전역변수
+var page = 1;
+var display = 20;
+
 // jQuery 객체 선언
 var members = $('#members');
 var total = $('#total');
@@ -65,7 +69,66 @@ const fnRegisterMember = ()=>{
   })
 }
 
+const fnMemberList = ()=>{
+  $.ajax({
+    type: 'GET',
+    url: getContextPath() + '/members/page/' + page + '/display/' + display,
+    dataType: 'json',
+    success: (resData)=>{  /*
+                              resData = {
+                                "members": [
+                                  {
+                                    "addressNo": 1,
+                                    "zonecode": '12345',
+                                    "address": '서울시 구로구'
+                                    "detailAddress": '디지털로',
+                                    "extraAddress": '(가산동)',
+                                    "member": {
+                                      "memberNo": 1,
+                                      "email": 'aaa@bbb',
+                                      "name": 'gildong',
+                                      "gender": 'none'
+                                    }
+                                  }, ...
+                                ],
+                                "total": 30,
+                                "paging": '< 1 2 3 4 5 6 7 8 9 10 >'
+                              }
+                           */
+      total.html('총 회원 ' + resData.total + '명');
+      members.empty();
+      $.each(resData.members, (i, member)=>{
+        let str = '<tr>';
+        str += '<td><input type="checkbox" class="chk-member" value="' + member.member.memberNo + '"></td>';
+        str += '<td>' + member.member.email + '</td>';
+        str += '<td>' + member.member.name + '</td>';
+        str += '<td>' + member.member.gender + '</td>';
+        str += '<td><button type="button" class="btn-detail" data-member-no="' + member.member.memberNo + '">조회</button></td>';
+        str += '</tr>';
+        members.append(str);
+      })
+      paging.html(resData.paging);
+    },
+    error: (jqXHR)=>{
+      alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+    }
+  })
+}
+
+// MyPageUtils 클래스의 getAsyncPaging() 메소드에서 만든 <a href="javascript:fnPaging()"> 에 의해서 실행되는 함수
+const fnPaging = (p)=>{
+  page = p;
+  fnMemberList();
+}
+
+const fnChangeDisplay = ()=>{
+  display = jqDisplay.val();
+  fnMemberList();
+}
+
 // 함수 호출 및 이벤트
 fnInit();
 btnInit.on('click', fnInit);
 btnRegister.on('click', fnRegisterMember);
+fnMemberList();
+jqDisplay.on('change', fnChangeDisplay);

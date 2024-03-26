@@ -43,9 +43,25 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public ResponseEntity<MemberDto> getMemberByNo(int memberNo) {
-    // TODO Auto-generated method stub
-    return null;
+  public ResponseEntity<Map<String, Object>> getMemberByNo(int memberNo) {
+    
+    int total = memberDao.getTotalAddressCountByNo(memberNo);
+    int page = 1;
+    int display = 20;
+    
+    myPageUtils.setPaging(total, display, page);
+    
+    Map<String, Object> params = Map.of("memberNo", memberNo
+                                      , "begin", myPageUtils.getBegin()
+                                      , "end", myPageUtils.getEnd());
+    
+    List<AddressDto> addressList = memberDao.getAddressListByNo(params);
+    MemberDto member = memberDao.getMemberByNo(memberNo);
+    
+    return new ResponseEntity<Map<String,Object>>(Map.of("addressList", addressList
+                                                       , "member", member)
+                                                , HttpStatus.OK);
+    
   }
 
   @Override

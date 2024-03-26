@@ -62,7 +62,11 @@ public class MemberController {
     return memberService.getMembers(page, display);
   }
   
-  
+  @GetMapping(value="/members/{memberNo}", produces="application/json")
+  public ResponseEntity<Map<String, Object>> getMemberByNo(@PathVariable(value="memberNo", required=false) Optional<String> opt) {
+    int memberNo = Integer.parseInt(opt.orElse("0"));
+    return memberService.getMemberByNo(memberNo);
+  }
   
   
   

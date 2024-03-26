@@ -118,71 +118,49 @@
   <script src="${contextPath}/resources/js/member.js"></script>
   <script>
   
-// 전역 변수
-var page = 1;
-var display = 20;
+// jQuery 객체 선언
+var btnDetail = $('.btn-detail');
   
 // 함수 표현식 (함수 만들기)
-const fnMemberList = ()=>{
+const getMemberByNo = (evt)=>{
   $.ajax({
     type: 'GET',
-    url: getContextPath() + '/members/page/' + page + '/display/' + display,
-    dataType: 'json',
-    success: (resData)=>{  /*
-    	                        resData = {
-    	                          "members": [
-    	                        	  {
-    	                        		  "addressNo": 1,
-    	                        		  "zonecode": '12345',
-    	                        		  "address": '서울시 구로구'
-    	                        		  "detailAddress": '디지털로',
-    	                        		  "extraAddress": '(가산동)',
-    	                        		  "member": {
-    	                        			  "memberNo": 1,
-    	                        			  "email": 'aaa@bbb',
-    	                        			  "name": 'gildong',
-    	                        			  "gender": 'none'
-    	                        		  }
-    	                        	  }, ...
-                                ],
-                                "total": 30,
-                                "paging": '< 1 2 3 4 5 6 7 8 9 10 >'
-                              }
-                           */
-      total.html('총 회원 ' + resData.total + '명');
-      members.empty();
-      $.each(resData.members, (i, member)=>{
-        let str = '<tr>';
-        str += '<td><input type="checkbox" class="chk-member" value="' + member.member.memberNo + '"></td>';
-        str += '<td>' + member.member.email + '</td>';
-        str += '<td>' + member.member.name + '</td>';
-        str += '<td>' + member.member.gender + '</td>';
-        str += '<td><button type="button" class="btn-detail" data-member-no="' + member.member.memberNo + '">조회</button></td>';
-        str += '</tr>';
-        members.append(str);
-      })
-      paging.html(resData.paging);
-    },
-    error: (jqXHR)=>{
-      alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-    }
+    url: getContextPath() + '/members/' + evt.target.dataset.memberNo,
+    dataType: 'json'
+  }).done(resData=>{  /* resData = {
+                           "addressList": [
+                             {
+                            	 "addressNo": 1,
+                            	 "zonecode": "12345",
+                            	 "address": "서울시 구로구 디지털로",
+                            	 "detailAddress": "카카오",
+                            	 "extraAddress": "(가산동)"
+                             },
+                             ...
+                           ],
+                           "member": {
+                             "memberNo": 1,
+                             "email": "email@email.com",
+                             "name": "gildong",
+                             "gender": "man"
+                           }
+                         }
+                      */
+    email.val(resData.member.email);
+    mName.val(resData.member.name);
+    $(':radio[value=' + resData.member.gender + ']').prop('checked', true);
+    zonecode.val(resData.addressList[0].zonecode);
+    address.val(resData.addressList[0].address);
+    detailAddress.val(resData.addressList[0].detailAddress);
+    extraAddress.val(resData.addressList[0].extraAddress);
+  }).fail(jqXHR=>{
+    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
   })
 }
 
-// MyPageUtils 클래스의 getAsyncPaging() 메소드에서 만든 <a href="javascript:fnPaging()"> 에 의해서 실행되는 함수
-const fnPaging = (p)=>{
-	page = p;
-	fnMemberList();
-}
-
-const fnChangeDisplay = ()=>{
-	display = jqDisplay.val();
-	fnMemberList();
-}
-
 // 함수 호출 및 이벤트
-fnMemberList();
-jqDisplay.on('click', fnChangeDisplay);
+$(document).on('click', '.btn-detail', (evt)=>{ getMemberByNo(evt); })
+
   </script>
 
 </body>
