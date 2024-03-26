@@ -6,6 +6,7 @@
 var members = $('#members');
 var total = $('#total');
 var paging = $('#paging');
+var jqDisplay = $('#display');
 var email = $('#email');
 var mName = $('#name');
 var zonecode = $('#zonecode');

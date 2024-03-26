@@ -92,6 +92,7 @@
     
     <div>
       <div id="total"></div>
+      <div><select id="display"><option>20</option><option>50</option><option>100</option></select></div>
       <table border="1">
         <thead>
           <tr>
@@ -174,9 +175,14 @@ const fnPaging = (p)=>{
 	fnMemberList();
 }
 
+const fnChangeDisplay = ()=>{
+	display = jqDisplay.val();
+	fnMemberList();
+}
+
 // 함수 호출 및 이벤트
 fnMemberList();
-  
+jqDisplay.on('click', fnChangeDisplay);
   </script>
 
 </body>

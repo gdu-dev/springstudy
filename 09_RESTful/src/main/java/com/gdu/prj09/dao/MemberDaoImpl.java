@@ -56,9 +56,21 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
-  public AddressDto getMemberByNo(int memberNo) {
+  public MemberDto getMemberByNo(int memberNo) {
     // TODO Auto-generated method stub
     return null;
   }
 
+  @Override
+  public int getTotalAddressCountByNo(int memberNo) {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+  
+  @Override
+  public List<AddressDto> getAddressListByNo(Map<String, Object> map) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  
 }

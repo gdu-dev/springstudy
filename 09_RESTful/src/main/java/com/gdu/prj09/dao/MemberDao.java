@@ -14,5 +14,7 @@ public interface MemberDao {
   int deleteMembers(List<String> memberNoList);
   int getTotalMemberCount();
   List<AddressDto> getMemberList(Map<String, Object> map);
-  AddressDto getMemberByNo(int memberNo);
+  MemberDto getMemberByNo(int memberNo);
+  int getTotalAddressCountByNo(int memberNo);
+  List<AddressDto> getAddressListByNo(Map<String, Object> map);
 }

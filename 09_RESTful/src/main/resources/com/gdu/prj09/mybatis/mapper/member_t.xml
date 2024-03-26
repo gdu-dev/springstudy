@@ -75,12 +75,28 @@
      WHERE RN BETWEEN #{begin} AND #{end}
   </select>
   
+  <select id="getMemberByNo"
+          resultType="MemberDto">
+    SELECT MEMBER_NO, EMAIL, NAME, GENDER
+      FROM MEMBER_T
+     WHERE MEMBER_NO = #{memberNo}        
+  </select>
   
+  <select id="getTotalAddressCountByNo"
+          resultType="int">
+    SELECT COUNT(*)
+      FROM ADDRESS_T
+     WHERE MEMBER_NO = #{memberNo} 
+  </select>
   
-  
-  
-  
-  
-  
+  <select id="getAddressListByNo"
+          parameterType="Map"
+          resultType="AddressDto">
+    SELECT ADDRESS_NO, ZONECODE, ADDRESS, DETAIL_ADDRESS, EXTRA_ADDRESS
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY ADDRESS_NO DESC) AS RN, ADDRESS_NO, ZONECODE, ADDRESS, DETAIL_ADDRESS, EXTRA_ADDRESS
+              FROM ADDRESS_T
+             WHERE MEMBER_NO = #{memberNo})
+     WHERE RN BETWEEN #{begin} AND #{end}         
+  </select>
   
 </mapper>
