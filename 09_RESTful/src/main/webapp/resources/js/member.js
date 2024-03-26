@@ -3,6 +3,9 @@
  */
 
 // jQuery 객체 선언
+var members = $('#members');
+var total = $('#total');
+var paging = $('#paging');
 var email = $('#email');
 var mName = $('#name');
 var zonecode = $('#zonecode');
@@ -13,6 +16,7 @@ var btnInit = $('#btn-init');
 var btnRegister = $('#btn-register');
 var btnModify = $('#btn-modify');
 var btnRemove = $('#btn-remove');
+var btnSelectRemove = $('#btn-select-remove');
 
 // 함수 표현식 (함수 만들기)
 const fnInit = ()=>{

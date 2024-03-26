@@ -33,7 +33,7 @@ public class MyPageUtils {
   
   public String getAsyncPaging() {
    
-    StringBuilder builder = new StringBuilder();
+    StringBuilder builder = new StringBuilder("< 1 2 3 4 5 >");
     
     // <
     
@@ -46,11 +46,3 @@ public class MyPageUtils {
   }
   
 }
-
-
-
-
-
-
-
-

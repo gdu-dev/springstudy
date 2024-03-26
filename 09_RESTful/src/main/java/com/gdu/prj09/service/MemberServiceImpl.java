@@ -35,7 +35,9 @@ public class MemberServiceImpl implements MemberService {
     
     List<AddressDto> members = memberDao.getMemberList(params);
     
-    return new ResponseEntity<Map<String,Object>>(Map.of("members", members, "total", total)
+    return new ResponseEntity<Map<String,Object>>(Map.of("members", members
+                                                       , "total", total
+                                                       , "paging", myPageUtils.getAsyncPaging())
                                                 , HttpStatus.OK);
     
   }

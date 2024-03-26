@@ -91,6 +91,7 @@
     <hr>
     
     <div>
+      <div id="total"></div>
       <table border="1">
         <thead>
           <tr>
@@ -108,6 +109,7 @@
           </tr>
         </tfoot>
       </table>
+      <button type="button" id="btn-select-remove">선택삭제</button>
     </div>
     
   </div>
@@ -125,8 +127,40 @@ const fnMemberList = ()=>{
     type: 'GET',
     url: getContextPath() + '/members/page/' + page + '/display/' + display,
     dataType: 'json',
-    success: (resData)=>{
-      console.log(resData);
+    success: (resData)=>{  /*
+    	                        resData = {
+    	                          "members": [
+    	                        	  {
+    	                        		  "addressNo": 1,
+    	                        		  "zonecode": '12345',
+    	                        		  "address": '서울시 구로구'
+    	                        		  "detailAddress": '디지털로',
+    	                        		  "extraAddress": '(가산동)',
+    	                        		  "member": {
+    	                        			  "memberNo": 1,
+    	                        			  "email": 'aaa@bbb',
+    	                        			  "name": 'gildong',
+    	                        			  "gender": 'none'
+    	                        		  }
+    	                        	  }, ...
+                                ],
+                                "total": 30,
+                                "paging": '< 1 2 3 4 5 6 7 8 9 10 >'
+                              }
+                           */
+      total.html('총 회원 ' + resData.total + '명');
+      members.empty();
+      $.each(resData.members, (i, member)=>{
+        let str = '<tr>';
+        str += '<td><input type="checkbox" class="chk-member" value="' + member.member.memberNo + '"></td>';
+        str += '<td>' + member.member.email + '</td>';
+        str += '<td>' + member.member.name + '</td>';
+        str += '<td>' + member.member.gender + '</td>';
+        str += '<td><button type="button" class="btn-detail" data-member-no="' + member.member.memberNo + '">조회</button></td>';
+        str += '</tr>';
+        members.append(str);
+      })
+      paging.html(resData.paging);
     },
     error: (jqXHR)=>{
       alert(jqXHR.statusText + '(' + jqXHR.status + ')');
