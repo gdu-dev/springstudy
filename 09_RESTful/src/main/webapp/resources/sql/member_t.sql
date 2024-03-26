@@ -1025,4 +1025,3 @@ INSERT INTO MEMBER_T (MEMBER_NO, EMAIL, NAME, GENDER) VALUES (998, 'dlipscomberp
 INSERT INTO MEMBER_T (MEMBER_NO, EMAIL, NAME, GENDER) VALUES (999, 'lmarrinerrq@soup.io', 'Marriner', 'woman');
 INSERT INTO MEMBER_T (MEMBER_NO, EMAIL, NAME, GENDER) VALUES (1000, 'rhysloprr@ft.com', 'Hyslop', 'woman');
 COMMIT;
-
