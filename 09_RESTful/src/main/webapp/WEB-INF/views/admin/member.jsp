@@ -168,6 +168,7 @@ const fnMemberList = ()=>{
   })
 }
 
+// MyPageUtils 클래스의 getAsyncPaging() 메소드에서 만든 <a href="javascript:fnPaging()"> 에 의해서 실행되는 함수
 const fnPaging = (p)=>{
 	page = p;
 	fnMemberList();
