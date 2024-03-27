@@ -117,7 +117,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public ResponseEntity<Map<String, Object>> modifyMember(Map<String, Object> map) {
     
-    int updateCount = memberDao.updateMember(map);
+    int updateMemberCount = memberDao.updateMember(map);
     int updateAddressCount = memberDao.updateAddress(map);
     
     if(updateAddressCount == 0) {
@@ -130,10 +130,10 @@ public class MemberServiceImpl implements MemberService {
                                         .memberNo(Integer.parseInt((String)map.get("memberNo")))
                                       .build())
                             .build();
-      updateCount += memberDao.insertAddress(address);
+      updateAddressCount = memberDao.insertAddress(address);
     }
     
-    return new ResponseEntity<Map<String,Object>>(Map.of("updateCount", updateCount)
+    return new ResponseEntity<Map<String,Object>>(Map.of("updateCount", updateMemberCount + updateAddressCount)
                                                 , HttpStatus.OK);
     
   }
