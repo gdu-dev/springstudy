@@ -81,6 +81,15 @@
      WHERE MEMBER_NO = #{memberNo}
   </delete>
   
+  <delete id="deleteMembers">
+    DELETE
+      FROM MEMBER_T
+     WHERE MEMBER_NO
+     <foreach collection="list" item="memberNo" open="IN(" separator="," close=")">
+       #{memberNo}
+     </foreach>
+  </delete>
+  
   <select id="getTotalMemberCount"
           resultType="int">
     SELECT COUNT(*)
