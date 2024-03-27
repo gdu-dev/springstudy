@@ -22,7 +22,7 @@
 <body>
 
   <form method="POST"
-        action="">
+        action="${contextPath}/board/register.do">
     <div>
       <textarea id="contents" name="contents"></textarea>
     </div>
@@ -34,25 +34,25 @@
   <script>
     $(document).ready(function(){     
       $('#contents').summernote({
-    	  width: 1024,
-    	  height: 500,
-    	  lang: 'ko-KR',
-    	  callbacks: {
-    		  onImageUpload: (images)=>{
-    			  // 비동기 방식을 이용한 이미지 업로드
-    			  let formData = new FormData();
-    			  for(let i = 0; i < images.length; i++) {
-    				  formData.append('images', images[i]);
-    			  }
-    			  fetch('${contextPath}/summernote/imageUpload.do', {
-    				  method: 'POST',
-    				  body: formData
-    			  }).then(response=>response.json())
-    			    .then(resData=>{
-    			    	console.log(resData);
-    			    });
-    		  }
-    	  }
+        width: 1024,
+        height: 500,
+        lang: 'ko-KR',
+        callbacks: {
+          onImageUpload: (images)=>{
+            // 비동기 방식을 이용한 이미지 업로드
+            for(let i = 0; i < images.length; i++) {
+              let formData = new FormData();
+              formData.append('image', images[i]);
+              fetch('${contextPath}/summernote/imageUpload.do', {
+                method: 'POST',
+                body: formData
+              }).then(response=>response.json())
+                .then(resData=>{
+                  $('#contents').summernote('insertImage', resData.src);
+                });
+            }
+          }
+        }
       });
     })
   </script>
