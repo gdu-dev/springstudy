@@ -18,7 +18,6 @@
   
   <dependencies>
 
-
     <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
     <!--
       jackson-databind / jackson-core / jackson-annotations >= 2.12.0
