@@ -1,6 +1,7 @@
 /*************************************************
  * 파일명 : member.js
  * 설  명 : 회원 관리 JavaScript
+ *
  * 수정일      수정자  Version   Function 명
  * -------------------------------------------
  * 2024.03.25  민경태  1.0       fnInit
@@ -36,18 +37,22 @@ var jqBtnSelectRemove = $('#btn-select-remove');
  * 사용법 : fnInit()
  * 작성일 : 2024.03.26
  * 작성자 : 이런저런 개발팀 민경태
+ *
  * 수정일     수정자  수정내용
  * --------------------------------
  * 2024.03.25 민경태  입력란 초기화
  *************************************************/
 const fnInit = ()=>{
-  jqEmail.val('');
+  jqEmail.val('').prop('disabled', false);
   jqName.val('');
   $('#none').prop('checked', true);
   jqZonecode.val('');
   jqAddress.val('');
   jqDetailAddress.val('');
   jqExtraAddress.val('');
+  jqBtnRegister.prop('disabled', false);
+  jqBtnModify.prop('disabled', true);
+  jqBtnRemove.prop('disabled', true);
 }
 
 const fnGetContextPath = ()=>{
@@ -169,9 +174,12 @@ const fnGetMemberByNo = (evt)=>{
                       */
     fnInit();
     if(resData.member !== null){
-      jqEmail.val(resData.member.email);
+      jqEmail.val(resData.member.email).prop('disabled', true);
       jqName.val(resData.member.name);
       $(':radio[value=' + resData.member.gender + ']').prop('checked', true);
+      jqBtnRegister.prop('disabled', true);
+      jqBtnModify.prop('disabled', false);
+      jqBtnRemove.prop('disabled', false);
     }
     if(resData.addressList.length !== 0){
       jqZonecode.val(resData.addressList[0].zonecode);

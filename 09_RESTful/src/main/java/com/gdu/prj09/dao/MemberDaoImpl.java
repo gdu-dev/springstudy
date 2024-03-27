@@ -28,9 +28,13 @@ public class MemberDaoImpl implements MemberDao {
   }
   
   @Override
-  public int updateMember(MemberDto member) {
-    // TODO Auto-generated method stub
-    return 0;
+  public int updateMember(Map<String, Object> map) {
+    return sqlSessionTemplate.update(NS + "updateMember", map);
+  }
+  
+  @Override
+  public int updateAddress(Map<String, Object> map) {
+    return sqlSessionTemplate.update(NS + "updateAddress", map);
   }
 
   @Override

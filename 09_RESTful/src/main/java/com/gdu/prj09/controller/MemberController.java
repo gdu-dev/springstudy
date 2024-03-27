@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.gdu.prj09.service.MemberService;
@@ -68,7 +69,10 @@ public class MemberController {
     return memberService.getMemberByNo(memberNo);
   }
   
-  
+  @PutMapping(value="/members", produces="application/json")
+  public ResponseEntity<Map<String, Object>> modifyMember(@RequestBody Map<String, Object> map) {
+    return memberService.modifyMember(map);
+  }
   
   
   

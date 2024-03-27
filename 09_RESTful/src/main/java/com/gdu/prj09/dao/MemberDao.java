@@ -9,7 +9,8 @@ import com.gdu.prj09.dto.MemberDto;
 public interface MemberDao {
   int insertMember(MemberDto member);
   int insertAddress(AddressDto address);
-  int updateMember(MemberDto member);
+  int updateMember(Map<String, Object> map);
+  int updateAddress(Map<String, Object> map);
   int deleteMember(int memberNo);
   int deleteMembers(List<String> memberNoList);
   int getTotalMemberCount();

@@ -57,6 +57,24 @@
     )
   </insert>
   
+  <update id="updateMember"
+          parameterType="Map">
+    UPDATE MEMBER_T
+       SET NAME = #{name}
+         , GENDER = #{gender}
+     WHERE MEMBER_NO = #{memberNo}
+  </update>
+  
+  <update id="updateAddress"
+          parameterType="Map">
+    UPDATE ADDRESS_T
+       SET ZONECODE = #{zonecode}
+         , ADDRESS = #{address}
+         , DETAIL_ADDRESS = #{detailAddress}
+         , EXTRA_ADDRESS = #{extraAddress}
+     WHERE MEMBER_NO = #{memberNo}
+  </update>
+  
   <select id="getTotalMemberCount"
           resultType="int">
     SELECT COUNT(*)

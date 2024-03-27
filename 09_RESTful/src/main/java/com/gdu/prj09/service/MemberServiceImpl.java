@@ -115,9 +115,14 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public ResponseEntity<Map<String, Object>> modifyMember(MemberDto member) {
-    // TODO Auto-generated method stub
-    return null;
+  public ResponseEntity<Map<String, Object>> modifyMember(Map<String, Object> map) {
+    
+    int updateCount = memberDao.updateMember(map);
+    updateCount += memberDao.updateAddress(map);
+    
+    return new ResponseEntity<Map<String,Object>>(Map.of("updateCount", updateCount)
+                                                , HttpStatus.OK);
+    
   }
 
   @Override
