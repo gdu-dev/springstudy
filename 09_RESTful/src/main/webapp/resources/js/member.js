@@ -18,6 +18,7 @@ var jqMembers = $('#members');
 var jqTotal = $('#total');
 var jqPaging = $('#paging');
 var jqDisplay = $('#display');
+var jqMemberNo = $('#member-no');
 var jqEmail = $('#email');
 var jqName = $('#name');
 var jqZonecode = $('#zonecode');
@@ -174,6 +175,7 @@ const fnGetMemberByNo = (evt)=>{
                       */
     fnInit();
     if(resData.member !== null){
+      jqMemberNo.val(resData.member.memberNo);
       jqEmail.val(resData.member.email).prop('disabled', true);
       jqName.val(resData.member.name);
       $(':radio[value=' + resData.member.gender + ']').prop('checked', true);

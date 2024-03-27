@@ -118,7 +118,20 @@ public class MemberServiceImpl implements MemberService {
   public ResponseEntity<Map<String, Object>> modifyMember(Map<String, Object> map) {
     
     int updateCount = memberDao.updateMember(map);
-    updateCount += memberDao.updateAddress(map);
+    int updateAddressCount = memberDao.updateAddress(map);
+    
+    if(updateAddressCount == 0) {
+      AddressDto address = AddressDto.builder()
+                              .zonecode((String)map.get("zonecode"))
+                              .address((String)map.get("address"))
+                              .detailAddress((String)map.get("detailAddress"))
+                              .extraAddress((String)map.get("extraAddress"))
+                              .member(MemberDto.builder()
+                                        .memberNo(Integer.parseInt((String)map.get("memberNo")))
+                                      .build())
+                            .build();
+      updateCount += memberDao.insertAddress(address);
+    }
     
     return new ResponseEntity<Map<String,Object>>(Map.of("updateCount", updateCount)
                                                 , HttpStatus.OK);
