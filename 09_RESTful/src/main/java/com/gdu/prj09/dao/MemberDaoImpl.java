@@ -39,8 +39,7 @@ public class MemberDaoImpl implements MemberDao {
 
   @Override
   public int deleteMember(int memberNo) {
-    // TODO Auto-generated method stub
-    return 0;
+    return sqlSessionTemplate.delete(NS + "deleteMember", memberNo);
   }
 
   @Override

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,7 +75,10 @@ public class MemberController {
     return memberService.modifyMember(map);
   }
   
-  
-  
+  @DeleteMapping(value="/member/{memberNo}", produces="application/json")
+  public ResponseEntity<Map<String, Object>> removeMember(@PathVariable(value="memberNo", required=false) Optional<String> opt) {
+    int memberNo = Integer.parseInt(opt.orElse("0"));
+    return memberService.removeMember(memberNo);
+  }
   
 }
