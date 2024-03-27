@@ -224,6 +224,65 @@ const fnModifyMember = ()=>{
   })
 }
 
+const fnRemoveMember = ()=>{
+  if(!confirm('삭제할까요?')){
+    return;
+  }
+  $.ajax({
+    type: 'DELETE',
+    url: fnGetContextPath() + '/member/' + jqMemberNo.val(),
+    dataType: 'json'
+  }).done(resData=>{  // {"deleteCount": 1}
+    if(resData.deleteCount === 1){
+      alert('회원 정보가 삭제되었습니다.');
+      fnInit();
+      vPage = 1;
+      fnGetMemberList();
+    } else {
+      alert('회원 정보가 삭제되지 않았습니다.');
+    }
+  }).fail(jqXHR=>{
+    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+  })
+}
+
+const fnRemoveMembers = ()=>{
+  // 체크된 요소를 배열에 저장하기
+  let arr = [];
+  $.each($('.chk-member'), (i, chk)=>{
+    if($(chk).is(':checked')){
+      arr.push(chk.value);
+    }
+  })
+  // 체크된 요소가 없으면 함수 종료
+  if(arr.length === 0){
+    alert('선택된 회원 정보가 없습니다.');
+    return;
+  }
+  // 삭제 확인
+  if(!confirm('선택된 회원 정보를 모두 삭제할까요?')){
+    return;
+  }
+  // 삭제
+  $.ajax({
+    type: 'DELETE',
+    url: fnGetContextPath() + '/members/' + arr.join(','),
+    dataType: 'json',
+    success: (resData)=>{  // {"deleteCount": 3}
+      if(resData.deleteCount === arr.length){
+        alert('선택된 회원 정보가 삭제되었습니다.');
+        vPage = 1;
+        fnGetMemberList();
+      } else {
+        alert('선택된 회원 정보가 삭제되지 않았습니다.');
+      }
+    },
+    error: (jqXHR)=>{
+      alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+    }
+  })
+}
+
 // 함수 호출 및 이벤트
 fnInit();
 jqBtnInit.on('click', fnInit);
@@ -232,3 +291,5 @@ fnGetMemberList();
 jqDisplay.on('change', fnChangeDisplay);
 $(document).on('click', '.btn-detail', (evt)=>{ fnGetMemberByNo(evt); });jqBtnModify.on('click', fnModifyMember);
 jqBtnModify.on('click', fnModifyMember);
+jqBtnRemove.on('click', fnRemoveMember);
+jqBtnSelectRemove.on('click', fnRemoveMembers);

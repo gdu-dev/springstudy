@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <!-- Appenders -->
+  
+  <!-- Console view 에 로그를 찍는 Appender -->
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="custom.logback.layout.MyLogbackLayout"/>
+    </encoder>
+  </appender>
+  
+  <!-- File 에 로그를 찍는 Appender -->
+  <appender name="file" class="ch.qos.logback.core.FileAppender">
+    <file>/logs/prj08.log</file>
+    <append>true</append>
+    <immediateFlush>true</immediateFlush>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="custom.logback.layout.MyLogbackLayout"/>
+    </encoder>
+  </appender>
+  
+  <!-- 매일 새로운 파일을 만드는 Appender -->
+  <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>/logs/prj08-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <totalSizeCap>100GB</totalSizeCap>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <customFields>{"appname":"myWebservice","roles":["customerorder","auth"],"buildinfo":{"version":"Version 0.1.0-SNAPSHOT","lastcommit":"75473700d5befa953c45f630c6d9105413c16fe1"}}</customFields>
+    </encoder>
+  </appender>
+  
+  <!-- Application Loggers -->
+  <logger name="com.gdu" level="info"/>
+  
+  <!-- 3rdparty Loggers -->
+  <logger name="org.springframework" level="info"/>
+  <logger name="com.zaxxer.hikari"   level="info"/>
+  <logger name="org.mybatis.spring"  level="info"/>
+  <logger name="jdbc.sqltiming"      level="info"/>   <!-- 쿼리문 + 실행시간 -->
+  <logger name="jdbc.sqlonly"        level="off"/>    <!-- 쿼리문 -->
+  <logger name="jdbc.connection"     level="off"/>    <!-- Connection 호출 정보 -->
+  <logger name="jdbc.audit"          level="off"/>    <!-- JDBC 호출 정보 -->
+  <logger name="jdbc.resultset"      level="off"/>    <!-- ResultSet 호출 정보 -->
+  <logger name="jdbc.resultsettable" level="off"/>    <!-- ResultSet 호출 결과 테이블 -->
+  <logger name="log4jdbc.debug"      level="off"/>    <!-- log4jdbc 라이브러리 동작 -->
+
+  <!-- Root Logger -->
+  <root>
+    <priority value="warn" />
+    <appender-ref ref="console" />
+    <appender-ref ref="rolling" />
+  </root>
+
+</configuration>
