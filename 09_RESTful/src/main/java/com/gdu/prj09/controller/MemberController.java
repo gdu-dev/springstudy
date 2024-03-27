@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  *    2) 상세 | /members/1                  | GET
  *    3) 삽입 | /members                    | POST
  *    4) 수정 | /members                    | PUT
- *    5) 삭제 | /members/1                  | DELETE 
+ *    5) 삭제 | /member/1                   | DELETE 
  *            | /members/1,2,3              |         
  */
 

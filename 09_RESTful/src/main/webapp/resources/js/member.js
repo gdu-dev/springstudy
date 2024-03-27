@@ -194,10 +194,41 @@ const fnGetMemberByNo = (evt)=>{
   })
 }
 
+const fnModifyMember = ()=>{
+  $.ajax({
+    type: 'PUT',
+    url: fnGetContextPath() + '/members',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      'memberNo': jqMemberNo.val(),
+      'name': jqName.val(),
+      'gender': $(':radio:checked').val(),
+      'zonecode': jqZonecode.val(),
+      'address': jqAddress.val(),
+      'detailAddress': jqDetailAddress.val(),
+      'extraAddress': jqExtraAddress.val()
+    }),
+    dataType: 'json',
+    success: (resData)=>{  // resData = {"updateCount": 2}
+      console.log(resData);
+      if(resData.updateCount === 2){
+        alert('회원 정보가 수정되었습니다.');
+        fnGetMemberList();
+      } else {
+        alert('회원 정보가 수정되지 않았습니다.');
+      }
+    },
+    error: (jqXHR)=>{
+      alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+    }
+  })
+}
+
 // 함수 호출 및 이벤트
 fnInit();
 jqBtnInit.on('click', fnInit);
 jqBtnRegister.on('click', fnRegisterMember);
 fnGetMemberList();
 jqDisplay.on('change', fnChangeDisplay);
-$(document).on('click', '.btn-detail', (evt)=>{ fnGetMemberByNo(evt); });
+$(document).on('click', '.btn-detail', (evt)=>{ fnGetMemberByNo(evt); });jqBtnModify.on('click', fnModifyMember);
+jqBtnModify.on('click', fnModifyMember);

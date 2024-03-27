@@ -93,7 +93,14 @@
     
     <div>
       <div id="total"></div>
-      <div><select id="display"><option>20</option><option>50</option><option>100</option></select></div>
+      <div>
+        <button type="button" id="btn-select-remove">선택삭제</button>
+        <select id="display">
+          <option>20</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+      </div>
       <table border="1">
         <thead>
           <tr>
@@ -111,7 +118,6 @@
           </tr>
         </tfoot>
       </table>
-      <button type="button" id="btn-select-remove">선택삭제</button>
     </div>
     
   </div>
@@ -123,38 +129,29 @@
 
   
 // 함수 표현식 (함수 만들기)
-const fnModifyMember = ()=>{
+const fnRemoveMember = ()=>{
+	if(!confirm('삭제할까요?')){
+		return;
+	}
 	$.ajax({
-		type: 'PUT',
-		url: fnGetContextPath() + '/members',
-		contentType: 'application/json',
-		data: JSON.stringify({
-			'memberNo': jqMemberNo.val(),
-			'name': jqName.val(),
-			'gender': $(':radio:checked').val(),
-			'zonecode': jqZonecode.val(),
-			'address': jqAddress.val(),
-			'detailAddress': jqDetailAddress.val(),
-			'extraAddress': jqExtraAddress.val()
-		}),
-		dataType: 'json',
-		success: (resData)=>{  // resData = {"updateCount": 2}
-		  console.log(resData);
-			if(resData.updateCount === 2){
-				alert('회원 정보가 수정되었습니다.');
-				fnGetMemberList();
-			} else {
-				alert('회원 정보가 수정되지 않았습니다.');
-			}
-		},
-		error: (jqXHR)=>{
-			alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+		type: 'DELETE',
+		url: fnGetContextPath() + '/member/' + jqMemberNo.val(),
+		dataType: 'json'
+	}).done(resData=>{  // {"deleteCount": 1}
+		if(resData.deleteCount === 1){
+			alert('회원 정보가 삭제되었습니다.');
+			fnInit();
+			fnGetMemberList();
+		} else {
+			alert('회원 정보가 삭제되지 않았습니다.');
 		}
+	}).fail(jqXHR=>{
+		alert(jqXHR.statusText + '(' + jqXHR.status + ')');
 	})
 }
 
 // 함수 호출 및 이벤트
-jqBtnModify.on('click', fnModifyMember);
+jqBtnRemove.on('click', fnRemoveMember);
 
   </script>
 
